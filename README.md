@@ -1,6 +1,10 @@
 # Videogame Creation Project
 Project for IIC3686 - Videogame Creation.
 
+# Settings
+
+**Engine:** Unity 2021.1.20f1
+
 # E1
 **Concepts:** [A](./docs/ConceptsA.pdf), [B](./docs/ConceptsB.pdf)
 
