@@ -1,9 +1,17 @@
 # Videogame Creation Project
 Project for IIC3686 - Videogame Creation.
 
+***Team:***
+- *Benjamín Farías* ([@BFFV](https://github.com/BFFV))
+- *Felipe Pattillo* ([@fpattillo](https://github.com/fpattillo))
+- *Juan Romero* ([@jaromero6](https://github.com/jaromero6))
+- *Pedro Wachtendorff* ([@Pedrowach](https://github.com/Pedrowach))
+
 # Setup
 
 **Engine:** Unity 2021.1.20f1
+
+**Workflow:** https://thoughtbot.com/blog/how-to-git-with-unity, https://medium.com/helloiconic/5-must-read-tips-to-use-git-with-unity-e8a308aa83a4
 
 **Trello:** https://trello.com/b/KMltolMJ/proyecto-videojuegos
 
