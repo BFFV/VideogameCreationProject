@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
     private Vector2 direction;
 
     // Player body
-    public Rigidbody2D player;
+    public Rigidbody2D body;
 
     // Animation to attack
     private Animator animator;
@@ -27,32 +27,27 @@ public class Player : MonoBehaviour {
         //health = 3;
         //experience = 0;
         direction = Vector2.zero;
+        body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
     void Update() {
-        Move();
         HandleAttack();
     }
 
-    // Movement
-    public void Move() {
-        direction = Vector2.zero;
+    void FixedUpdate() {
+        Move();
+    }
 
-        // Check input
-        if (Input.GetAxisRaw("Vertical") == 1) {
-            direction += Vector2.up;
-        }
-        if (Input.GetAxisRaw("Vertical") == -1) {
-            direction += Vector2.down;
-        }
-        if (Input.GetAxisRaw("Horizontal") == -1) {
-            direction += Vector2.left;
-        }
-        if (Input.GetAxisRaw("Horizontal") == 1) {
-            direction += Vector2.right;
-        }
-        transform.Translate(direction * speed * Time.deltaTime);
+    // Player Movement
+    public void Move() {
+        // Get input
+        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        direction.Normalize();
+
+        // Move body
+        body.MovePosition(new Vector2(transform.position.x + direction.x * speed * Time.deltaTime,
+                transform.position.y + direction.y * speed * Time.deltaTime));
     }
 
     // Start the attack
