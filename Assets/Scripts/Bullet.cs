@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-    // Start is called before the first frame update
-    private Rigidbody2D myRigidbody;
 
-    // Allow direction of the bullet
+    // Body
+    private Rigidbody2D body;
+
+    // Direction of the shot
     public Vector2 direction;
 
     [SerializeField]
@@ -15,11 +16,11 @@ public class Bullet : MonoBehaviour {
     // Distance of the bullet
     [SerializeField]
     private int distance;
+
     void Start() {
-        myRigidbody = GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update() {
         distance--;
         if (distance <= 0) {
@@ -27,8 +28,7 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-
     private void FixedUpdate() {
-        myRigidbody.velocity = direction.normalized * speed;
+        body.velocity = direction.normalized * speed;
     }
 }

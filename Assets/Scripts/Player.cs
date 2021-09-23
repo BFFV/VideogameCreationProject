@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
 
     // Set direction of movement
     private Vector2 direction;
+
+    // Last direction of movement
     private Vector2 last_direction;
 
     // Player body
@@ -30,7 +32,7 @@ public class Player : MonoBehaviour {
 
     // Shoot settings
     private bool hasGun;
-    private int nBullets;
+    //private int nBullets;
 
     public int health;
 
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour {
 
         // TODO: Get gun
         hasGun = true;
-        nBullets = 10;
+        //nBullets = 10;
     }
 
     void Update() {
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour {
     public void HandleAttack() {
         if (!attacking) {
             if (Input.GetKey(KeyCode.O)) {
-                    StartCoroutine(Attack());  
+                    StartCoroutine(Attack());
             } else if (hasGun && Input.GetKeyUp(KeyCode.L)) { // KeyUp event to avoid spam projectiles
                 StartCoroutine(Shoot());
             }
@@ -98,7 +100,7 @@ public class Player : MonoBehaviour {
         attacking = false;
     }
 
-    void OnCollisionEnter2D(Collision2D other) { // other es el otro objeto con el que colisiona
+    void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Flying_enemy") {
             Destroy(other.gameObject);
             health -= 1;
