@@ -32,6 +32,8 @@ public class Player : MonoBehaviour {
     private bool hasGun;
     private int nBullets;
 
+    public int health;
+
     void Start() {
         //health = 3;
         //experience = 0;
@@ -94,5 +96,15 @@ public class Player : MonoBehaviour {
         newProjectile.GetComponent<Bullet>().direction = last_direction;
         yield return new WaitForSeconds(1);
         attacking = false;
+    }
+
+    void OnCollisionEnter2D(Collision2D other) { // other es el otro objeto con el que colisiona
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Flying_enemy") {
+            Destroy(other.gameObject);
+            health -= 1;
+            if (health == 0) {
+                Destroy(gameObject);
+            }
+        }
     }
 }
