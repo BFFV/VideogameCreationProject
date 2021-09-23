@@ -8,9 +8,10 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float speed;
 
-    // Set direction of move
+    // Set direction of movement
     private Vector2 direction;
 
+    // Player body
     public Rigidbody2D player;
 
     // Animation to attack
@@ -22,56 +23,51 @@ public class Player : MonoBehaviour {
     //private int health;
     //private int experience;
 
-    // Start is called before the first frame update
     void Start() {
-    //   health = 3;
-    //   experience = 0;
+        //health = 3;
+        //experience = 0;
         direction = Vector2.zero;
         animator = GetComponent<Animator>();
-        
     }
 
-    // Update is called once per frame
     void Update() {
         Move();
         HandleAttack();
     }
 
+    // Movement
     public void Move() {
-        // First get the key of move that the player press
         direction = Vector2.zero;
-        // Kyeboard of move: WASD
-        if (Input.GetKey(KeyCode.W)) {
+
+        // Check input
+        if (Input.GetAxisRaw("Vertical") == 1) {
             direction += Vector2.up;
         }
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetAxisRaw("Vertical") == -1) {
             direction += Vector2.down;
         }
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetAxisRaw("Horizontal") == -1) {
             direction += Vector2.left;
         }
-       if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetAxisRaw("Horizontal") == 1) {
             direction += Vector2.right;
         }
         transform.Translate(direction * speed * Time.deltaTime);
     }
 
+    // Start the attack
     public void HandleAttack() {
         if (Input.GetKey(KeyCode.O) && !attacking) {
             StartCoroutine(Attack());
-        } 
+        }
     }
 
+    // Attack
     private IEnumerator Attack() {
-        
             animator.SetBool("Attacking", true);
             attacking = true;
-
             yield return new WaitForSeconds(1);
             animator.SetBool("Attacking", false);
             attacking = false;
-
     }
-
-
 }
