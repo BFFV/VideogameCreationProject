@@ -61,6 +61,9 @@ public class Player : MonoBehaviour {
     void Update() {
         healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
         expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
+        if (hasGun) {
+            gunIcon.enabled = true;
+        }
         HandleAttack();
     }
 
