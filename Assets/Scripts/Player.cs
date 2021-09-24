@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Player : MonoBehaviour {
 
-    // Set speed of character
+    // Movement
+
+    // Player speed
     [SerializeField]
     private float speed;
 
-    // Set direction of movement
+    // Direction of movement
     private Vector2 direction;
 
     // Last direction of movement
@@ -17,55 +20,91 @@ public class Player : MonoBehaviour {
     // Player body
     public Rigidbody2D body;
 
-    // Animation to attack
+    // Attack
+
+    // Player is attacking
+    private bool attacking;
+
+    // Player is using melee attack
+    private bool melee;
+
+    // Melee power
+    private int attack;
+
+    // Attack animation
     private Animator animator;
+
+    // Player can shoot
+    private bool hasGun;
 
     // Bullets
     [SerializeField]
     private GameObject[] projectiles;
 
-    private bool attacking = false;
+    // Health
+
+    // HP
+    private int hp;
+
+    // Player is recovering from attack
+    private bool recovering;
+
+    // Recovery Frames
+    private float recoveryTime;
 
     // Stats
-    //private int health;
-    //private int experience;
 
-    // Shoot settings
-    private bool hasGun;
-    //private int nBullets;
+    // Level
+    private int lvl;
 
-    public int health;
+    // Experience
+    private int exp;
+    private int nextLvl;
 
     void Start() {
-        //health = 3;
-        //experience = 0;
+        hp = 10;
+        attack = 2;
+        attacking = false;
+        melee = false;
+        recovering = false;
+        recoveryTime = 1;
         direction = Vector2.zero;
-        last_direction = new Vector2(1,0);
+        last_direction = new Vector2(1, 0);
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
-        // TODO: Get gun
-        hasGun = true;
-        //nBullets = 10;
+        exp = 0;
+        nextLvl = 100;
+        lvl = 1;
+        hasGun = false;
     }
 
     void Update() {
+        GetInput();
         HandleAttack();
+        Recover();
+        if (Input.GetKeyDown(KeyCode.G)) {
+            GameManager.Instance.StartGame();
+        }
     }
 
     void FixedUpdate() {
         Move();
     }
 
-    // Player Movement
-    public void Move() {
-        // Get input
+    // Receive input
+    private void GetInput() {
+        // Get movement input
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         direction.Normalize();
+
+        // Save last direction of movement
         if (direction.x != 0 || direction.y != 0){
             last_direction = direction;
         }
+    }
 
+    // Player Movement
+    public void Move() {
         // Move body
         body.MovePosition(new Vector2(transform.position.x + direction.x * speed * Time.deltaTime,
                 transform.position.y + direction.y * speed * Time.deltaTime));
@@ -75,22 +114,25 @@ public class Player : MonoBehaviour {
     public void HandleAttack() {
         if (!attacking) {
             if (Input.GetKey(KeyCode.O)) {
-                    StartCoroutine(Attack());
-            } else if (hasGun && Input.GetKeyUp(KeyCode.L)) { // KeyUp event to avoid spam projectiles
+                StartCoroutine(Attack());
+            } else if (hasGun && Input.GetKeyDown(KeyCode.L)) {
                 StartCoroutine(Shoot());
             }
         }
     }
 
-    // Attack
+    // Melee attack
     private IEnumerator Attack() {
-            animator.SetBool("Attacking", true);
-            attacking = true;
-            yield return new WaitForSeconds(1);
-            animator.SetBool("Attacking", false);
-            attacking = false;
+        animator.SetBool("Attacking", true);
+        attacking = true;
+        melee = true;
+        yield return new WaitForSeconds(1);
+        animator.SetBool("Attacking", false);
+        attacking = false;
+        melee = false;
     }
 
+    // Ranged attack
     public IEnumerator Shoot() {
         attacking = true;
         float initX = (float) (transform.position.x + last_direction.x);
@@ -98,16 +140,79 @@ public class Player : MonoBehaviour {
         GameObject newProjectile = Instantiate(projectiles[0], new Vector3(initX, initY, 0), transform.rotation);
         // Set direction of the bullet
         newProjectile.GetComponent<Bullet>().direction = last_direction;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         attacking = false;
     }
 
+    // Collisions
     void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Flying_enemy") {
-            //Destroy(other.gameObject);
-            health -= 1;
-            if (health == 0) {
-                Destroy(gameObject);
+        string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
+        string tag = other.gameObject.tag;
+        if (enemies.Contains(tag)) {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+            // Attack enemy
+            if (melee) {
+                int expGained = enemy.TakeDamage(attack);
+                GainExperience(expGained);
+            } else if (!recovering) {  // Take damage from enemy
+                TakeDamage(enemy.attack);
+            }
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D other) {
+        string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
+        string tag = other.gameObject.tag;
+        if (enemies.Contains(tag)) {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+            // Attack enemy
+            if (melee) {
+                int expGained = enemy.TakeDamage(attack);
+                GainExperience(expGained);
+            } else if (!recovering) {  // Take damage from enemy
+                TakeDamage(enemy.attack);
+            }
+        }
+    }
+
+    // Obtain experience
+    void GainExperience(int expObtained) {
+        exp += expObtained;
+
+        // Next level
+        if (exp >= nextLvl) {
+            exp = exp - nextLvl;
+            nextLvl += 50;
+            lvl ++;
+        }
+
+        // Get gun
+        if (!hasGun && lvl >= 2) {
+            hasGun = true;
+        }
+    }
+
+    // Take damage from enemies
+    void TakeDamage(int damage) {
+        if (recovering) {
+            return;
+        }
+        hp -= damage;
+        if (hp <= 0) {
+            GameManager.Instance.EndGame();
+        }
+        recovering = true;
+        recoveryTime = 1;
+    }
+
+    // Recover from attacks
+    void Recover() {
+        if (recovering) {
+            recoveryTime -= Time.deltaTime;
+            if (recoveryTime <= 0) {
+                recovering = false;
             }
         }
     }
