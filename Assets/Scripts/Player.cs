@@ -135,7 +135,10 @@ public class Player : MonoBehaviour {
     // Ranged attack
     public IEnumerator Shoot() {
         attacking = true;
-        GameObject newProjectile = Instantiate(projectiles[0], transform.position, transform.rotation);
+        float initX = (float) (transform.position.x + last_direction.x);
+        float initY = (float) (transform.position.y + last_direction.y);
+        GameObject newProjectile = Instantiate(projectiles[0], new Vector3(initX, initY, 0), transform.rotation);
+        // Set direction of the bullet
         newProjectile.GetComponent<Bullet>().direction = last_direction;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
