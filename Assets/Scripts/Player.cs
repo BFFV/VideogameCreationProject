@@ -93,7 +93,9 @@ public class Player : MonoBehaviour {
 
     public IEnumerator Shoot() {
         attacking = true;
-        GameObject newProjectile = Instantiate(projectiles[0], transform.position, transform.rotation);
+        float initX = (float) (transform.position.x + last_direction.x);
+        float initY = (float) (transform.position.y + last_direction.y);
+        GameObject newProjectile = Instantiate(projectiles[0], new Vector3(initX, initY, 0), transform.rotation);
         // Set direction of the bullet
         newProjectile.GetComponent<Bullet>().direction = last_direction;
         yield return new WaitForSeconds(1);
@@ -102,7 +104,7 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Flying_enemy") {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
             health -= 1;
             if (health == 0) {
                 Destroy(gameObject);

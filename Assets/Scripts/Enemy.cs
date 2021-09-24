@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        myRigidbody = this.GetComponent<Rigidbody2D>();
+        myRigidbody = GetComponent<Rigidbody2D>();
 
         timeBetweenMoveCounter = Random.Range (timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
         timeToMoveCounter = Random.Range (timeToMove * 0.75f, timeToMove * 1.25f);
@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour
             moveCharacter(movement);
         }
     }
+
+
     void moveCharacter(Vector2 dir) {
         myRigidbody.MovePosition((Vector2)transform.position + (dir * moveSpeed * Time.deltaTime));
     }

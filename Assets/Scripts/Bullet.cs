@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour {
 
     void Start() {
         body = GetComponent<Rigidbody2D>();
+
     }
 
     void Update() {
@@ -28,7 +29,19 @@ public class Bullet : MonoBehaviour {
         }
     }
 
+
     private void FixedUpdate() {
         body.velocity = direction.normalized * speed;
+    }
+
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "Flying_enemy" || other.gameObject.tag == "Enemy") {
+            Enemy enemy = other.collider.GetComponentInParent<Enemy>();
+            // Bala impacto en un enemigo
+            Debug.Log("Colision con enemigo");
+            
+        }
+        Destroy(gameObject);
     }
 }
