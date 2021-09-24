@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7092221283155207328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4036403, y: -0.042896584, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -138,8 +138,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   body: {fileID: 425586376}
+  attack: 2
   projectiles:
   - {fileID: 757851957709202160, guid: 088484a4dbed02e488b4a198689f391a, type: 3}
+  maxHp: 10
+  healthText: {fileID: 0}
+  expText: {fileID: 0}
+  gunIcon: {fileID: 0}
 --- !u!95 &7092221283155207331
 Animator:
   serializedVersion: 3

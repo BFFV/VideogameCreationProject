@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager> {
     public void EndGame() {
         if (playing) {
             playing = false;
-            SceneManager.LoadScene("Demo2");
+            SceneManager.LoadScene("EndScene");
         }
     }
 

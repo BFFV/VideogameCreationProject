@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Bullet : MonoBehaviour {
 
@@ -17,9 +18,15 @@ public class Bullet : MonoBehaviour {
     [SerializeField]
     private int distance;
 
+    // Damage
+    public int damage;
+
+    // Player
+    private Player player;
+
     void Start() {
         body = GetComponent<Rigidbody2D>();
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     void Update() {
@@ -36,11 +43,12 @@ public class Bullet : MonoBehaviour {
 
 
     void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag == "Flying_enemy" || other.gameObject.tag == "Enemy") {
-            Enemy enemy = other.collider.GetComponentInParent<Enemy>();
-            // Bala impacto en un enemigo
-            Debug.Log("Colision con enemigo");
-            
+        string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
+        string tag = other.gameObject.tag;
+        if (enemies.Contains(tag)) {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            int expGained = enemy.TakeDamage(damage);
+            player.GainExperience(expGained);
         }
         Destroy(gameObject);
     }

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
     private bool melee;
 
     // Melee power
-    private int attack;
+    public int attack;
 
     // Attack animation
     private Animator animator;
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour {
     // Health
 
     // HP
-    public int hp;
+    private int hp;
 
     // Player is recovering from attack
     private bool recovering;
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour {
 
     // Level
     private int lvl;
-  
+
     // GUI
     public int maxHp;
     public Text healthText;
@@ -69,8 +69,7 @@ public class Player : MonoBehaviour {
     private int nextLvl;
 
     void Start() {
-        hp = 10;
-        attack = 2;
+        hp = maxHp;
         attacking = false;
         melee = false;
         recovering = false;
@@ -81,8 +80,6 @@ public class Player : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         // GUI
-        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
-        expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
         gunIcon.enabled = false;
 
         // Exp
@@ -95,8 +92,7 @@ public class Player : MonoBehaviour {
 
     void Update() {
         GetInput();
-        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
-        expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
+        UpdateGUI();
         HandleAttack();
         Recover();
         if (Input.GetKeyDown(KeyCode.G)) {
@@ -195,7 +191,7 @@ public class Player : MonoBehaviour {
     }
 
     // Obtain experience
-    void GainExperience(int expObtained) {
+    public void GainExperience(int expObtained) {
         exp += expObtained;
 
         // Next level
@@ -233,5 +229,11 @@ public class Player : MonoBehaviour {
                 recovering = false;
             }
         }
+    }
+
+    // Update GUI values
+    void UpdateGUI() {
+        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
     }
 }
