@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -34,22 +35,32 @@ public class Player : MonoBehaviour {
     private bool hasGun;
     //private int nBullets;
 
-    public int health;
+    public int hp;
+    public int maxHp;
+    public int experience;
+    public int maxExperience;
+    public Text healthText;
+    public Text expText;
+    public Image gunIcon;
 
     void Start() {
         //health = 3;
         //experience = 0;
+        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
         direction = Vector2.zero;
         last_direction = new Vector2(1,0);
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        gunIcon.enabled = false;
         // TODO: Get gun
         hasGun = true;
         //nBullets = 10;
     }
 
     void Update() {
+        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
         HandleAttack();
     }
 
@@ -103,8 +114,8 @@ public class Player : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Flying_enemy") {
             Destroy(other.gameObject);
-            health -= 1;
-            if (health == 0) {
+            hp -= 1;
+            if (hp == 0) {
                 Destroy(gameObject);
             }
         }
