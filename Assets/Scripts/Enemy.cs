@@ -17,60 +17,105 @@ public class Enemy : MonoBehaviour
     public float timeToMove;
     private float timeToMoveCounter;
 
-    private Vector3 moveDirection;
+    private Vector2 moveDirection;
 
-    public GameObject player;
+    private GameObject player;
     private Vector2 movement;
 
-    // Use this for initialization
-    void Start()
-    {
-        myRigidbody = this.GetComponent<Rigidbody2D>();
+    // Attack
+    public int attack;
 
-        timeBetweenMoveCounter = Random.Range (timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
-        timeToMoveCounter = Random.Range (timeToMove * 0.75f, timeToMove * 1.25f);
+    // Health
+
+    // HP
+    public int hp;
+
+    // Enemy is recovering from attack
+    private bool recovering;
+
+    // Recovery Frames
+    private float recoveryTime;
+
+    // Experience
+    public int expValue;
+
+    // Use this for initialization
+    void Start() {
+        recovering = false;
+        recoveryTime = 1;
+        player = GameObject.FindGameObjectWithTag("Player");
+        myRigidbody = this.GetComponent<Rigidbody2D>();
+        timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
+        timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (gameObject.tag == "Enemy") {
-            if (moving)
-            {
+            if (moving) {
                 timeToMoveCounter -= Time.deltaTime;
                 myRigidbody.velocity = moveDirection;
 
-                if (timeToMoveCounter < 0f)
-                {
+                if (timeToMoveCounter < 0f) {
                     moving = false;
-                    timeBetweenMoveCounter = Random.Range (timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
+                    timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
                 }
 
             }
-            else
-            {
+            else {
                 timeBetweenMoveCounter -= Time.deltaTime;
                 myRigidbody.velocity = Vector2.zero;
-                if (timeBetweenMoveCounter < 0f)
-                {
+                if (timeBetweenMoveCounter < 0f) {
                     moving = true;
-                    timeToMoveCounter = Random.Range (timeToMove * 0.75f, timeToMove * 1.25f);
-                    moveDirection = new Vector3(Random.Range(-1f, 1f)* moveSpeed, Random.Range(-1f, 1f) * moveSpeed, 0f);
+                    timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
+                    moveDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 }
             }
-        } else if (gameObject.tag == "Flying_enemy") {
+        } else {
             Vector3 direction = player.transform.position - transform.position;
             direction.Normalize();
             movement = direction;
         }
+        Recover();
     }
+
     private void FixedUpdate() {
-        if (gameObject.tag == "Flying_enemy") {
-            moveCharacter(movement);
+        if (gameObject.tag != "Enemy") {
+            MoveCharacter(movement);
+        } else {
+            MoveCharacter(moveDirection);
         }
     }
-    void moveCharacter(Vector2 dir) {
+
+    void MoveCharacter(Vector2 dir) {
         myRigidbody.MovePosition((Vector2)transform.position + (dir * moveSpeed * Time.deltaTime));
     }
 
+    // Take damage from player
+    public int TakeDamage(int damage) {
+        if (recovering) {
+            return 0;
+        }
+        hp -= damage;
+        if (hp <= 0) {
+            if (gameObject.tag == "Boss") {
+                GameManager.Instance.EndGame();
+            }
+            Destroy(gameObject);
+            return expValue;
+        }
+        recovering = true;
+        recoveryTime = 1;
+        return 0;
+    }
+
+    // Recover from attacks
+    void Recover() {
+        if (recovering) {
+            recoveryTime -= Time.deltaTime;
+            if (recoveryTime <= 0) {
+                recovering = false;
+            }
+        }
+    }
 }
