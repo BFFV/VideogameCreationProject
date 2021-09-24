@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class Player : MonoBehaviour {
@@ -44,7 +45,7 @@ public class Player : MonoBehaviour {
     // Health
 
     // HP
-    private int hp;
+    public int hp;
 
     // Player is recovering from attack
     private bool recovering;
@@ -56,6 +57,12 @@ public class Player : MonoBehaviour {
 
     // Level
     private int lvl;
+  
+    // GUI
+    public int maxHp;
+    public Text healthText;
+    public Text expText;
+    public Image gunIcon;
 
     // Experience
     private int exp;
@@ -72,14 +79,24 @@ public class Player : MonoBehaviour {
         last_direction = new Vector2(1, 0);
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        // GUI
+        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
+        gunIcon.enabled = false;
+
+        // Exp
         exp = 0;
         nextLvl = 100;
         lvl = 1;
         hasGun = false;
     }
 
+
     void Update() {
         GetInput();
+        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ experience.ToString() + "/" + maxExperience.ToString();
         HandleAttack();
         Recover();
         if (Input.GetKeyDown(KeyCode.G)) {
@@ -191,6 +208,7 @@ public class Player : MonoBehaviour {
         // Get gun
         if (!hasGun && lvl >= 2) {
             hasGun = true;
+            gunIcon.enabled = true;
         }
     }
 
