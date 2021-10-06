@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class Player : MonoBehaviour {
+public class Player : Singleton<Player> {
 
     // Movement
 
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     private Vector2 direction;
 
     // Last direction of movement
-    private Vector2 last_direction;
+    private Vector2 lastDirection;
 
     // Player body
     public Rigidbody2D body;
@@ -42,6 +42,9 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject[] projectiles;
 
+    // Skills
+    private bool fast;
+
     // Health
 
     // HP
@@ -65,17 +68,18 @@ public class Player : MonoBehaviour {
     public Image gunIcon;
 
     // Experience
-    private int exp;
+    public int exp;
     private int nextLvl;
 
     void Start() {
         hp = maxHp;
         attacking = false;
         melee = false;
+        fast = false;
         recovering = false;
         recoveryTime = 1;
         direction = Vector2.zero;
-        last_direction = new Vector2(1, 0);
+        lastDirection = new Vector2(1, 0);
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -85,8 +89,11 @@ public class Player : MonoBehaviour {
         // Exp
         exp = 0;
         nextLvl = 100;
-        lvl = 1;
+        // lvl = 1;
         hasGun = false;
+
+        // Events
+        Inventory.Instance.onSkillActivatedCallback += ActivateFast;
     }
 
 
@@ -95,9 +102,6 @@ public class Player : MonoBehaviour {
         UpdateGUI();
         HandleAttack();
         Recover();
-        if (Input.GetKeyDown(KeyCode.G)) {
-            GameManager.Instance.StartGame();
-        }
     }
 
     void FixedUpdate() {
@@ -112,7 +116,18 @@ public class Player : MonoBehaviour {
 
         // Save last direction of movement
         if (direction.x != 0 || direction.y != 0){
-            last_direction = direction;
+            lastDirection = direction;
+        }
+
+        // Fast run skill input
+        if (fast) {
+            if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                speed *= 2;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift)) {
+                speed /= 2;
+            }
         }
     }
 
@@ -148,11 +163,11 @@ public class Player : MonoBehaviour {
     // Ranged attack
     public IEnumerator Shoot() {
         attacking = true;
-        float initX = (float) (transform.position.x + last_direction.x);
-        float initY = (float) (transform.position.y + last_direction.y);
+        float initX = (float) (transform.position.x + lastDirection.x);
+        float initY = (float) (transform.position.y + lastDirection.y);
         GameObject newProjectile = Instantiate(projectiles[0], new Vector3(initX, initY, 0), transform.rotation);
         // Set direction of the bullet
-        newProjectile.GetComponent<Bullet>().direction = last_direction;
+        newProjectile.GetComponent<Bullet>().direction = lastDirection;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }
@@ -195,14 +210,12 @@ public class Player : MonoBehaviour {
         exp += expObtained;
 
         // Next level
-        if (exp >= nextLvl) {
-            exp = exp - nextLvl;
-            nextLvl += 50;
-            lvl ++;
-        }
+        // if (exp >= nextLvl) {
+            // nextLvl += 50;
+        // }
 
         // Get gun
-        if (!hasGun && lvl >= 2) {
+        if (!hasGun && exp >= 100) {
             hasGun = true;
             gunIcon.enabled = true;
         }
@@ -235,5 +248,10 @@ public class Player : MonoBehaviour {
     void UpdateGUI() {
         healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
         expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
+    }
+
+    // Activate fast run ability
+    void ActivateFast() {
+        fast = true;
     }
 }
