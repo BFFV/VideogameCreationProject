@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour {
     public int expValue;
     // Boss hp limit trigger (hp %)
     public float hpLimit;
+    // Boss quake
+    private GameObject quake;
 
     // Use this for initialization
     void Start() {
@@ -54,6 +56,7 @@ public class Enemy : MonoBehaviour {
         myRigidbody = this.GetComponent<Rigidbody2D>();
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
         timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
+        quake = GameObject.FindGameObjectWithTag("Quake");
     }
 
     // Update is called once per frame
@@ -95,6 +98,7 @@ public class Enemy : MonoBehaviour {
                 else if (hp < hpLimit * maxHp) {
                     moving = true;
                     anim.SetBool("Enraged", false);
+                    Destroy(quake);
                 }
             }
             if (gameObject.tag == "Flying_enemy" || (gameObject.tag == "Boss" && moving)) {
@@ -134,7 +138,7 @@ public class Enemy : MonoBehaviour {
             return expValue;
         }
         recovering = true;
-        recoveryTime = 1;
+        recoveryTime = 0.5f;
         return 0;
     }
 

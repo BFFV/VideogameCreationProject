@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  moving: 0
   timeBetweenMove: 2
   timeToMove: 1
   attack: 5
@@ -128,6 +129,7 @@ MonoBehaviour:
   maxHp: 30
   expValue: 100
   hpLimit: 0.7
+  quake: {fileID: 2892579677971617146, guid: b0325c9f360eb9247b7687ee8b0b8638, type: 3}
 --- !u!61 &5310207700747859593
 BoxCollider2D:
   m_ObjectHideFlags: 0
