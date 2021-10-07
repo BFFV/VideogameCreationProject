@@ -167,7 +167,9 @@ MonoBehaviour:
   timeToMove: 1
   attack: 1
   hp: 4
+  maxHp: 4
   expValue: 15
+  hpLimit: 0
 --- !u!95 &195637380556508569
 Animator:
   serializedVersion: 3
