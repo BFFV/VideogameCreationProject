@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Flying_enemy
   - Boss
+  - Quake
   layers:
   - Default
   - TransparentFX

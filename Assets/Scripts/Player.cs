@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class Player : MonoBehaviour {
+// Player
+public class Player : SceneSingleton<Player> {
 
     // Movement
 
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour {
     private Vector2 direction;
 
     // Last direction of movement
-    private Vector2 last_direction;
+    private Vector2 lastDirection;
 
     // Player body
     public Rigidbody2D body;
@@ -39,6 +40,9 @@ public class Player : MonoBehaviour {
     // Bullets
     [SerializeField]
     private GameObject[] attacks;
+
+    // Skills
+    private bool fast;
 
     // Health
 
@@ -63,7 +67,7 @@ public class Player : MonoBehaviour {
     public Image gunIcon;
 
     // Experience
-    private int exp;
+    public int exp;
     private int nextLvl;
 
     void Start() {
@@ -72,7 +76,9 @@ public class Player : MonoBehaviour {
         recovering = false;
         recoveryTime = 1;
         direction = Vector2.zero;
+        fast = false;
         last_direction = new Vector2(0, 1);
+
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -82,8 +88,11 @@ public class Player : MonoBehaviour {
         // Exp
         exp = 0;
         nextLvl = 100;
-        lvl = 1;
+        // lvl = 1;
         hasGun = false;
+
+        // Events
+        Inventory.Instance.onSkillActivatedCallback += ActivateFast;
     }
 
 
@@ -92,9 +101,6 @@ public class Player : MonoBehaviour {
         UpdateGUI();
         HandleAttack();
         Recover();
-        if (Input.GetKeyDown(KeyCode.G)) {
-            GameManager.Instance.StartGame();
-        }
     }
 
     void FixedUpdate() {
@@ -126,7 +132,17 @@ public class Player : MonoBehaviour {
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y > 0) {
                 last_direction = new Vector2(0, 1);
             }
-           // last_direction = direction;
+        }
+
+        // Fast run skill input
+        if (fast) {
+            if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                speed *= 2;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift)) {
+                speed /= 2;
+            }
         }
 
     }
@@ -182,8 +198,9 @@ public class Player : MonoBehaviour {
         float initX = (float) (transform.position.x + last_direction.x);
         float initY = (float) (transform.position.y + last_direction.y);
         GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
+
         // Set direction of the bullet
-        newProjectile.GetComponent<Bullet>().direction = last_direction;
+        newProjectile.GetComponent<Bullet>().direction = lastDirection;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }
@@ -228,19 +245,39 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        string tag = other.gameObject.tag;
+        if (tag == "Quake") {
+            Quake quake = other.gameObject.GetComponent<Quake>();
+            if (!recovering) {
+                TakeDamage(quake.damage);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        string tag = other.gameObject.tag;
+        if (tag == "Quake") {
+            Quake quake = other.gameObject.GetComponent<Quake>();
+            if (!recovering) {
+                TakeDamage(quake.damage);
+            }
+        }
+    }
+
     // Obtain experience
     public void GainExperience(int expObtained) {
         exp += expObtained;
 
         // Next level
-        if (exp >= nextLvl) {
-            exp = exp - nextLvl;
-            nextLvl += 50;
-            lvl ++;
-        }
+        // if (exp >= nextLvl) {
+            // nextLvl += 50;
+        // }
 
         // Get gun
-        if (!hasGun && lvl >= 2) {
+        if (!hasGun && exp >= 100) {
             hasGun = true;
             gunIcon.enabled = true;
         }
@@ -273,5 +310,10 @@ public class Player : MonoBehaviour {
     void UpdateGUI() {
         //healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
         //expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
+    }
+
+    // Activate fast run ability
+    void ActivateFast() {
+        fast = true;
     }
 }
