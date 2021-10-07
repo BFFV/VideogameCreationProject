@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour {
     private GameObject player;
     private Vector2 movement;
 
+    // Animator
+    private Animator anim;
+
     // Attack
     public int attack;
 
@@ -40,6 +43,7 @@ public class Enemy : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        anim = GetComponent<Animator>();
         recovering = false;
         recoveryTime = 1;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -58,6 +62,8 @@ public class Enemy : MonoBehaviour {
                 if (timeToMoveCounter < 0f) {
                     moving = false;
                     timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
+                    anim.SetFloat("MoveX", 0);
+                    anim.SetFloat("MoveY", 0);
                 }
 
             }
@@ -68,12 +74,18 @@ public class Enemy : MonoBehaviour {
                     moving = true;
                     timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
                     moveDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    Vector2 auxDirection = moveDirection;
+                    auxDirection.Normalize();
+                    anim.SetFloat("MoveX", auxDirection[0]);
+                    anim.SetFloat("MoveY", auxDirection[1]);
                 }
             }
         } else {
             Vector3 direction = player.transform.position - transform.position;
             direction.Normalize();
             movement = direction;
+            anim.SetFloat("MoveX", movement[0]);
+            anim.SetFloat("MoveY", movement[1]);
         }
         Recover();
     }
@@ -81,7 +93,7 @@ public class Enemy : MonoBehaviour {
     private void FixedUpdate() {
         if (gameObject.tag != "Enemy") {
             MoveCharacter(movement);
-        } else {
+        } else if (moving) {
             MoveCharacter(moveDirection);
         }
     }
