@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class Player : Singleton<Player> {
+// Player
+public class Player : SceneSingleton<Player> {
 
     // Movement
 
