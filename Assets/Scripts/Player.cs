@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour {
         recovering = false;
         recoveryTime = 1;
         direction = Vector2.zero;
-        last_direction = new Vector2(1, 0);
+        last_direction = new Vector2(0, 1);
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -116,7 +117,16 @@ public class Player : MonoBehaviour {
 
         // Save last direction of movement
         if (direction.x != 0 || direction.y != 0){
-            last_direction = direction;
+            if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x < 0 ) {
+                last_direction = new Vector2(-1,0);
+            } else if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x > 0) {
+                last_direction = new Vector2(1,0);
+            } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y < 0) {
+                last_direction = new Vector2(0, -1);
+            } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y > 0) {
+                last_direction = new Vector2(0, 1);
+            }
+           // last_direction = direction;
         }
 
     }
@@ -158,10 +168,11 @@ public class Player : MonoBehaviour {
         // Set Sword Object
         float initX = (float) (transform.position.x + last_direction.x);
         float initY = (float) (transform.position.y + last_direction.y);
-        GameObject newProjectile = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
+        GameObject sword = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
     
         yield return new WaitForSeconds(1);
         animator.SetLayerWeight(2,0);
+        Destroy(sword);
         attacking = false;
     }
 
