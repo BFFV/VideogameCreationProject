@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour {
 
     private Rigidbody2D myRigidbody;
 
-    private bool moving;
+    public bool moving;
 
     public float timeBetweenMove;
     private float timeBetweenMoveCounter;

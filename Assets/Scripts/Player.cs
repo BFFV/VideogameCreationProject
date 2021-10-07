@@ -190,6 +190,28 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        string tag = other.gameObject.tag;
+        if (tag == "Quake") {
+            Quake quake = other.gameObject.GetComponent<Quake>();
+            if (!recovering) {
+                TakeDamage(quake.damage);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        string tag = other.gameObject.tag;
+        if (tag == "Quake") {
+            Quake quake = other.gameObject.GetComponent<Quake>();
+            if (!recovering) {
+                TakeDamage(quake.damage);
+            }
+        }
+    }
+
     // Obtain experience
     public void GainExperience(int expObtained) {
         exp += expObtained;
