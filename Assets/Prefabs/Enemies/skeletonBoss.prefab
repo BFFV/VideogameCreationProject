@@ -125,7 +125,9 @@ MonoBehaviour:
   timeToMove: 1
   attack: 5
   hp: 30
+  maxHp: 30
   expValue: 100
+  hpLimit: 0.7
 --- !u!61 &5310207700747859593
 BoxCollider2D:
   m_ObjectHideFlags: 0

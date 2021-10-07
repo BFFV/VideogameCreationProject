@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour {
 
     // HP
     public int hp;
+    public int maxHp;
 
     // Enemy is recovering from attack
     private bool recovering;
@@ -40,9 +41,12 @@ public class Enemy : MonoBehaviour {
 
     // Experience
     public int expValue;
+    // Boss hp limit trigger (hp %)
+    public float hpLimit;
 
     // Use this for initialization
     void Start() {
+        hp = maxHp;
         anim = GetComponent<Animator>();
         recovering = false;
         recoveryTime = 1;
@@ -81,11 +85,25 @@ public class Enemy : MonoBehaviour {
                 }
             }
         } else {
-            Vector3 direction = player.transform.position - transform.position;
-            direction.Normalize();
-            movement = direction;
-            anim.SetFloat("MoveX", movement[0]);
-            anim.SetFloat("MoveY", movement[1]);
+            if (gameObject.tag == "Boss") {
+                if (hp > (hpLimit + 0.1) * maxHp) {
+                    moving = false;
+                }
+                else if (hp <= (hpLimit + 0.1) * maxHp && hp >= hpLimit * maxHp ) {
+                    anim.SetBool("Enraged", true);
+                }
+                else if (hp < hpLimit * maxHp) {
+                    moving = true;
+                    anim.SetBool("Enraged", false);
+                }
+            }
+            if (gameObject.tag == "Flying_enemy" || (gameObject.tag == "Boss" && moving)) {
+                Vector3 direction = player.transform.position - transform.position;
+                direction.Normalize();
+                movement = direction;
+                anim.SetFloat("MoveX", movement[0]);
+                anim.SetFloat("MoveY", movement[1]);
+            }
         }
         Recover();
     }
