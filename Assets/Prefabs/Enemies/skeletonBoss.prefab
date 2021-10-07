@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7981996852071503402}
   - component: {fileID: 7981996852071503403}
   - component: {fileID: 5310207700747859593}
+  - component: {fileID: 5794971910886563407}
   m_Layer: 0
   m_Name: skeletonBoss
   m_TagString: Boss
@@ -151,3 +152,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.74685824, y: 1.2219007}
   m_EdgeRadius: 0
+--- !u!95 &5794971910886563407
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981996852071503412}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 51d6a8fb3c2952148882b494299366a9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
