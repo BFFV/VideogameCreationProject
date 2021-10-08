@@ -308,8 +308,8 @@ public class Player : SceneSingleton<Player> {
 
     // Update GUI values
     void UpdateGUI() {
-        //healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
-        //expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
+        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
     }
 
     // Activate fast run ability
