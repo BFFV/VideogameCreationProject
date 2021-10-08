@@ -83,7 +83,7 @@ public class Player : SceneSingleton<Player> {
         animator = GetComponent<Animator>();
 
         // GUI
-        //gunIcon.enabled = false;
+        gunIcon.enabled = false;
 
         // Exp
         exp = 0;
