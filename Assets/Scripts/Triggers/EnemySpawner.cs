@@ -15,7 +15,10 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        CancelInvoke("SpawnEnemy");
+        string tag = other.gameObject.tag;
+        if (tag == "Player") {
+            CancelInvoke("SpawnEnemy");
+        }
     }
 
     void SpawnEnemy() {

@@ -9,6 +9,7 @@ TagManager:
   - Boss
   - Quake
   - Lava
+  - Gun
   layers:
   - Default
   - TransparentFX

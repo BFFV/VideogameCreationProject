@@ -77,7 +77,7 @@ public class Player : SceneSingleton<Player> {
         recoveryTime = 1;
         direction = Vector2.zero;
         fast = false;
-        last_direction = new Vector2(0, 1);
+        lastDirection = new Vector2(0, 1);
 
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -87,9 +87,9 @@ public class Player : SceneSingleton<Player> {
 
         // Exp
         exp = 0;
-        nextLvl = 100;
+        //nextLvl = 100;
         // lvl = 1;
-        hasGun = true;
+        hasGun = false;
 
         // Events
         Inventory.Instance.onSkillActivatedCallback += ActivateFast;
@@ -118,19 +118,18 @@ public class Player : SceneSingleton<Player> {
 
         // Animate the player movement
         AnimationMove();
-
         direction.Normalize();
 
         // Save last direction of movement
         if (direction.x != 0 || direction.y != 0){
             if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x < 0 ) {
-                last_direction = new Vector2(-1,0);
+                lastDirection = new Vector2(-1,0);
             } else if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x > 0) {
-                last_direction = new Vector2(1,0);
+                lastDirection = new Vector2(1,0);
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y < 0) {
-                last_direction = new Vector2(0, -1);
+                lastDirection = new Vector2(0, -1);
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y > 0) {
-                last_direction = new Vector2(0, 1);
+                lastDirection = new Vector2(0, 1);
             }
         }
 
@@ -171,7 +170,6 @@ public class Player : SceneSingleton<Player> {
         } else {
             animator.SetLayerWeight(1,0);
         }
-        
         animator.SetFloat("x", direction.x * speed);
         animator.SetFloat("y", direction.y * speed);
     }
@@ -182,10 +180,9 @@ public class Player : SceneSingleton<Player> {
         attacking = true;
 
         // Set Sword Object
-        float initX = (float) (transform.position.x + last_direction.x);
-        float initY = (float) (transform.position.y + last_direction.y);
+        float initX = (float) (transform.position.x + lastDirection.x);
+        float initY = (float) (transform.position.y + lastDirection.y);
         GameObject sword = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
-    
         yield return new WaitForSeconds(1);
         animator.SetLayerWeight(2,0);
         Destroy(sword);
@@ -195,8 +192,8 @@ public class Player : SceneSingleton<Player> {
     // Ranged attack
     public IEnumerator Shoot() {
         attacking = true;
-        float initX = (float) (transform.position.x + last_direction.x);
-        float initY = (float) (transform.position.y + last_direction.y);
+        float initX = (float) (transform.position.x + lastDirection.x);
+        float initY = (float) (transform.position.y + lastDirection.y);
         GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of the bullet
@@ -221,6 +218,10 @@ public class Player : SceneSingleton<Player> {
         if (tag == "Quake") {
             Quake quake = other.gameObject.GetComponent<Quake>();
             TakeDamage(quake.damage);
+        } else if (tag == "Gun") {
+            hasGun = true;
+            Destroy(other.gameObject);
+            gunIcon.enabled = true;
         } else if (tag == "Finish") {
             GameManager.Instance.EndGame(true);
         }
@@ -230,7 +231,7 @@ public class Player : SceneSingleton<Player> {
     private void OnTriggerStay2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Lava") {
-            TakeDamage(5);
+            TakeDamage(2);
         }
     }
 
@@ -238,16 +239,15 @@ public class Player : SceneSingleton<Player> {
     public void GainExperience(int expObtained) {
         exp += expObtained;
 
+        // Heal by defeating enemy
+        if (expObtained > 0 && hp < maxHp) {
+            hp += 1;
+        }
+
         // Next level
         // if (exp >= nextLvl) {
             // nextLvl += 50;
         // }
-
-        // Get gun
-        if (!hasGun && exp >= 100) {
-            hasGun = true;
-            gunIcon.enabled = true;
-        }
     }
 
     // Take damage from enemies
@@ -275,8 +275,8 @@ public class Player : SceneSingleton<Player> {
 
     // Update GUI values
     void UpdateGUI() {
-        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
-        expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
+        healthText.text = "HP: " + hp.ToString() + "/" + maxHp.ToString();
+        expText.text = "EXP: "+ exp.ToString();
     }
 
     // Activate fast run ability

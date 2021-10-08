@@ -94,13 +94,15 @@ public class Enemy : MonoBehaviour {
             if (gameObject.tag == "Boss") {
                 if (hp > (hpLimit + 0.1) * maxHp) {
                     moving = false;
-                }
-                else if (hp <= (hpLimit + 0.1) * maxHp && hp >= hpLimit * maxHp ) {
+                } else if (hp <= (hpLimit + 0.1) * maxHp && hp >= hpLimit * maxHp ) {
                     anim.SetBool("Enraged", true);
-                }
-                else if (hp < hpLimit * maxHp) {
+                } else if (hp < hpLimit * maxHp) {
                     moving = true;
                     anim.SetBool("Enraged", false);
+                }
+
+                if (hp < (1 - hpLimit) * maxHp) {
+                    moveSpeed = speed * 1.5f;
                 }
             }
             if (gameObject.tag == "Flying_enemy" || (gameObject.tag == "Boss" && moving)) {
