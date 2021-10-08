@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acfe1321c8a27949b5b83e7ffbca814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  speed: 3
   moving: 0
   timeBetweenMove: 2
   timeToMove: 1
@@ -129,7 +129,6 @@ MonoBehaviour:
   maxHp: 30
   expValue: 100
   hpLimit: 0.7
-  quake: {fileID: 2892579677971617146, guid: b0325c9f360eb9247b7687ee8b0b8638, type: 3}
 --- !u!61 &5310207700747859593
 BoxCollider2D:
   m_ObjectHideFlags: 0

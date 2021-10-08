@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    public float moveSpeed;
+    public float speed;
+
+    private float moveSpeed;
 
     private Rigidbody2D myRigidbody;
 
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour {
     // Use this for initialization
     void Start() {
         hp = maxHp;
+        moveSpeed = speed;
         anim = GetComponent<Animator>();
         recovering = false;
         recoveryTime = 1;
@@ -98,7 +101,6 @@ public class Enemy : MonoBehaviour {
                 else if (hp < hpLimit * maxHp) {
                     moving = true;
                     anim.SetBool("Enraged", false);
-                    Destroy(quake);
                 }
             }
             if (gameObject.tag == "Flying_enemy" || (gameObject.tag == "Boss" && moving)) {
@@ -132,7 +134,7 @@ public class Enemy : MonoBehaviour {
         hp -= damage;
         if (hp <= 0) {
             if (gameObject.tag == "Boss") {
-                GameManager.Instance.EndGame();
+                Destroy(quake);
             }
             Destroy(gameObject);
             return expValue;
@@ -151,4 +153,20 @@ public class Enemy : MonoBehaviour {
             }
         }
     }
+
+    // Activity radius
+    void OnTriggerEnter2D(Collider2D other) {
+        string tag = other.gameObject.tag;
+        if (tag == "Player") {
+            moveSpeed = speed;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        string tag = other.gameObject.tag;
+        if (tag == "Player" && gameObject.tag != "Boss") {
+            moveSpeed = 0;
+        }
+    }
+
 }

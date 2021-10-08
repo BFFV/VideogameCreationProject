@@ -91,7 +91,7 @@ public class Player : SceneSingleton<Player> {
         exp = 0;
         nextLvl = 100;
         // lvl = 1;
-        hasGun = false;
+        hasGun = true;
 
         // Events
         Inventory.Instance.onSkillActivatedCallback += ActivateFast;
@@ -174,22 +174,6 @@ public class Player : SceneSingleton<Player> {
     }
 
     // Collisions
-    void OnCollisionEnter2D(Collision2D other) {
-        string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
-        string tag = other.gameObject.tag;
-        if (enemies.Contains(tag)) {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-
-            // Attack enemy
-            if (melee) {
-                int expGained = enemy.TakeDamage(attack);
-                GainExperience(expGained);
-            } else if (!recovering) {  // Take damage from enemy
-                TakeDamage(enemy.attack);
-            }
-        }
-    }
-
     void OnCollisionStay2D(Collision2D other) {
         string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
         string tag = other.gameObject.tag;
@@ -200,31 +184,28 @@ public class Player : SceneSingleton<Player> {
             if (melee) {
                 int expGained = enemy.TakeDamage(attack);
                 GainExperience(expGained);
-            } else if (!recovering) {  // Take damage from enemy
+            } else {  // Take damage from enemy
                 TakeDamage(enemy.attack);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+    // Quake collision
+    private void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Quake") {
             Quake quake = other.gameObject.GetComponent<Quake>();
-            if (!recovering) {
-                TakeDamage(quake.damage);
-            }
+            TakeDamage(quake.damage);
+        } else if (tag == "Finish") {
+            GameManager.Instance.EndGame(true);
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
+    // Lava damage
+    private void OnTriggerStay2D(Collider2D other) {
         string tag = other.gameObject.tag;
-        if (tag == "Quake") {
-            Quake quake = other.gameObject.GetComponent<Quake>();
-            if (!recovering) {
-                TakeDamage(quake.damage);
-            }
+        if (tag == "Lava") {
+            TakeDamage(5);
         }
     }
 
@@ -251,7 +232,7 @@ public class Player : SceneSingleton<Player> {
         }
         hp -= damage;
         if (hp <= 0) {
-            GameManager.Instance.EndGame();
+            GameManager.Instance.EndGame(false);
         }
         recovering = true;
         recoveryTime = 1;
