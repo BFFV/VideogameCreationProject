@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,9 +28,6 @@ public class Player : SceneSingleton<Player> {
     // Player is attacking
     private bool attacking;
 
-    // Player is using melee attack
-    private bool melee;
-
     // Melee power
     public int attack;
 
@@ -41,7 +39,7 @@ public class Player : SceneSingleton<Player> {
 
     // Bullets
     [SerializeField]
-    private GameObject[] projectiles;
+    private GameObject[] attacks;
 
     // Skills
     private bool fast;
@@ -75,12 +73,12 @@ public class Player : SceneSingleton<Player> {
     void Start() {
         hp = maxHp;
         attacking = false;
-        melee = false;
-        fast = false;
         recovering = false;
         recoveryTime = 1;
         direction = Vector2.zero;
-        lastDirection = new Vector2(1, 0);
+        fast = false;
+        last_direction = new Vector2(0, 1);
+
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -112,12 +110,28 @@ public class Player : SceneSingleton<Player> {
     // Receive input
     private void GetInput() {
         // Get movement input
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (!attacking) {
+            direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        } else {
+            direction = Vector2.zero;
+        }
+
+        // Animate the player movement
+        AnimationMove();
+
         direction.Normalize();
 
         // Save last direction of movement
         if (direction.x != 0 || direction.y != 0){
-            lastDirection = direction;
+            if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x < 0 ) {
+                last_direction = new Vector2(-1,0);
+            } else if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x > 0) {
+                last_direction = new Vector2(1,0);
+            } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y < 0) {
+                last_direction = new Vector2(0, -1);
+            } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y > 0) {
+                last_direction = new Vector2(0, 1);
+            }
         }
 
         // Fast run skill input
@@ -130,6 +144,7 @@ public class Player : SceneSingleton<Player> {
                 speed /= 2;
             }
         }
+
     }
 
     // Player Movement
@@ -150,23 +165,40 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
+    public void AnimationMove() {
+        if (direction.x != 0 || direction.y != 0) {
+            animator.SetLayerWeight(1,1);
+        } else {
+            animator.SetLayerWeight(1,0);
+        }
+        
+        animator.SetFloat("x", direction.x * speed);
+        animator.SetFloat("y", direction.y * speed);
+    }
+
     // Melee attack
     private IEnumerator Attack() {
-        animator.SetBool("Attacking", true);
+        animator.SetLayerWeight(2,1);
         attacking = true;
-        melee = true;
+
+        // Set Sword Object
+        float initX = (float) (transform.position.x + last_direction.x);
+        float initY = (float) (transform.position.y + last_direction.y);
+        GameObject sword = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
+    
         yield return new WaitForSeconds(1);
-        animator.SetBool("Attacking", false);
+        animator.SetLayerWeight(2,0);
+        Destroy(sword);
         attacking = false;
-        melee = false;
     }
 
     // Ranged attack
     public IEnumerator Shoot() {
         attacking = true;
-        float initX = (float) (transform.position.x + lastDirection.x);
-        float initY = (float) (transform.position.y + lastDirection.y);
-        GameObject newProjectile = Instantiate(projectiles[0], new Vector3(initX, initY, 0), transform.rotation);
+        float initX = (float) (transform.position.x + last_direction.x);
+        float initY = (float) (transform.position.y + last_direction.y);
+        GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
+
         // Set direction of the bullet
         newProjectile.GetComponent<Bullet>().direction = lastDirection;
         yield return new WaitForSeconds(0.5f);
@@ -179,14 +211,17 @@ public class Player : SceneSingleton<Player> {
         string tag = other.gameObject.tag;
         if (enemies.Contains(tag)) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-
+            // Player always will be damaged if touch an enemy
+            TakeDamage(enemy.attack);
             // Attack enemy
+            /*
             if (melee) {
                 int expGained = enemy.TakeDamage(attack);
                 GainExperience(expGained);
             } else if (!recovering) {  // Take damage from enemy
                 TakeDamage(enemy.attack);
             }
+            */
         }
     }
 
@@ -196,6 +231,9 @@ public class Player : SceneSingleton<Player> {
         if (enemies.Contains(tag)) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
+            TakeDamage(enemy.attack);
+
+            /*
             // Attack enemy
             if (melee) {
                 int expGained = enemy.TakeDamage(attack);
@@ -203,6 +241,7 @@ public class Player : SceneSingleton<Player> {
             } else if (!recovering) {  // Take damage from enemy
                 TakeDamage(enemy.attack);
             }
+            */
         }
     }
 
