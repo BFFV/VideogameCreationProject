@@ -102,7 +102,6 @@ MonoBehaviour:
   speed: 7
   distance: 2000
   damage: 1
-  quakeObject: {fileID: 2892579677971617146, guid: b0325c9f360eb9247b7687ee8b0b8638, type: 3}
 --- !u!50 &6542443885267207696
 Rigidbody2D:
   serializedVersion: 4

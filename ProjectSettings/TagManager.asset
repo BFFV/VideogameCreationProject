@@ -8,6 +8,7 @@ TagManager:
   - Flying_enemy
   - Boss
   - Quake
+  - Lava
   layers:
   - Default
   - TransparentFX

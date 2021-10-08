@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    public float moveSpeed;
+    public float speed;
+
+    private float moveSpeed;
 
     private Rigidbody2D myRigidbody;
 
@@ -43,10 +45,13 @@ public class Enemy : MonoBehaviour {
     public int expValue;
     // Boss hp limit trigger (hp %)
     public float hpLimit;
+    // Boss quake
+    private GameObject quake;
 
     // Use this for initialization
     void Start() {
         hp = maxHp;
+        moveSpeed = speed;
         anim = GetComponent<Animator>();
         recovering = false;
         recoveryTime = 1;
@@ -54,6 +59,7 @@ public class Enemy : MonoBehaviour {
         myRigidbody = this.GetComponent<Rigidbody2D>();
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
         timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
+        quake = GameObject.FindGameObjectWithTag("Quake");
     }
 
     // Update is called once per frame
@@ -128,13 +134,13 @@ public class Enemy : MonoBehaviour {
         hp -= damage;
         if (hp <= 0) {
             if (gameObject.tag == "Boss") {
-                GameManager.Instance.EndGame();
+                Destroy(quake);
             }
             Destroy(gameObject);
             return expValue;
         }
         recovering = true;
-        recoveryTime = 1;
+        recoveryTime = 0.5f;
         return 0;
     }
 
@@ -147,4 +153,20 @@ public class Enemy : MonoBehaviour {
             }
         }
     }
+
+    // Activity radius
+    void OnTriggerEnter2D(Collider2D other) {
+        string tag = other.gameObject.tag;
+        if (tag == "Player") {
+            moveSpeed = speed;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        string tag = other.gameObject.tag;
+        if (tag == "Player" && gameObject.tag != "Boss") {
+            moveSpeed = 0;
+        }
+    }
+
 }

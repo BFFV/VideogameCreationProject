@@ -7,10 +7,12 @@ public class GameManager : Singleton<GameManager> {
 
     // Settings
     bool playing = true;
+    bool win = false;
 
     // Finish game
-    public void EndGame() {
+    public void EndGame(bool won) {
         if (playing) {
+            win = won;
             playing = false;
             SceneManager.LoadScene("EndScene");
         }
