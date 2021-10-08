@@ -26,9 +26,6 @@ public class Player : MonoBehaviour {
     // Player is attacking
     private bool attacking;
 
-    // Player is using melee attack
-    private bool melee;
-
     // Melee power
     public int attack;
 
@@ -40,7 +37,7 @@ public class Player : MonoBehaviour {
 
     // Bullets
     [SerializeField]
-    private GameObject[] projectiles;
+    private GameObject[] attacks;
 
     // Health
 
@@ -71,7 +68,6 @@ public class Player : MonoBehaviour {
     void Start() {
         hp = maxHp;
         attacking = false;
-        melee = false;
         recovering = false;
         recoveryTime = 1;
         direction = Vector2.zero;
@@ -80,7 +76,7 @@ public class Player : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         // GUI
-        gunIcon.enabled = false;
+        //gunIcon.enabled = false;
 
         // Exp
         exp = 0;
@@ -107,13 +103,22 @@ public class Player : MonoBehaviour {
     // Receive input
     private void GetInput() {
         // Get movement input
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (!attacking) {
+            direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        } else {
+            direction = Vector2.zero;
+        }
+
+        // Animate the player movement
+        AnimationMove();
+
         direction.Normalize();
 
         // Save last direction of movement
         if (direction.x != 0 || direction.y != 0){
             last_direction = direction;
         }
+
     }
 
     // Player Movement
@@ -134,15 +139,30 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void AnimationMove() {
+        if (direction.x != 0 || direction.y != 0) {
+            animator.SetLayerWeight(1,1);
+        } else {
+            animator.SetLayerWeight(1,0);
+        }
+        
+        animator.SetFloat("x", direction.x * speed);
+        animator.SetFloat("y", direction.y * speed);
+    }
+
     // Melee attack
     private IEnumerator Attack() {
-        animator.SetBool("Attacking", true);
+        animator.SetLayerWeight(2,1);
         attacking = true;
-        melee = true;
+
+        // Set Sword Object
+        float initX = (float) (transform.position.x + last_direction.x);
+        float initY = (float) (transform.position.y + last_direction.y);
+        GameObject newProjectile = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
+    
         yield return new WaitForSeconds(1);
-        animator.SetBool("Attacking", false);
+        animator.SetLayerWeight(2,0);
         attacking = false;
-        melee = false;
     }
 
     // Ranged attack
@@ -150,7 +170,7 @@ public class Player : MonoBehaviour {
         attacking = true;
         float initX = (float) (transform.position.x + last_direction.x);
         float initY = (float) (transform.position.y + last_direction.y);
-        GameObject newProjectile = Instantiate(projectiles[0], new Vector3(initX, initY, 0), transform.rotation);
+        GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
         // Set direction of the bullet
         newProjectile.GetComponent<Bullet>().direction = last_direction;
         yield return new WaitForSeconds(0.5f);
@@ -163,14 +183,17 @@ public class Player : MonoBehaviour {
         string tag = other.gameObject.tag;
         if (enemies.Contains(tag)) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-
+            // Player always will be damaged if touch an enemy
+            TakeDamage(enemy.attack);
             // Attack enemy
+            /*
             if (melee) {
                 int expGained = enemy.TakeDamage(attack);
                 GainExperience(expGained);
             } else if (!recovering) {  // Take damage from enemy
                 TakeDamage(enemy.attack);
             }
+            */
         }
     }
 
@@ -180,6 +203,9 @@ public class Player : MonoBehaviour {
         if (enemies.Contains(tag)) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
+            TakeDamage(enemy.attack);
+
+            /*
             // Attack enemy
             if (melee) {
                 int expGained = enemy.TakeDamage(attack);
@@ -187,6 +213,7 @@ public class Player : MonoBehaviour {
             } else if (!recovering) {  // Take damage from enemy
                 TakeDamage(enemy.attack);
             }
+            */
         }
     }
 
@@ -233,7 +260,7 @@ public class Player : MonoBehaviour {
 
     // Update GUI values
     void UpdateGUI() {
-        healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
-        expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
+        //healthText.text = "Health: " + hp.ToString() + "/" + maxHp.ToString();
+        //expText.text = "EXP: "+ exp.ToString() + "/" + nextLvl.ToString();
     }
 }
