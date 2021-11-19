@@ -16,14 +16,21 @@ Project for IIC3686 - Videogame Creation.
 **Trello:** https://trello.com/b/KMltolMJ/proyecto-videojuegos
 
 # E1
+
 **Concepts:** [A](./docs/ConceptsA.pdf), [B](./docs/ConceptsB.pdf)
 
 **Selected Idea:** Action RPG similar to Hades + The Legend of Zelda, with elemental powers & historic references, based on a mix of different mythologies.
 
 # E2
+
 **Demo:** https://youtu.be/AJnxZYz0cwM
 
 # E3
+
 **Demo:** https://youtu.be/yqrf1dPcz08
 
 **Game:** https://bffv.itch.io/hell-rescue
+
+# E4
+
+**Testing:** [Testing Report](./docs/Testing.pdf)
