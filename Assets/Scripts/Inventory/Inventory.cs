@@ -8,12 +8,9 @@ public class Inventory : SceneSingleton<Inventory> {
     public delegate void OnSkillActivated();
     public OnSkillActivated onSkillActivatedCallback;
 
-    // Skill list (not in use)
-    public List<int> skills = new List<int>();
-
-    // Set new skill (not in use)
-    public bool SetSkill(int skillID) {
-        skills.Add(skillID);
+    // Activate new skill
+    public bool SetSkill(string skill) {
+        Player.Instance.skills.Add(skill);
 
         // Update UI
         if (onSkillActivatedCallback != null) {
