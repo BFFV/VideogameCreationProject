@@ -48,10 +48,13 @@ public class Enemy : MonoBehaviour {
     // Boss quake
     private GameObject quake;
 
+    // Spawner
+    public EnemySpawner spawner;
+
     // Use this for initialization
     void Start() {
         hp = maxHp;
-        moveSpeed = speed;
+        moveSpeed = 0;
         anim = GetComponent<Animator>();
         recovering = false;
         recoveryTime = 1;
@@ -138,6 +141,7 @@ public class Enemy : MonoBehaviour {
             if (gameObject.tag == "Boss") {
                 Destroy(quake);
             }
+            spawner.EnemyDestroyed();
             Destroy(gameObject);
             return expValue;
         }
@@ -159,16 +163,14 @@ public class Enemy : MonoBehaviour {
     // Activity radius
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
-        if (tag == "Player") {
+        if (other.CompareTag("Player")) {
             moveSpeed = speed;
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        string tag = other.gameObject.tag;
-        if (tag == "Player" && gameObject.tag != "Boss") {
+        if (other.CompareTag("Player") && gameObject.tag != "Boss") {
             moveSpeed = 0;
         }
     }
-
 }

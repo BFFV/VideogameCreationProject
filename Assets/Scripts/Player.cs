@@ -47,7 +47,7 @@ public class Player : SceneSingleton<Player> {
     // Health
 
     // HP
-    private int hp;
+    public int hp;
 
     // Player is recovering from attack
     private bool recovering;
@@ -82,12 +82,19 @@ public class Player : SceneSingleton<Player> {
         animator = GetComponent<Animator>();
 
         // Spawn state
-        PlayerData state = GameManager.Instance.playerData;
+        PlayerData state;
+        if (GameManager.Instance.warping) {  // Warping to new level
+            hp = GameManager.Instance.warpHp;
+            state = GameManager.Instance.warpData;
+        } else {  // Respawning at checkpoint
+            hp = maxHp;
+            state = GameManager.Instance.playerData;
+        }
         transform.position = new Vector3(state.spawnPos[0], state.spawnPos[1], state.spawnPos[2]);
         exp = state.spawnExp;
-        weapons = state.spawnWeapons;
-        gunIcon.enabled = weapons.Contains("Gun");
-        skills = state.spawnSkills;
+        weapons = new List<string>(state.spawnWeapons);
+        gunIcon.enabled = weapons.Contains("Gun");  // Needs to be removed later (replaced by current weapon icon)
+        skills = new List<string>(state.spawnSkills);
     }
 
 
@@ -211,18 +218,12 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Quake collision
+    // Collisions
     private void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Quake") {
             Quake quake = other.gameObject.GetComponent<Quake>();
             TakeDamage(quake.damage);
-        } else if (tag == "Gun") {
-            weapons.Add(tag);
-            Destroy(other.gameObject);
-            gunIcon.enabled = true;
-        } else if (tag == "Finish") {
-            GameManager.Instance.EndGame(true);
         }
     }
 

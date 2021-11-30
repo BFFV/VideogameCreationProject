@@ -23,16 +23,15 @@ public class PlayerData {
             spawnExp = 100;
             spawnWeapons = new List<string>();
             spawnSkills = new List<string>();
-            return;
         } else if (state == "new") {  // New game
-            spawnExp = 0;
+            spawnExp = 100;
             spawnWeapons = new List<string>();
             spawnSkills = new List<string>();
-            return;
+        } else if (state == "saved") {  // Checkpoint
+            Player player = Player.Instance;
+            spawnExp = player.exp;
+            spawnWeapons = new List<string>(player.weapons);
+            spawnSkills = new List<string>(player.skills);
         }
-        Player player = Player.Instance;
-        spawnExp = player.exp;
-        spawnWeapons = player.weapons;
-        spawnSkills = player.skills;
     }
 }
