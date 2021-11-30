@@ -23,7 +23,7 @@ public class Player : SceneSingleton<Player> {
     // Player body
     public Rigidbody2D body;
 
-    // Attack
+    // Combat
 
     // Player is attacking
     private bool attacking;
@@ -34,15 +34,15 @@ public class Player : SceneSingleton<Player> {
     // Attack animation
     private Animator animator;
 
-    // Player can shoot
-    private bool hasGun;
+    // Weapons
+    public List<string> weapons;
 
     // Bullets
     [SerializeField]
     private GameObject[] attacks;
 
     // Skills
-    private bool fast;
+    public List<string> skills;
 
     // Health
 
@@ -55,11 +55,6 @@ public class Player : SceneSingleton<Player> {
     // Recovery Frames
     private float recoveryTime;
 
-    // Stats
-
-    // Level
-    private int lvl;
-
     // GUI
     public int maxHp;
     public Text healthText;
@@ -68,31 +63,31 @@ public class Player : SceneSingleton<Player> {
 
     // Experience
     public int exp;
-    private int nextLvl;
+
+    // Checkpoints
+    public Checkpoint currentCheckpoint = null;
 
     void Start() {
+
+        // Base stats
         hp = maxHp;
         attacking = false;
         recovering = false;
         recoveryTime = 1;
         direction = Vector2.zero;
-        fast = false;
         lastDirection = new Vector2(0, 1);
 
+        // Body & animator
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        // GUI
-        gunIcon.enabled = false;
-
-        // Exp
-        exp = 0;
-        //nextLvl = 100;
-        // lvl = 1;
-        hasGun = false;
-
-        // Events
-        Inventory.Instance.onSkillActivatedCallback += ActivateFast;
+        // Spawn state
+        PlayerData state = GameManager.Instance.playerData;
+        transform.position = new Vector3(state.spawnPos[0], state.spawnPos[1], state.spawnPos[2]);
+        exp = state.spawnExp;
+        weapons = state.spawnWeapons;
+        gunIcon.enabled = weapons.Contains("Gun");
+        skills = state.spawnSkills;
     }
 
 
@@ -107,7 +102,7 @@ public class Player : SceneSingleton<Player> {
         Move();
     }
 
-    // Receive input
+    // Receive player input
     private void GetInput() {
         // Get movement input
         if (!attacking) {
@@ -134,7 +129,7 @@ public class Player : SceneSingleton<Player> {
         }
 
         // Fast run skill input
-        if (fast) {
+        if (skills.Contains("Sprint")) {
             if (Input.GetKeyDown(KeyCode.LeftShift)) {
                 speed *= 2;
             }
@@ -144,6 +139,10 @@ public class Player : SceneSingleton<Player> {
             }
         }
 
+        // Save game input
+        if (Input.GetKeyDown(KeyCode.G) && currentCheckpoint != null) {
+            currentCheckpoint.SaveGame();
+        }
     }
 
     // Player Movement
@@ -158,7 +157,7 @@ public class Player : SceneSingleton<Player> {
         if (!attacking) {
             if (Input.GetKey(KeyCode.O)) {
                 StartCoroutine(Attack());
-            } else if (hasGun && Input.GetKeyDown(KeyCode.L)) {
+            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.L)) {
                 StartCoroutine(Shoot());
             }
         }
@@ -219,7 +218,7 @@ public class Player : SceneSingleton<Player> {
             Quake quake = other.gameObject.GetComponent<Quake>();
             TakeDamage(quake.damage);
         } else if (tag == "Gun") {
-            hasGun = true;
+            weapons.Add(tag);
             Destroy(other.gameObject);
             gunIcon.enabled = true;
         } else if (tag == "Finish") {
@@ -243,11 +242,6 @@ public class Player : SceneSingleton<Player> {
         if (expObtained > 0 && hp < maxHp) {
             hp += 1;
         }
-
-        // Next level
-        // if (exp >= nextLvl) {
-            // nextLvl += 50;
-        // }
     }
 
     // Take damage from enemies
@@ -255,9 +249,13 @@ public class Player : SceneSingleton<Player> {
         if (recovering) {
             return;
         }
-        hp -= damage;
+        if (hp < damage) {
+            hp = 0;
+        } else {
+            hp -= damage;
+        }
         if (hp <= 0) {
-            GameManager.Instance.EndGame(false);
+            GameManager.Instance.StartGame();
         }
         recovering = true;
         recoveryTime = 1;
@@ -277,10 +275,5 @@ public class Player : SceneSingleton<Player> {
     void UpdateGUI() {
         healthText.text = "HP: " + hp.ToString() + "/" + maxHp.ToString();
         expText.text = "EXP: "+ exp.ToString();
-    }
-
-    // Activate fast run ability
-    void ActivateFast() {
-        fast = true;
     }
 }
