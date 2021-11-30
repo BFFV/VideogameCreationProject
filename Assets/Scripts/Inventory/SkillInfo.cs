@@ -14,7 +14,7 @@ public class SkillInfo : MonoBehaviour {
         inventory.onSkillActivatedCallback += Unlocked;
 
         // Skill already unlocked
-        if (GameManager.Instance.spawnSkills.Contains("Sprint")) {
+        if (GameManager.Instance.playerData.spawnSkills.Contains("Sprint")) {
             icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 255f);
             cost.text = "Skill Unlocked!";
         }

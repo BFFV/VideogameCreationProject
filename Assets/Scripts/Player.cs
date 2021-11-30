@@ -64,6 +64,9 @@ public class Player : SceneSingleton<Player> {
     // Experience
     public int exp;
 
+    // Checkpoints
+    public Checkpoint currentCheckpoint = null;
+
     void Start() {
 
         // Base stats
@@ -79,11 +82,12 @@ public class Player : SceneSingleton<Player> {
         animator = GetComponent<Animator>();
 
         // Spawn state
-        transform.position = GameManager.Instance.spawnPos;
-        exp = GameManager.Instance.spawnExp;
-        weapons = GameManager.Instance.spawnWeapons;
+        PlayerData state = GameManager.Instance.playerData;
+        transform.position = new Vector3(state.spawnPos[0], state.spawnPos[1], state.spawnPos[2]);
+        exp = state.spawnExp;
+        weapons = state.spawnWeapons;
         gunIcon.enabled = weapons.Contains("Gun");
-        skills = GameManager.Instance.spawnSkills;
+        skills = state.spawnSkills;
     }
 
 
@@ -98,7 +102,7 @@ public class Player : SceneSingleton<Player> {
         Move();
     }
 
-    // Receive input
+    // Receive player input
     private void GetInput() {
         // Get movement input
         if (!attacking) {
@@ -135,6 +139,10 @@ public class Player : SceneSingleton<Player> {
             }
         }
 
+        // Save game input
+        if (Input.GetKeyDown(KeyCode.G) && currentCheckpoint != null) {
+            currentCheckpoint.SaveGame();
+        }
     }
 
     // Player Movement
@@ -247,7 +255,7 @@ public class Player : SceneSingleton<Player> {
             hp -= damage;
         }
         if (hp <= 0) {
-            GameManager.Instance.Respawn();
+            GameManager.Instance.StartGame();
         }
         recovering = true;
         recoveryTime = 1;

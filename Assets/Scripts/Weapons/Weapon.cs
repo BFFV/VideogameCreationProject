@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour {
 
     void Start() {
         string weaponType = gameObject.tag;
-        if (GameManager.Instance.spawnWeapons.Contains(weaponType)) {
+        if (GameManager.Instance.playerData.spawnWeapons.Contains(weaponType)) {
             Destroy(gameObject);
         }
     }
