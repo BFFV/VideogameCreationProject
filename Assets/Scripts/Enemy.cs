@@ -30,21 +30,14 @@ public class Enemy : MonoBehaviour {
     public int attack;
 
     // Health
-
-    // HP
     public int hp;
     public int maxHp;
-
-    // Enemy is recovering from attack
-    private bool recovering;
-
-    // Recovery Frames
-    private float recoveryTime;
+    private float recoveryTime = 0;
+    public float hpLimit;  // Boss hp limit trigger (hp %)
 
     // Experience
     public int expValue;
-    // Boss hp limit trigger (hp %)
-    public float hpLimit;
+
     // Boss quake
     private GameObject quake;
 
@@ -56,8 +49,6 @@ public class Enemy : MonoBehaviour {
         hp = maxHp;
         moveSpeed = 0;
         anim = GetComponent<Animator>();
-        recovering = false;
-        recoveryTime = 1;
         player = GameObject.FindGameObjectWithTag("Player");
         myRigidbody = this.GetComponent<Rigidbody2D>();
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
@@ -133,31 +124,40 @@ public class Enemy : MonoBehaviour {
 
     // Take damage from player
     public int TakeDamage(int damage) {
-        if (recovering) {
+        // Invincibility
+        if (recoveryTime > 0) {
             return 0;
         }
+
+        // Lose HP
         hp -= damage;
+
+        // Death
         if (hp <= 0) {
+            // May be removed
             if (gameObject.tag == "Boss") {
                 Destroy(quake);
             }
+            // Tell spawner that this enemy is dead
             if (spawner != null) {
                 spawner.EnemyDestroyed();
             }
+            // Reward player with exp
             Destroy(gameObject);
             return expValue;
         }
-        recovering = true;
+
+        // Recovery frames
         recoveryTime = 0.5f;
         return 0;
     }
 
     // Recover from attacks
     void Recover() {
-        if (recovering) {
+        if (recoveryTime > 0) {
             recoveryTime -= Time.deltaTime;
             if (recoveryTime <= 0) {
-                recovering = false;
+                recoveryTime = 0;
             }
         }
     }

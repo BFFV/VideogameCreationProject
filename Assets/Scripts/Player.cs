@@ -41,39 +41,30 @@ public class Player : SceneSingleton<Player> {
     [SerializeField]
     private GameObject[] attacks;
 
-    // Skills
-    public List<string> skills;
-
     // Health
-
-    // HP
+    public int maxHp;
     public int hp;
-
-    // Player is recovering from attack
-    private bool recovering;
-
-    // Recovery Frames
-    private float recoveryTime;
+    float recoveryTime = 0;
 
     // GUI
-    public int maxHp;
     public Text healthText;
     public Text expText;
     public Image gunIcon;
 
-    // Experience
+    // Skills & Experience
     public int exp;
+    public List<string> skills;
+    bool invincible = false;
+    GameObject barrierSkill = null;
+    public GameObject barrier;
 
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
 
     void Start() {
-
         // Base stats
         hp = maxHp;
         attacking = false;
-        recovering = false;
-        recoveryTime = 1;
         direction = Vector2.zero;
         lastDirection = new Vector2(0, 1);
 
@@ -100,9 +91,9 @@ public class Player : SceneSingleton<Player> {
 
     void Update() {
         GetInput();
-        UpdateGUI();
+        UpdateGUI();  // will be removed later
         HandleAttack();
-        Recover();
+        Recover();  //
     }
 
     void FixedUpdate() {
@@ -135,14 +126,23 @@ public class Player : SceneSingleton<Player> {
             }
         }
 
-        // Fast run skill input
+        // Sprint skill input
         if (skills.Contains("Sprint")) {
             if (Input.GetKeyDown(KeyCode.LeftShift)) {
                 speed *= 2;
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            } else if (Input.GetKeyUp(KeyCode.LeftShift)) {
                 speed /= 2;
+            }
+        }
+
+        // Barrier skill input
+        if (skills.Contains("Barrier")) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                invincible = true;
+                barrierSkill = Instantiate(barrier, transform);
+            } else if (Input.GetKeyUp(KeyCode.Space)) {
+                invincible = false;
+                Destroy(barrierSkill);
             }
         }
 
@@ -208,7 +208,7 @@ public class Player : SceneSingleton<Player> {
         attacking = false;
     }
 
-    // Collisions
+    // Enemy damage
     void OnCollisionStay2D(Collision2D other) {
         string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
         string tag = other.gameObject.tag;
@@ -218,8 +218,8 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Collisions
-    private void OnTriggerEnter2D(Collider2D other) {
+    // Impulse damage
+    void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Quake") {
             Quake quake = other.gameObject.GetComponent<Quake>();
@@ -227,8 +227,8 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Lava damage
-    private void OnTriggerStay2D(Collider2D other) {
+    // Environmental damage
+    void OnTriggerStay2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Lava") {
             TakeDamage(2);
@@ -245,34 +245,40 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Take damage from enemies
+    // Take damage
     void TakeDamage(int damage) {
-        if (recovering) {
+        // Invincibility
+        if (recoveryTime > 0 || invincible) {
             return;
         }
+
+        // Lose HP
         if (hp < damage) {
             hp = 0;
         } else {
             hp -= damage;
         }
+
+        // Death
         if (hp <= 0) {
             GameManager.Instance.StartGame();
         }
-        recovering = true;
-        recoveryTime = 1;
+
+        // Recovery frames
+        recoveryTime = 0.8f;
     }
 
-    // Recover from attacks
+    // Recovery state
     void Recover() {
-        if (recovering) {
+        if (recoveryTime > 0) {
             recoveryTime -= Time.deltaTime;
             if (recoveryTime <= 0) {
-                recovering = false;
+                recoveryTime = 0;
             }
         }
     }
 
-    // Update GUI values
+    // Update GUI values (will be removed later)
     void UpdateGUI() {
         healthText.text = "HP: " + hp.ToString() + "/" + maxHp.ToString();
         expText.text = "EXP: "+ exp.ToString();
