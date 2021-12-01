@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class GUIManager : SceneSingleton<GUIManager> {
 
     // References
-    public GameObject saveMessage;
+    public GameObject actionMessage;
     public GameObject eventMessage;
+    public GameObject tutorialMessage;
 
     // Event Messages
     float eventTimeout = 0;
@@ -28,9 +29,10 @@ public class GUIManager : SceneSingleton<GUIManager> {
         }
     }
 
-    // Toggle save game message
-    public void ToggleSave(bool active) {
-        saveMessage.SetActive(active);
+    // Show/hide action message
+    public void ShowAction(string text, bool active) {
+        actionMessage.GetComponent<Text>().text = text;
+        actionMessage.SetActive(active);
     }
 
     // Show event message
@@ -38,5 +40,11 @@ public class GUIManager : SceneSingleton<GUIManager> {
         eventMessage.GetComponent<Text>().text = text;
         eventTimeout = 4;
         eventMessage.SetActive(true);
+    }
+
+    // Show/hide tutorial message
+    public void ShowTutorial(string text, bool active) {
+        tutorialMessage.GetComponent<Text>().text = text;
+        tutorialMessage.SetActive(active);
     }
 }

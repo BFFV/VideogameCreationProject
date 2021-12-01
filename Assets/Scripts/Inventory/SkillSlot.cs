@@ -11,7 +11,13 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     // Skill already unlocked
     void Start() {
-        if (GameManager.Instance.playerData.spawnSkills.Contains("Sprint")) {
+        PlayerData state;
+        if (GameManager.Instance.warping) {
+            state = GameManager.Instance.warpData;
+        } else {
+            state = GameManager.Instance.playerData;
+        }
+        if (state.spawnSkills.Contains("Sprint")) {
             unlockButton.interactable = false;
             icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 255f);
         }

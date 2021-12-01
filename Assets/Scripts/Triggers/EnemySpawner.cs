@@ -6,11 +6,15 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour {
 
     public GameObject[] enemies;
+    int currentEnemies = 0;
+    public int maxEnemies;
+    public int minTime;
+    public int maxTime;
 
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Player") {
-            InvokeRepeating("SpawnEnemy", Random.Range(3, 10), Random.Range(3, 10));
+            InvokeRepeating("SpawnEnemy", 1, Random.Range(minTime, maxTime));
         }
     }
 
@@ -22,6 +26,9 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     void SpawnEnemy() {
+        if (currentEnemies >= maxEnemies) {
+            return;
+        }
         Vector3 spawnPosition = gameObject.transform.position;
         float radius = gameObject.GetComponent<CircleCollider2D>().radius;
         Vector3 position = Random.insideUnitSphere * radius;
@@ -29,6 +36,14 @@ public class EnemySpawner : MonoBehaviour {
         position.y += spawnPosition.y;
         position.z = 0.0f;
         int enemyType = Random.Range(0, enemies.Length);
-        Instantiate(enemies[enemyType], position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemies[enemyType], position, Quaternion.identity);
+        enemy.GetComponent<Enemy>().spawner = gameObject.GetComponent<EnemySpawner>();
+        currentEnemies++;
+    }
+
+    public void EnemyDestroyed() {
+        if (currentEnemies > 0) {
+            currentEnemies--;
+        }
     }
 }

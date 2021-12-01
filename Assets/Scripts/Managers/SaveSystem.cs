@@ -36,7 +36,7 @@ public static class SaveSystem {
             }
             return data;
         } else {  // New game state
-            PlayerData newGame = new PlayerData("DemoLevel", new Vector3(0, 0, 0), "new");
+            PlayerData newGame = new PlayerData("Tutorial", new Vector3(0, 0, 0), "new");
             SaveData(slot, newGame);
             return newGame;
         }

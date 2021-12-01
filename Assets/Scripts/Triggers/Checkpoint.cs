@@ -11,7 +11,7 @@ public class Checkpoint : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             Player.Instance.currentCheckpoint = gameObject.GetComponent<Checkpoint>();
-            GUIManager.Instance.ToggleSave(true);
+            GUIManager.Instance.ShowAction("Press <G> to save your progress", true);
         }
     }
 
@@ -19,7 +19,7 @@ public class Checkpoint : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             Player.Instance.currentCheckpoint = null;
-            GUIManager.Instance.ToggleSave(false);
+            GUIManager.Instance.ShowAction("", false);
         }
     }
 
