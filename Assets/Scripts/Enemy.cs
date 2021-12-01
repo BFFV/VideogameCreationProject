@@ -141,7 +141,9 @@ public class Enemy : MonoBehaviour {
             if (gameObject.tag == "Boss") {
                 Destroy(quake);
             }
-            spawner.EnemyDestroyed();
+            if (spawner != null) {
+                spawner.EnemyDestroyed();
+            }
             Destroy(gameObject);
             return expValue;
         }

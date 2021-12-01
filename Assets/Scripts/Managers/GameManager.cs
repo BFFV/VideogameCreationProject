@@ -7,12 +7,12 @@ public class GameManager : Singleton<GameManager> {
 
     // Warping
     public bool warping = false;
-    public PlayerData warpData = new PlayerData("DemoLevel", new Vector3(0, 0, 0), "default");
+    public PlayerData warpData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
     public int warpHp = 0;
 
     // Checkpoints & save data
     public int slot = 0;
-    public PlayerData playerData = new PlayerData("DemoLevel", new Vector3(0, 0, 0), "default");
+    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
 
     // Finish game (not in use)
     public void EndGame(bool won) {
