@@ -146,18 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad46a2c6f581cf49a6a176e276da775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
   body: {fileID: 833101522849591645}
   attack: 2
   weapons: []
   attacks:
   - {fileID: 757851957709202160, guid: 088484a4dbed02e488b4a198689f391a, type: 3}
   - {fileID: 4217426930786536418, guid: cc95aca0634e82f44ad172f4c571f025, type: 3}
-  maxHp: 10
-  hp: 0
-  healthText: {fileID: 0}
-  expText: {fileID: 0}
-  gunIcon: {fileID: 0}
+  hp: 10
   exp: 0
   skills: []
   barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}

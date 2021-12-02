@@ -2,45 +2,24 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
 
 // Player
 public class Player : SceneSingleton<Player> {
 
     // Movement
-
-    // Player speed
     float speed = 4;
-
-    // Direction of movement
-    private Vector2 direction = Vector2.zero;
-
-    // Last direction of movement
-    private Vector2 lastDirection = new Vector2(0, 1);
-
-    // Player body
-    public Rigidbody2D body;
+    Vector2 direction = Vector2.zero;
+    Vector2 lastDirection = new Vector2(0, 1);
+    Rigidbody2D body;
+    Animator animator;
 
     // Combat
-
-    // Player is attacking
-    private bool attacking = false;
-
-    // Melee power
+    bool attacking = false;
     public int attack;
-
-    // Attack animation
-    private Animator animator;
-
-    // Weapons
     public List<string> weapons;
-
-    // Bullets
     public GameObject[] attacks;
 
     // Health
-    public int maxHp;
     public int hp;
     float recoveryTime = 0;
 
@@ -57,9 +36,6 @@ public class Player : SceneSingleton<Player> {
 
     // Initialize player
     void Start() {
-        // Base HP
-        hp = maxHp;
-
         // Body & animator
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -70,7 +46,6 @@ public class Player : SceneSingleton<Player> {
             hp = GameManager.Instance.warpHp;
             state = GameManager.Instance.warpData;
         } else {  // Respawning at checkpoint
-            hp = maxHp;
             state = GameManager.Instance.playerData;
         }
         transform.position = new Vector3(state.spawnPos[0], state.spawnPos[1], state.spawnPos[2]);
@@ -78,16 +53,16 @@ public class Player : SceneSingleton<Player> {
         weapons = new List<string>(state.spawnWeapons);
         skills = new List<string>(state.spawnSkills);
         GUIManager.Instance.UpdatePlayerStatus(hp, exp);
-        GUIManager.Instance.ToggleGunIcon(weapons.Contains("Gun"));  // will be changed later
-        skills.Add("Sprint");
-        skills.Add("Lightning");
-        skills.Add("Barrier");
+        GUIManager.Instance.ToggleGunIcon(weapons.Contains("Gun"));  // TODO: change later
+        skills.Add("Sprint");  // TODO: Remove later
+        skills.Add("Lightning");  // TODO: Remove later
+        skills.Add("Barrier");  // TODO: Remove later
     }
 
     // Player interactions
     void Update() {
-        GetInput();  // Process player input
-        HandleAttack();  // Process attack
+        GetInput();  // Process player input for movement/skills
+        HandleAttack();  // Process player input for weapons
         Recover();  // Recovery time
     }
 
@@ -184,7 +159,7 @@ public class Player : SceneSingleton<Player> {
         animator.SetFloat("y", direction.y * speed);
     }
 
-    // Melee attack
+    // Sword attack
     private IEnumerator Attack() {
         animator.SetLayerWeight(2,1);
         attacking = true;
@@ -199,7 +174,7 @@ public class Player : SceneSingleton<Player> {
         attacking = false;
     }
 
-    // Ranged attack
+    // Gun attack
     public IEnumerator Shoot() {
         attacking = true;
         float initX = (float) (transform.position.x + lastDirection.x);
@@ -215,18 +190,9 @@ public class Player : SceneSingleton<Player> {
     // Enemy damage
     void OnCollisionStay2D(Collision2D other) {
         string tag = other.gameObject.tag;
-        if (tag == "Enemy") {
+        if (tag == "Enemy" || tag == "Boss") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             TakeDamage(enemy.attack);
-        }
-    }
-
-    // Impulse damage
-    void OnTriggerEnter2D(Collider2D other) {
-        string tag = other.gameObject.tag;
-        if (tag == "Quake") {
-            Quake quake = other.gameObject.GetComponent<Quake>();
-            TakeDamage(quake.damage);
         }
     }
 

@@ -2,124 +2,105 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Enemy
 public class Enemy : MonoBehaviour {
 
+    // Movement
     public float speed;
-
-    private float moveSpeed;
-
-    private Rigidbody2D myRigidbody;
-
-    public bool moving;
-
+    float moveSpeed;
+    Rigidbody2D body;
+    bool moving = true;
     public float timeBetweenMove;
-    private float timeBetweenMoveCounter;
-
+    float timeBetweenMoveCounter;
     public float timeToMove;
-    private float timeToMoveCounter;
+    float timeToMoveCounter;
+    Vector2 movement = Vector2.zero;
+    Animator anim;
 
-    private Vector2 moveDirection;
-
-    private GameObject player;
-    private Vector2 movement;
-
-    // Animator
-    private Animator anim;
-
-    // Attack
+    // Combat
     public int attack;
 
     // Health
-    public int hp;
     public int maxHp;
-    private float recoveryTime = 0;
-    public float hpLimit;  // Boss hp limit trigger (hp %)
+    public int hp;
+    float recoveryTime = 0;
 
     // Experience
     public int expValue;
 
-    // Spawner
+    // References
+    GameObject player;
     public EnemySpawner spawner;
 
     // Enemy type
     public string enemyType;
 
-    // Use this for initialization
+    // Initialize enemy
     void Start() {
         hp = maxHp;
-        moveSpeed = 0;
+        moveSpeed = speed;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        myRigidbody = this.GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
+        player = Player.Instance.gameObject;
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
         timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
+        if (enemyType == "Skeleton") {
+            moving = false;
+        }
     }
 
-    // Update is called once per frame
+    // Enemy interactions
     void Update() {
+        // Skeleton
         if (enemyType == "Skeleton") {
             if (moving) {
                 timeToMoveCounter -= Time.deltaTime;
-                myRigidbody.velocity = moveDirection;
-
                 if (timeToMoveCounter < 0f) {
                     moving = false;
                     timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
                     anim.SetFloat("MoveX", 0);
                     anim.SetFloat("MoveY", 0);
+                    movement = Vector2.zero;
                 }
-
             } else {
                 timeBetweenMoveCounter -= Time.deltaTime;
-                myRigidbody.velocity = Vector2.zero;
                 if (timeBetweenMoveCounter < 0f) {
                     moving = true;
                     timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
-                    moving = true;
                     timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
                     Vector3 direction = player.transform.position - transform.position;
                     direction.Normalize();
                     anim.SetFloat("MoveX", direction[0]);
                     anim.SetFloat("MoveY", direction[1]);
-                    moveDirection = direction;
+                    movement = direction;
                 }
             }
-        } else {
-            if (enemyType == "SkeletonBoss") {
-                if (hp > (hpLimit + 0.1) * maxHp) {
-                    moving = false;
-                } else if (hp <= (hpLimit + 0.1) * maxHp && hp >= hpLimit * maxHp ) {
-                    anim.SetBool("Enraged", true);
-                } else if (hp < hpLimit * maxHp) {
-                    moving = true;
-                    anim.SetBool("Enraged", false);
-                }
-
-                if (hp < (1 - hpLimit) * maxHp) {
-                    moveSpeed = speed * 1.5f;
-                }
-            }
-            if (enemyType == "Bat" || (enemyType == "SkeletonBoss" && moving)) {
-                Vector3 direction = player.transform.position - transform.position;
-                direction.Normalize();
-                movement = direction;
-                anim.SetFloat("MoveX", movement[0]);
-                anim.SetFloat("MoveY", movement[1]);
-            }
+            return;
         }
+
+        // Bat
+        if (enemyType == "Bat") {
+            Vector3 direction = player.transform.position - transform.position;
+            direction.Normalize();
+            anim.SetFloat("MoveX", movement[0]);
+            anim.SetFloat("MoveY", movement[1]);
+            movement = direction;
+        }
+
+        // Recovery frames
         Recover();
     }
 
-    private void FixedUpdate() {
-        if (enemyType != "Skeleton") {
+    // Rigidbody movement
+    void FixedUpdate() {
+        if (moving) {
             MoveCharacter(movement);
-        } else if (moving) {
-            MoveCharacter(moveDirection);
         }
     }
 
+    // Enemy movement
     void MoveCharacter(Vector2 dir) {
-        myRigidbody.MovePosition((Vector2)transform.position + (dir * moveSpeed * Time.deltaTime));
+        body.MovePosition((Vector2) transform.position + (dir * moveSpeed * Time.deltaTime));
     }
 
     // Take damage from player
@@ -159,7 +140,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    // Activity radius
+    // Activate enemy
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (other.CompareTag("Player")) {
@@ -167,8 +148,9 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    // Deactivate enemy
     void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player") && enemyType != "Boss") {
+        if (other.CompareTag("Player")) {
             moveSpeed = 0;
         }
     }

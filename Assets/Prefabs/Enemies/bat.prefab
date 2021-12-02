@@ -164,13 +164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  moving: 0
-  timeBetweenMove: 2
-  timeToMove: 1
+  timeBetweenMove: 0
+  timeToMove: 0
   attack: 1
-  hp: 4
   maxHp: 4
-  hpLimit: 0
+  hp: 4
   expValue: 15
   spawner: {fileID: 0}
   enemyType: Bat

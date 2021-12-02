@@ -8,6 +8,7 @@ TagManager:
   - Lava
   - Gun
   - Obstacle
+  - Boss1
   layers:
   - Default
   - TransparentFX
