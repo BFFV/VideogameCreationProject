@@ -11,8 +11,7 @@ public class Player : SceneSingleton<Player> {
     // Movement
 
     // Player speed
-    [SerializeField]
-    private float speed;
+    float speed = 4;
 
     // Direction of movement
     private Vector2 direction = Vector2.zero;
@@ -38,8 +37,7 @@ public class Player : SceneSingleton<Player> {
     public List<string> weapons;
 
     // Bullets
-    [SerializeField]
-    private GameObject[] attacks;
+    public GameObject[] attacks;
 
     // Health
     public int maxHp;
@@ -81,6 +79,9 @@ public class Player : SceneSingleton<Player> {
         skills = new List<string>(state.spawnSkills);
         GUIManager.Instance.UpdatePlayerStatus(hp, exp);
         GUIManager.Instance.ToggleGunIcon(weapons.Contains("Gun"));  // will be changed later
+        skills.Add("Sprint");
+        skills.Add("Lightning");
+        skills.Add("Barrier");
     }
 
     // Player interactions
@@ -154,7 +155,7 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Player Movement
+    // Player movement
     public void Move() {
         // Move body
         body.MovePosition(new Vector2(transform.position.x + direction.x * speed * Time.deltaTime,
@@ -172,6 +173,7 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
+    // Movement animation
     public void AnimationMove() {
         if (direction.x != 0 || direction.y != 0) {
             animator.SetLayerWeight(1,1);

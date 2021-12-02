@@ -38,9 +38,6 @@ public class Enemy : MonoBehaviour {
     // Experience
     public int expValue;
 
-    // Boss quake
-    private GameObject quake;
-
     // Spawner
     public EnemySpawner spawner;
 
@@ -56,7 +53,6 @@ public class Enemy : MonoBehaviour {
         myRigidbody = this.GetComponent<Rigidbody2D>();
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
         timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
-        quake = GameObject.FindGameObjectWithTag("Quake");
     }
 
     // Update is called once per frame
@@ -73,18 +69,19 @@ public class Enemy : MonoBehaviour {
                     anim.SetFloat("MoveY", 0);
                 }
 
-            }
-            else {
+            } else {
                 timeBetweenMoveCounter -= Time.deltaTime;
                 myRigidbody.velocity = Vector2.zero;
                 if (timeBetweenMoveCounter < 0f) {
                     moving = true;
                     timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
-                    moveDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                    Vector2 auxDirection = moveDirection;
-                    auxDirection.Normalize();
-                    anim.SetFloat("MoveX", auxDirection[0]);
-                    anim.SetFloat("MoveY", auxDirection[1]);
+                    moving = true;
+                    timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
+                    Vector3 direction = player.transform.position - transform.position;
+                    direction.Normalize();
+                    anim.SetFloat("MoveX", direction[0]);
+                    anim.SetFloat("MoveY", direction[1]);
+                    moveDirection = direction;
                 }
             }
         } else {
@@ -137,10 +134,6 @@ public class Enemy : MonoBehaviour {
 
         // Death
         if (hp <= 0) {
-            // May be removed
-            if (enemyType == "SkeletonBoss") {
-                Destroy(quake);
-            }
             // Tell spawner that this enemy is dead
             if (spawner != null) {
                 spawner.EnemyDestroyed();
