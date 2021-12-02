@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8454048222453312827}
   m_Layer: 0
   m_Name: bat
-  m_TagString: Flying_enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,8 +170,10 @@ MonoBehaviour:
   attack: 1
   hp: 4
   maxHp: 4
-  expValue: 15
   hpLimit: 0
+  expValue: 15
+  spawner: {fileID: 0}
+  enemyType: Bat
 --- !u!95 &195637380556508569
 Animator:
   serializedVersion: 3

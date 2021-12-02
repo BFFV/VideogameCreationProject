@@ -23,7 +23,7 @@ public class Weapon : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             Player.Instance.weapons.Add(gameObject.tag);
-            Player.Instance.gunIcon.enabled = true;
+            GUIManager.Instance.ToggleGunIcon(true);  // will be changed later
             GUIManager.Instance.ShowEvent("You have acquired a " + gameObject.tag + "!");
             Destroy(gameObject);
         }

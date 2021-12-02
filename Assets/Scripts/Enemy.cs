@@ -30,34 +30,28 @@ public class Enemy : MonoBehaviour {
     public int attack;
 
     // Health
-
-    // HP
     public int hp;
     public int maxHp;
-
-    // Enemy is recovering from attack
-    private bool recovering;
-
-    // Recovery Frames
-    private float recoveryTime;
+    private float recoveryTime = 0;
+    public float hpLimit;  // Boss hp limit trigger (hp %)
 
     // Experience
     public int expValue;
-    // Boss hp limit trigger (hp %)
-    public float hpLimit;
+
     // Boss quake
     private GameObject quake;
 
     // Spawner
     public EnemySpawner spawner;
 
+    // Enemy type
+    public string enemyType;
+
     // Use this for initialization
     void Start() {
         hp = maxHp;
         moveSpeed = 0;
         anim = GetComponent<Animator>();
-        recovering = false;
-        recoveryTime = 1;
         player = GameObject.FindGameObjectWithTag("Player");
         myRigidbody = this.GetComponent<Rigidbody2D>();
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
@@ -67,7 +61,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (gameObject.tag == "Enemy") {
+        if (enemyType == "Skeleton") {
             if (moving) {
                 timeToMoveCounter -= Time.deltaTime;
                 myRigidbody.velocity = moveDirection;
@@ -94,7 +88,7 @@ public class Enemy : MonoBehaviour {
                 }
             }
         } else {
-            if (gameObject.tag == "Boss") {
+            if (enemyType == "SkeletonBoss") {
                 if (hp > (hpLimit + 0.1) * maxHp) {
                     moving = false;
                 } else if (hp <= (hpLimit + 0.1) * maxHp && hp >= hpLimit * maxHp ) {
@@ -108,7 +102,7 @@ public class Enemy : MonoBehaviour {
                     moveSpeed = speed * 1.5f;
                 }
             }
-            if (gameObject.tag == "Flying_enemy" || (gameObject.tag == "Boss" && moving)) {
+            if (enemyType == "Bat" || (enemyType == "SkeletonBoss" && moving)) {
                 Vector3 direction = player.transform.position - transform.position;
                 direction.Normalize();
                 movement = direction;
@@ -120,7 +114,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (gameObject.tag != "Enemy") {
+        if (enemyType != "Skeleton") {
             MoveCharacter(movement);
         } else if (moving) {
             MoveCharacter(moveDirection);
@@ -132,32 +126,42 @@ public class Enemy : MonoBehaviour {
     }
 
     // Take damage from player
-    public int TakeDamage(int damage) {
-        if (recovering) {
-            return 0;
+    public bool TakeDamage(int damage, bool forced = false) {
+        // Invincibility
+        if (recoveryTime > 0 && !forced) {
+            return false;
         }
+
+        // Lose HP
         hp -= damage;
+
+        // Death
         if (hp <= 0) {
-            if (gameObject.tag == "Boss") {
+            // May be removed
+            if (enemyType == "SkeletonBoss") {
                 Destroy(quake);
             }
+            // Tell spawner that this enemy is dead
             if (spawner != null) {
                 spawner.EnemyDestroyed();
             }
+            // Reward player with exp
+            Player.Instance.GainExp(expValue);
             Destroy(gameObject);
-            return expValue;
+            return true;
         }
-        recovering = true;
+
+        // Recovery frames
         recoveryTime = 0.5f;
-        return 0;
+        return false;
     }
 
     // Recover from attacks
     void Recover() {
-        if (recovering) {
+        if (recoveryTime > 0) {
             recoveryTime -= Time.deltaTime;
             if (recoveryTime <= 0) {
-                recovering = false;
+                recoveryTime = 0;
             }
         }
     }
@@ -171,7 +175,7 @@ public class Enemy : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player") && gameObject.tag != "Boss") {
+        if (other.CompareTag("Player") && enemyType != "Boss") {
             moveSpeed = 0;
         }
     }

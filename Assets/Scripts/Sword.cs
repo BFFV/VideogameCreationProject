@@ -16,12 +16,10 @@ public class Sword : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
         string tag = other.gameObject.tag;
-        if (enemies.Contains(tag)) {
+        if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            int expGained = enemy.TakeDamage(damage);
-            player.GainExperience(expGained);
+            enemy.TakeDamage(damage);
         }
     }
 }

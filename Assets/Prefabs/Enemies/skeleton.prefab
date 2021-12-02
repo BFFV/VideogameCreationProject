@@ -154,8 +154,10 @@ MonoBehaviour:
   attack: 2
   hp: 10
   maxHp: 10
-  expValue: 20
   hpLimit: 0
+  expValue: 20
+  spawner: {fileID: 0}
+  enemyType: Skeleton
 --- !u!95 &3846978347734005970
 Animator:
   serializedVersion: 3
