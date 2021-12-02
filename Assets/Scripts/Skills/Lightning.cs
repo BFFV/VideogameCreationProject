@@ -55,7 +55,8 @@ public class Lightning : MonoBehaviour {
     // Enemy enters strike zone
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
-        if (!other.isTrigger && tag == "Enemy") {
+        // TODO: add other bosses
+        if (!other.isTrigger && (tag == "Enemy" || tag == "Boss1")) {
             targets.Add(other.gameObject);
         }
     }
@@ -63,7 +64,8 @@ public class Lightning : MonoBehaviour {
     // Enemy exits strike zone
     void OnTriggerExit2D(Collider2D other) {
         string tag = other.gameObject.tag;
-        if (!other.isTrigger && tag == "Enemy") {
+         // TODO: add other bosses
+        if (!other.isTrigger && (tag == "Enemy" || tag == "Boss1")) {
             targets.Remove(other.gameObject);
         }
     }
@@ -74,11 +76,20 @@ public class Lightning : MonoBehaviour {
             GameObject t = targets[i];
             Vector3 pos = t.transform.position;
             Instantiate(strikes[Random.Range(0, 3)], pos, Quaternion.identity);
-            Enemy enemy = t.GetComponent<Enemy>();
-            if (enemy.hp <= damage) {
-                targets.RemoveAt(i);
+            // TODO: add other bosses
+            if (t.CompareTag("Enemy")) {
+                Enemy enemy = t.GetComponent<Enemy>();
+                if (enemy.hp <= damage) {
+                    targets.RemoveAt(i);
+                }
+                enemy.TakeDamage(damage, forced: true);
+            } else if (t.CompareTag("Boss1")) {
+                SkeletonBoss boss = t.GetComponent<SkeletonBoss>();
+                if (boss.hp <= damage) {
+                    targets.RemoveAt(i);
+                }
+                boss.TakeDamage(damage, forced: true);
             }
-            enemy.TakeDamage(damage, forced: true);
         }
     }
 }
