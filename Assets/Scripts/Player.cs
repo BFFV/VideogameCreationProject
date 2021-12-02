@@ -15,10 +15,10 @@ public class Player : SceneSingleton<Player> {
     private float speed;
 
     // Direction of movement
-    private Vector2 direction;
+    private Vector2 direction = Vector2.zero;
 
     // Last direction of movement
-    private Vector2 lastDirection;
+    private Vector2 lastDirection = new Vector2(0, 1);
 
     // Player body
     public Rigidbody2D body;
@@ -26,7 +26,7 @@ public class Player : SceneSingleton<Player> {
     // Combat
 
     // Player is attacking
-    private bool attacking;
+    private bool attacking = false;
 
     // Melee power
     public int attack;
@@ -46,27 +46,21 @@ public class Player : SceneSingleton<Player> {
     public int hp;
     float recoveryTime = 0;
 
-    // GUI
-    public Text healthText;
-    public Text expText;
-    public Image gunIcon;
-
     // Skills & Experience
     public int exp;
     public List<string> skills;
     bool invincible = false;
     GameObject barrierSkill = null;
     public GameObject barrier;
+    public GameObject lightning;
 
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
 
+    // Initialize player
     void Start() {
-        // Base stats
+        // Base HP
         hp = maxHp;
-        attacking = false;
-        direction = Vector2.zero;
-        lastDirection = new Vector2(0, 1);
 
         // Body & animator
         body = GetComponent<Rigidbody2D>();
@@ -84,36 +78,37 @@ public class Player : SceneSingleton<Player> {
         transform.position = new Vector3(state.spawnPos[0], state.spawnPos[1], state.spawnPos[2]);
         exp = state.spawnExp;
         weapons = new List<string>(state.spawnWeapons);
-        gunIcon.enabled = weapons.Contains("Gun");  // Needs to be removed later (replaced by current weapon icon)
         skills = new List<string>(state.spawnSkills);
+        GUIManager.Instance.UpdatePlayerStatus(hp, exp);
+        GUIManager.Instance.ToggleGunIcon(weapons.Contains("Gun"));  // will be changed later
     }
 
-
+    // Player interactions
     void Update() {
-        GetInput();
-        UpdateGUI();  // will be removed later
-        HandleAttack();
-        Recover();  //
+        GetInput();  // Process player input
+        HandleAttack();  // Process attack
+        Recover();  // Recovery time
     }
 
+    // Rigidbody movement
     void FixedUpdate() {
         Move();
     }
 
     // Receive player input
     private void GetInput() {
-        // Get movement input
+        // Movement input
         if (!attacking) {
             direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         } else {
             direction = Vector2.zero;
         }
 
-        // Animate the player movement
+        // Animate player movement
         AnimationMove();
         direction.Normalize();
 
-        // Save last direction of movement
+        // Last direction of movement
         if (direction.x != 0 || direction.y != 0){
             if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x < 0 ) {
                 lastDirection = new Vector2(-1,0);
@@ -132,6 +127,13 @@ public class Player : SceneSingleton<Player> {
                 speed *= 2;
             } else if (Input.GetKeyUp(KeyCode.LeftShift)) {
                 speed /= 2;
+            }
+        }
+
+        // Lightning skill input
+        if (skills.Contains("Lightning")) {
+            if (Input.GetKeyDown(KeyCode.R)) {
+                Instantiate(lightning, transform.position, Quaternion.identity);
             }
         }
 
@@ -210,9 +212,8 @@ public class Player : SceneSingleton<Player> {
 
     // Enemy damage
     void OnCollisionStay2D(Collision2D other) {
-        string[] enemies = {"Enemy", "Flying_enemy", "Boss"};
         string tag = other.gameObject.tag;
-        if (enemies.Contains(tag)) {
+        if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             TakeDamage(enemy.attack);
         }
@@ -235,16 +236,6 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Obtain experience
-    public void GainExperience(int expObtained) {
-        exp += expObtained;
-
-        // Heal by defeating enemy
-        if (expObtained > 0 && hp < maxHp) {
-            hp += 1;
-        }
-    }
-
     // Take damage
     void TakeDamage(int damage) {
         // Invincibility
@@ -258,6 +249,7 @@ public class Player : SceneSingleton<Player> {
         } else {
             hp -= damage;
         }
+        GUIManager.Instance.UpdatePlayerHealth(hp);
 
         // Death
         if (hp <= 0) {
@@ -278,9 +270,9 @@ public class Player : SceneSingleton<Player> {
         }
     }
 
-    // Update GUI values (will be removed later)
-    void UpdateGUI() {
-        healthText.text = "HP: " + hp.ToString() + "/" + maxHp.ToString();
-        expText.text = "EXP: "+ exp.ToString();
+    // Gain experience
+    public void GainExp(int expValue) {
+        exp += expValue;
+        GUIManager.Instance.UpdatePlayerExp(exp);
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5794971910886563407}
   m_Layer: 0
   m_Name: skeletonBoss
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,8 +127,10 @@ MonoBehaviour:
   attack: 5
   hp: 15
   maxHp: 15
-  expValue: 100
   hpLimit: 0.7
+  expValue: 100
+  spawner: {fileID: 0}
+  enemyType: SkeletonBoss
 --- !u!61 &5310207700747859593
 BoxCollider2D:
   m_ObjectHideFlags: 0

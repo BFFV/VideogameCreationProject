@@ -44,6 +44,9 @@ public class Enemy : MonoBehaviour {
     // Spawner
     public EnemySpawner spawner;
 
+    // Enemy type
+    public string enemyType;
+
     // Use this for initialization
     void Start() {
         hp = maxHp;
@@ -58,7 +61,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (gameObject.tag == "Enemy") {
+        if (enemyType == "Skeleton") {
             if (moving) {
                 timeToMoveCounter -= Time.deltaTime;
                 myRigidbody.velocity = moveDirection;
@@ -85,7 +88,7 @@ public class Enemy : MonoBehaviour {
                 }
             }
         } else {
-            if (gameObject.tag == "Boss") {
+            if (enemyType == "SkeletonBoss") {
                 if (hp > (hpLimit + 0.1) * maxHp) {
                     moving = false;
                 } else if (hp <= (hpLimit + 0.1) * maxHp && hp >= hpLimit * maxHp ) {
@@ -99,7 +102,7 @@ public class Enemy : MonoBehaviour {
                     moveSpeed = speed * 1.5f;
                 }
             }
-            if (gameObject.tag == "Flying_enemy" || (gameObject.tag == "Boss" && moving)) {
+            if (enemyType == "Bat" || (enemyType == "SkeletonBoss" && moving)) {
                 Vector3 direction = player.transform.position - transform.position;
                 direction.Normalize();
                 movement = direction;
@@ -111,7 +114,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (gameObject.tag != "Enemy") {
+        if (enemyType != "Skeleton") {
             MoveCharacter(movement);
         } else if (moving) {
             MoveCharacter(moveDirection);
@@ -123,10 +126,10 @@ public class Enemy : MonoBehaviour {
     }
 
     // Take damage from player
-    public int TakeDamage(int damage) {
+    public bool TakeDamage(int damage, bool forced = false) {
         // Invincibility
-        if (recoveryTime > 0) {
-            return 0;
+        if (recoveryTime > 0 && !forced) {
+            return false;
         }
 
         // Lose HP
@@ -135,7 +138,7 @@ public class Enemy : MonoBehaviour {
         // Death
         if (hp <= 0) {
             // May be removed
-            if (gameObject.tag == "Boss") {
+            if (enemyType == "SkeletonBoss") {
                 Destroy(quake);
             }
             // Tell spawner that this enemy is dead
@@ -143,13 +146,14 @@ public class Enemy : MonoBehaviour {
                 spawner.EnemyDestroyed();
             }
             // Reward player with exp
+            Player.Instance.GainExp(expValue);
             Destroy(gameObject);
-            return expValue;
+            return true;
         }
 
         // Recovery frames
         recoveryTime = 0.5f;
-        return 0;
+        return false;
     }
 
     // Recover from attacks
@@ -171,7 +175,7 @@ public class Enemy : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player") && gameObject.tag != "Boss") {
+        if (other.CompareTag("Player") && enemyType != "Boss") {
             moveSpeed = 0;
         }
     }
