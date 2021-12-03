@@ -23,17 +23,28 @@ public class SkeletonBoss : MonoBehaviour {
 
     // References
     GameObject player;
+    public GameObject rock;
+    public SpriteRenderer sprite;
 
     // Phases
     int phase = 0;
-    float rageTimeout = 2;
+    float rageTimeout = 0;
 
     // Initialize boss
     void Start() {
+        // Boss already defeated
+        if (Player.Instance.skills.Contains("BlackHole")) {
+            GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+            foreach (GameObject rock in obstacles) {
+                Destroy(rock);
+            }
+            Destroy(gameObject);
+        }
         hp = maxHp;
         moveSpeed = speed;
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         player = Player.Instance.gameObject;
     }
 
@@ -61,8 +72,10 @@ public class SkeletonBoss : MonoBehaviour {
         if (phase <= 1 && hp <= maxHp * 0.7) {
             phase = 2;
             moveSpeed = speed * 1.5f;
+            sprite.material.color = new Color(50, 0.5f, 0, 1);
         } else if (phase == 2 && hp <= maxHp * 0.3) {
             phase = 3;
+            sprite.material.color = new Color(255, 1, 0, 1);
         }
 
         // Recovery frames
@@ -114,14 +127,23 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Death sequence
     void BossDeath() {
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject rock in obstacles) {
+            Destroy(rock);
+        }
+        GUIManager.Instance.ShowEvent("You have learned the superior skill Black Hole!");
+        Inventory.Instance.SetSkill("BlackHole");
         Destroy(gameObject);
     }
 
     // Activate boss
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
-        if (other.CompareTag("Player")) {
+        if (other.CompareTag("Player") && !moving) {
+            Vector3 entrance = new Vector3(70, 8, 0);
+            Instantiate(rock, entrance, Quaternion.identity);
             anim.SetBool("Enraged", true);
+            rageTimeout = 0.5f;
         }
     }
 }

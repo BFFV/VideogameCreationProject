@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager> {
 
     // Checkpoints & save data
     public int slot = 0;
-    public PlayerData playerData = new PlayerData("Shrine", new Vector3(60, 2, 0), "default");  // TODO: reset to default later
+    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
 
     // Finish game (not in use)
     public void EndGame(bool won) {
