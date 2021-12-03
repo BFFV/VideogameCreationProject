@@ -12,6 +12,7 @@ public class Sword : MonoBehaviour {
     // Setup
     void Start() {
         body = GetComponent<Rigidbody2D>();
+        AudioManager.Instance.PlaySound("sword");
     }
 
     // Hit an enemy

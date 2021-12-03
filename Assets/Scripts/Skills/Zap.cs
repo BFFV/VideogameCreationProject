@@ -29,6 +29,7 @@ public class Zap : MonoBehaviour {
     // Zap activity cycle
     IEnumerator ZapCycle() {
         yield return StartCoroutine(FadeTo(1.0f, 0.05f));
+        AudioManager.Instance.PlaySound("thunder");
         yield return new WaitForSeconds(timeout);
         yield return StartCoroutine(FadeTo(0.0f, 0.1f));
         Destroy(gameObject);

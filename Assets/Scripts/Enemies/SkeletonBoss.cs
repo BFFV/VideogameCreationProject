@@ -127,6 +127,7 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Death sequence
     void BossDeath() {
+        AudioManager.Instance.PlaySoundtrack("lava");
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach (GameObject rock in obstacles) {
             Destroy(rock);
@@ -144,6 +145,7 @@ public class SkeletonBoss : MonoBehaviour {
             Instantiate(rock, entrance, Quaternion.identity);
             anim.SetBool("Enraged", true);
             rageTimeout = 0.5f;
+            AudioManager.Instance.PlaySoundtrack("skeletonBoss");
         }
     }
 }

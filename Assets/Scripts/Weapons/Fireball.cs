@@ -16,6 +16,7 @@ public class Fireball : MonoBehaviour {
     // Setup
     void Start() {
         body = GetComponent<Rigidbody2D>();
+        AudioManager.Instance.PlaySound("fireball");
     }
 
     // Check distance for the bullet
