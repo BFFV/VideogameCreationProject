@@ -189,12 +189,13 @@ public class Player : SceneSingleton<Player> {
         attacking = false;
     }
 
+    // Wind attack
     public IEnumerator WindShoot() {
         float initX = (float) (transform.position.x + 1.2 * lastDirection.x);
         float initY = (float) (transform.position.y + 1.2 * lastDirection.y);
         GameObject newProjectile = Instantiate(attacks[2], new Vector3(initX, initY, 0), transform.rotation);
 
-        // Set direction of the bullet
+        // Set direction of wind
         newProjectile.GetComponent<Wind>().direction = lastDirection;
         yield return new WaitForSeconds(0.5f);
     }

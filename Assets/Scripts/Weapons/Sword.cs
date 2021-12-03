@@ -19,7 +19,7 @@ public class Sword : MonoBehaviour {
         string tag = other.gameObject.tag;
         if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            enemy.TakeDamage(damage);
         } else if (tag == "Boss1") {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
             boss.TakeDamage(damage);
