@@ -1,19 +1,14 @@
+using System.Collections;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 // Inventory UI
-public class InventoryUI : MonoBehaviour {
-    // References
-    Inventory inventory;
-    public GameObject skillSlot;
-    public GameObject inventoryUI;
-    SkillSlot skill;
+public class InventoryUI : SceneSingleton<InventoryUI> {
 
-    // Setup
-    void Start() {
-        inventory = Inventory.Instance;
-        inventory.onSkillActivatedCallback += UpdateUI;
-        skill = skillSlot.GetComponent<SkillSlot>();
-    }
+    // References
+    public List<GameObject> skillSlots;
+    public GameObject inventoryUI;
 
     // Toggle inventory
     void Update() {
@@ -23,7 +18,8 @@ public class InventoryUI : MonoBehaviour {
     }
 
     // Update skill slot
-    void UpdateUI() {
-        skill.ActivateSkill(0);
+    public void UpdateUI(int skillID) {
+        SkillSlot skill = skillSlots[skillID].GetComponent<SkillSlot>();
+        skill.ActivateSkill();
     }
 }

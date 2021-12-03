@@ -170,6 +170,8 @@ MonoBehaviour:
   attack: 5
   maxHp: 15
   hp: 15
+  rock: {fileID: 7421803797852565109, guid: fbc5d0293c2bce341ad5ba14e8fd8e16, type: 3}
+  sprite: {fileID: 0}
 --- !u!58 &-1451863230720038305
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -185,4 +187,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 6

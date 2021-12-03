@@ -34,6 +34,9 @@ public class Player : SceneSingleton<Player> {
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
 
+    // Environmental damage
+    int lavaDamage = 4;
+
     // Initialize player
     void Start() {
         // Body & animator
@@ -54,9 +57,6 @@ public class Player : SceneSingleton<Player> {
         skills = new List<string>(state.spawnSkills);
         GUIManager.Instance.UpdatePlayerStatus(hp, exp);
         GUIManager.Instance.ToggleGunIcon(weapons.Contains("Gun"));  // TODO: change later
-        skills.Add("Sprint");  // TODO: Remove later
-        skills.Add("Lightning");  // TODO: Remove later
-        skills.Add("Barrier");  // TODO: Remove later
     }
 
     // Player interactions
@@ -190,9 +190,13 @@ public class Player : SceneSingleton<Player> {
     // Enemy damage
     void OnCollisionStay2D(Collision2D other) {
         string tag = other.gameObject.tag;
-        if (tag == "Enemy" || tag == "Boss") {
+        // TODO: add other bosses
+        if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             TakeDamage(enemy.attack);
+        } else if (tag == "Boss1") {
+            SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
+            TakeDamage(boss.attack);
         }
     }
 
@@ -200,7 +204,7 @@ public class Player : SceneSingleton<Player> {
     void OnTriggerStay2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Lava") {
-            TakeDamage(2);
+            TakeDamage(lavaDamage);
         }
     }
 
