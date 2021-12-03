@@ -10,6 +10,7 @@ TagManager:
   - Quake
   - Lava
   - Gun
+  - Wind
   layers:
   - Default
   - TransparentFX
