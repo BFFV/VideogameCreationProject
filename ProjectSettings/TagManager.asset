@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Lava
   - Gun
+  - Wind
   - Obstacle
   - Boss1
   layers:
