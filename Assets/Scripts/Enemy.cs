@@ -19,6 +19,9 @@ public class Enemy : MonoBehaviour {
 
     // Combat
     public int attack;
+    public float timeBetweenAttack;
+    float timeBetweenAttackCounter;
+    public GameObject[] attacks;
 
     // Health
     public int maxHp;
@@ -47,6 +50,9 @@ public class Enemy : MonoBehaviour {
         if (enemyType == "Skeleton") {
             moving = false;
         }
+        if (enemyType == "LavaEnemy") {
+            timeBetweenAttackCounter = timeBetweenAttack;
+        }
     }
 
     // Enemy interactions
@@ -57,7 +63,7 @@ public class Enemy : MonoBehaviour {
                 timeToMoveCounter -= Time.deltaTime;
                 if (timeToMoveCounter < 0f) {
                     moving = false;
-                    timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
+                    timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.9f, timeBetweenMove * 1.1f);
                     anim.SetFloat("MoveX", 0);
                     anim.SetFloat("MoveY", 0);
                     movement = Vector2.zero;
@@ -66,8 +72,8 @@ public class Enemy : MonoBehaviour {
                 timeBetweenMoveCounter -= Time.deltaTime;
                 if (timeBetweenMoveCounter < 0f) {
                     moving = true;
-                    timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
-                    timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
+                    timeToMoveCounter = Random.Range(timeToMove * 0.9f, timeToMove * 1.1f);
+                    timeToMoveCounter = Random.Range(timeToMove * 0.9f, timeToMove * 1.1f);
                     Vector3 direction = player.transform.position - transform.position;
                     direction.Normalize();
                     anim.SetFloat("MoveX", direction[0]);
@@ -79,12 +85,52 @@ public class Enemy : MonoBehaviour {
         }
 
         // Bat
-        if (enemyType == "Bat") {
+        if (enemyType == "Bat" || enemyType == "LavaEnemy") {
             Vector3 direction = player.transform.position - transform.position;
             direction.Normalize();
             anim.SetFloat("MoveX", movement[0]);
             anim.SetFloat("MoveY", movement[1]);
             movement = direction;
+        }
+
+        if (enemyType == "LavaEnemy") {
+            timeBetweenAttackCounter -= Time.deltaTime;
+            if (timeBetweenAttackCounter < 0f) {
+                float initX = (float) (transform.position.x);
+                float initY = (float) (transform.position.y);
+
+                float playerX = initX - player.transform.position.x;
+                float playerY = initY - player.transform.position.y;
+
+                float angle = Mathf.Atan(playerY / playerX) * Mathf.Rad2Deg;
+                if (angle < 0.0f) {
+                    angle = 360 + angle;
+                }
+                if (playerX < 0.0f) {
+                    angle = angle + 180;
+                }
+
+                if (Mathf.Abs(playerX) > Mathf.Abs(playerY)) {
+                    if (playerX < 0) {
+                        initX += 1.5f;
+                    } else {
+                        initX -= 1.5f;
+                    }
+                } else {
+                    if (playerY < 0) {
+                        initY += 1.5f;
+                    } else {
+                        initY -= 1.5f;
+                    }
+                }
+
+                GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
+
+                // Set direction of the bullet
+                newProjectile.GetComponent<Bullet>().direction = player.transform.position - transform.position;
+                newProjectile.GetComponent<Bullet>().transform.Rotate(0.0f, 0.0f, angle, Space.Self);
+                timeBetweenAttackCounter = timeBetweenAttack;
+            }
         }
 
         // Recovery frames

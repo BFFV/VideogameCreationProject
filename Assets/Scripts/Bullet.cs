@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour {
     public float speed;
     public int distance;
     public int damage;
+    public bool enemyBullet;
 
     // Setup
     void Start() {
@@ -33,14 +34,23 @@ public class Bullet : MonoBehaviour {
     // Hit an enemy
     void OnCollisionEnter2D(Collision2D other) {
         string tag = other.gameObject.tag;
-        if (tag == "Enemy") {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
-        } else if (tag == "Boss1") {
-            SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
-            boss.TakeDamage(damage);
+        if (enemyBullet) {
+            if (tag == "Player") {
+                other.gameObject.GetComponent<Player>().TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        } else {
+            if (tag == "Enemy") {
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
+                other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            } else if (tag == "Boss1") {
+                SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
+                boss.TakeDamage(damage);
+            }
         }
         // TODO: add other bosses
-        Destroy(gameObject);
+        if (!enemyBullet) {
+            Destroy(gameObject);
+        }
     }
 }

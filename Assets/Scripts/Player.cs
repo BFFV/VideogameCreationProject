@@ -205,7 +205,7 @@ public class Player : SceneSingleton<Player> {
     }
 
     // Take damage
-    void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         // Invincibility
         if (recoveryTime > 0 || invincible) {
             return;
