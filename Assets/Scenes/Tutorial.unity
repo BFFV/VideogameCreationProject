@@ -638,6 +638,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8775238950085654806, guid: 654090db1f8e1e841abca773b7879035, type: 3}
       propertyPath: maxEnemies
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8775238950085654806, guid: 654090db1f8e1e841abca773b7879035, type: 3}
+      propertyPath: aliveEnemies
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8775238950085654806, guid: 654090db1f8e1e841abca773b7879035, type: 3}
@@ -31879,6 +31883,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8775238950085654806, guid: 654090db1f8e1e841abca773b7879035, type: 3}
       propertyPath: maxEnemies
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8775238950085654806, guid: 654090db1f8e1e841abca773b7879035, type: 3}
+      propertyPath: aliveEnemies
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8775238950085654806, guid: 654090db1f8e1e841abca773b7879035, type: 3}

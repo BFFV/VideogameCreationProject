@@ -13,7 +13,12 @@ public class GameManager : Singleton<GameManager> {
 
     // Checkpoints & save data
     public int slot = 0;
-    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
+    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default"); // TODO: remove
+
+    // Settings
+    void Start() {
+        Application.targetFrameRate = 60;
+    }
 
     // Finish game (not in use)
     public void EndGame(bool won) {

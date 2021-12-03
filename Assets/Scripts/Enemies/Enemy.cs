@@ -81,7 +81,6 @@ public class Enemy : MonoBehaviour {
                     movement = direction;
                 }
             }
-            return;
         }
 
         // Bat
@@ -180,21 +179,6 @@ public class Enemy : MonoBehaviour {
             if (recoveryTime <= 0) {
                 recoveryTime = 0;
             }
-        }
-    }
-
-    // Activate enemy
-    void OnTriggerEnter2D(Collider2D other) {
-        string tag = other.gameObject.tag;
-        if (other.CompareTag("Player")) {
-            moveSpeed = speed;
-        }
-    }
-
-    // Deactivate enemy
-    void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            moveSpeed = 0;
         }
     }
 }

@@ -7,9 +7,11 @@ public class EnemySpawner : MonoBehaviour {
 
     public GameObject[] enemies;
     int currentEnemies = 0;
+    int totalEnemies = 0;
+    public int aliveEnemies;
     public int maxEnemies;
-    public int minTime;
-    public int maxTime;
+    public float minTime;
+    public float maxTime;
 
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
@@ -26,7 +28,7 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     void SpawnEnemy() {
-        if (currentEnemies >= maxEnemies) {
+        if (currentEnemies >= aliveEnemies || totalEnemies >= maxEnemies) {
             return;
         }
         Vector3 spawnPosition = gameObject.transform.position;
@@ -39,6 +41,7 @@ public class EnemySpawner : MonoBehaviour {
         GameObject enemy = Instantiate(enemies[enemyType], position, Quaternion.identity);
         enemy.GetComponent<Enemy>().spawner = gameObject.GetComponent<EnemySpawner>();
         currentEnemies++;
+        totalEnemies++;
     }
 
     public void EnemyDestroyed() {
