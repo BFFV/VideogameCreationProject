@@ -53,7 +53,7 @@ public class GUIManager : SceneSingleton<GUIManager> {
 
     // Update player HP
     public void UpdatePlayerHealth(int hp) {
-        hpNumber.GetComponent<Text>().text = "HP: " + hp + "/" + Player.Instance.maxHp;
+        hpNumber.GetComponent<Text>().text = "HP: " + hp + "/" + 10;
     }
 
     // Update player EXP

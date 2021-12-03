@@ -5,12 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Flying_enemy
-  - Boss
-  - Quake
   - Lava
   - Gun
   - Wind
+  - Obstacle
+  - Boss1
   layers:
   - Default
   - TransparentFX
