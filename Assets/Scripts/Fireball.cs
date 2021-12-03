@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 // Gun weapon
-public class Bullet : MonoBehaviour {
+public class Fireball : MonoBehaviour {
     // References
     Rigidbody2D body;
     public Vector2 direction;

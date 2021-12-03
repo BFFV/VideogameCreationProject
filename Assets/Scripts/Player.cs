@@ -182,7 +182,7 @@ public class Player : SceneSingleton<Player> {
         GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of the bullet
-        newProjectile.GetComponent<Bullet>().direction = lastDirection;
+        newProjectile.GetComponent<Fireball>().direction = lastDirection;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }

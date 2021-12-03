@@ -127,8 +127,8 @@ public class Enemy : MonoBehaviour {
                 GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
 
                 // Set direction of the bullet
-                newProjectile.GetComponent<Bullet>().direction = player.transform.position - transform.position;
-                newProjectile.GetComponent<Bullet>().transform.Rotate(0.0f, 0.0f, angle, Space.Self);
+                newProjectile.GetComponent<Fireball>().direction = player.transform.position - transform.position;
+                newProjectile.GetComponent<Fireball>().transform.Rotate(0.0f, 0.0f, angle, Space.Self);
                 timeBetweenAttackCounter = timeBetweenAttack;
             }
         }
