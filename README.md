@@ -29,8 +29,14 @@ Project for IIC3686 - Videogame Creation.
 
 **Demo:** https://youtu.be/yqrf1dPcz08
 
-**Game:** https://bffv.itch.io/hell-rescue
+**Game:** https://bffv.itch.io/god-slayer
 
 # E4
 
 **Testing:** [Testing Report](./docs/Testing.pdf)
+
+# E5
+
+**Demo:** https://youtu.be/Q6ZZEJoNEXQ
+
+**Game:** https://bffv.itch.io/god-slayer
