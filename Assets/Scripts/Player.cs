@@ -169,7 +169,7 @@ public class Player : SceneSingleton<Player> {
         // Set Sword Object
         float initX = (float) (transform.position.x + lastDirection.x);
         float initY = (float) (transform.position.y + lastDirection.y);
-        GameObject sword = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
+        GameObject sword = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
         yield return new WaitForSeconds(1);
         animator.SetLayerWeight(2,0);
         Destroy(sword);
@@ -181,10 +181,10 @@ public class Player : SceneSingleton<Player> {
         attacking = true;
         float initX = (float) (transform.position.x + lastDirection.x);
         float initY = (float) (transform.position.y + lastDirection.y);
-        GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
+        GameObject newProjectile = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of the bullet
-        newProjectile.GetComponent<Fireball>().direction = lastDirection;
+        newProjectile.GetComponent<Bullet>().direction = lastDirection;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }

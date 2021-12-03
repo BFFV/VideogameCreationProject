@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 2884332417181468337}
   - component: {fileID: 203980776}
   - component: {fileID: 203980777}
+  - component: {fileID: 8079196765313693803}
   m_Layer: 0
-  m_Name: lava_enemy
+  m_Name: lavaEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9001788609434573246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.7, y: 1.86, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,7 +132,7 @@ MonoBehaviour:
   attack: 3
   timeBetweenAttack: 5
   attacks:
-  - {fileID: 5569558701137803408, guid: 16bc1b4ff97495d45a7b5b6f12d6d7e2, type: 3}
+  - {fileID: 5569558701137803408, guid: f38b6dc07c758f546864dc69085fc9c0, type: 3}
   maxHp: 10
   hp: 10
   expValue: 20
@@ -177,3 +178,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &8079196765313693803
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9001788609434573246}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10

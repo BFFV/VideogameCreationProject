@@ -25,8 +25,11 @@ public class Weapon : MonoBehaviour {
             Player.Instance.weapons.Add(gameObject.tag);
             if (gameObject.tag == "Gun") {
                 GUIManager.Instance.ToggleGunIcon(true);  // will be changed later
+                GUIManager.Instance.ShowEvent("You have acquired a " + gameObject.tag + "!");
             }
-            GUIManager.Instance.ShowEvent("You have acquired a " + gameObject.tag + "!");
+            if (gameObject.tag == "Wind") {
+                GUIManager.Instance.ShowEvent("You have acquired the Typhoon!");
+            }
             Destroy(gameObject);
         }
     }

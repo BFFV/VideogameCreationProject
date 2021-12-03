@@ -93,15 +93,14 @@ public class Enemy : MonoBehaviour {
             movement = direction;
         }
 
+        // Lava Enemy
         if (enemyType == "LavaEnemy") {
             timeBetweenAttackCounter -= Time.deltaTime;
-            if (timeBetweenAttackCounter < 0f) {
+            if (timeBetweenAttackCounter <= 0f) {
                 float initX = (float) (transform.position.x);
                 float initY = (float) (transform.position.y);
-
                 float playerX = initX - player.transform.position.x;
                 float playerY = initY - player.transform.position.y;
-
                 float angle = Mathf.Atan(playerY / playerX) * Mathf.Rad2Deg;
                 if (angle < 0.0f) {
                     angle = 360 + angle;
@@ -109,24 +108,22 @@ public class Enemy : MonoBehaviour {
                 if (playerX < 0.0f) {
                     angle = angle + 180;
                 }
-
                 if (Mathf.Abs(playerX) > Mathf.Abs(playerY)) {
                     if (playerX < 0) {
                         initX += 1.5f;
                     } else {
-                        initX -= 1.5f;
+                        initX -= 2f;
                     }
                 } else {
                     if (playerY < 0) {
                         initY += 1.5f;
                     } else {
-                        initY -= 1.5f;
+                        initY -= 2f;
                     }
                 }
-
                 GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
 
-                // Set direction of the bullet
+                // Set direction of the fireball
                 newProjectile.GetComponent<Fireball>().direction = player.transform.position - transform.position;
                 newProjectile.GetComponent<Fireball>().transform.Rotate(0.0f, 0.0f, angle, Space.Self);
                 timeBetweenAttackCounter = timeBetweenAttack;

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-// Gun weapon
+// Fireball
 public class Fireball : MonoBehaviour {
+
     // References
     Rigidbody2D body;
     public Vector2 direction;
     public float speed;
     public int distance;
     public int damage;
-    public bool enemyBullet;
 
     // Setup
     void Start() {
@@ -31,26 +31,12 @@ public class Fireball : MonoBehaviour {
         body.velocity = direction.normalized * speed;
     }
 
-    // Hit an enemy
+    // Hit the player
     void OnCollisionEnter2D(Collision2D other) {
         string tag = other.gameObject.tag;
-        if (enemyBullet) {
-            if (tag == "Player") {
-                other.gameObject.GetComponent<Player>().TakeDamage(damage);
-                Destroy(gameObject);
-            }
-        } else {
-            if (tag == "Enemy") {
-                Enemy enemy = other.gameObject.GetComponent<Enemy>();
-                other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
-            } else if (tag == "Boss1") {
-                SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
-                boss.TakeDamage(damage);
-            }
+        if (tag == "Player") {
+            other.gameObject.GetComponent<Player>().TakeDamage(damage);
         }
-        // TODO: add other bosses
-        if (!enemyBullet) {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }
