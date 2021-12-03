@@ -1,0 +1,1332 @@
+fileFormatVersion: 2
+guid: a5489fceb63b78d498ef52ca23280235
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8344341082403775981
+    second: tornado_0
+  - first:
+      213: 8711932940884701960
+    second: tornado_1
+  - first:
+      213: 4897245058477648533
+    second: tornado_2
+  - first:
+      213: -7980301598023847080
+    second: tornado_3
+  - first:
+      213: 1604585771787707823
+    second: tornado_4
+  - first:
+      213: -8645022542604547041
+    second: tornado_5
+  - first:
+      213: 659453987968490796
+    second: tornado_6
+  - first:
+      213: 5831214501237021655
+    second: tornado_7
+  - first:
+      213: -9190233683510328780
+    second: tornado-PhotoRoom_8
+  - first:
+      213: 8925424375448108432
+    second: tornado-PhotoRoom_9
+  - first:
+      213: 2451718162633665413
+    second: tornado-PhotoRoom_10
+  - first:
+      213: -5967641606720752371
+    second: tornado-PhotoRoom_11
+  - first:
+      213: 4573848958867432160
+    second: tornado-PhotoRoom_12
+  - first:
+      213: 3658093268050065731
+    second: tornado-PhotoRoom_13
+  - first:
+      213: 7896948370093514649
+    second: tornado-PhotoRoom_14
+  - first:
+      213: 7567809903128414335
+    second: tornado-PhotoRoom_15
+  - first:
+      213: 8861251421011695966
+    second: tornado-PhotoRoom_16
+  - first:
+      213: -3105786950516489633
+    second: tornado-PhotoRoom_17
+  - first:
+      213: 7384560022134471093
+    second: tornado-PhotoRoom_18
+  - first:
+      213: 5810125716773163072
+    second: tornado-PhotoRoom_19
+  - first:
+      213: -3531047813121285592
+    second: tornado-PhotoRoom_20
+  - first:
+      213: 8398236157578590109
+    second: tornado-PhotoRoom_21
+  - first:
+      213: 2929129458991889561
+    second: tornado-PhotoRoom_22
+  - first:
+      213: -4348577778795276917
+    second: tornado-PhotoRoom_23
+  - first:
+      213: 4425836111903912700
+    second: tornado-PhotoRoom_24
+  - first:
+      213: -8768618016144843945
+    second: tornado-PhotoRoom_25
+  - first:
+      213: 698529614675792676
+    second: tornado-PhotoRoom_26
+  - first:
+      213: -7668487917002933274
+    second: tornado-PhotoRoom_27
+  - first:
+      213: -7162958131631317069
+    second: tornado-PhotoRoom_28
+  - first:
+      213: 6354432341693667461
+    second: tornado-PhotoRoom_29
+  - first:
+      213: -9041203166026566390
+    second: tornado-PhotoRoom_30
+  - first:
+      213: 1157538915463664505
+    second: tornado-PhotoRoom_31
+  - first:
+      213: 7566885703877549307
+    second: tornado-PhotoRoom_32
+  - first:
+      213: 3139129503652939878
+    second: tornado-PhotoRoom_33
+  - first:
+      213: -3637817858860924699
+    second: tornado-PhotoRoom_34
+  - first:
+      213: -1823424694638235692
+    second: tornado-PhotoRoom_35
+  - first:
+      213: 1224250271852024673
+    second: tornado-PhotoRoom_36
+  - first:
+      213: 7205113620240601970
+    second: tornado-PhotoRoom_37
+  - first:
+      213: -9192008466031893491
+    second: tornado-PhotoRoom_38
+  - first:
+      213: 5097791627327627646
+    second: tornado-PhotoRoom_39
+  - first:
+      213: 2094037526850941564
+    second: tornado-PhotoRoom_40
+  - first:
+      213: 8216277263270897131
+    second: tornado-PhotoRoom_41
+  - first:
+      213: -3039779715505051764
+    second: tornado-PhotoRoom_42
+  - first:
+      213: 3704565397215441144
+    second: tornado-PhotoRoom_43
+  - first:
+      213: 3221534382451597946
+    second: tornado-PhotoRoom_44
+  - first:
+      213: 8120358170026897094
+    second: tornado-PhotoRoom_45
+  - first:
+      213: -6009631968808399661
+    second: tornado-PhotoRoom_46
+  - first:
+      213: -2010064275756460899
+    second: tornado-PhotoRoom_47
+  - first:
+      213: -8374677252267603922
+    second: tornado-PhotoRoom_48
+  - first:
+      213: 1831634487765867300
+    second: tornado-PhotoRoom_49
+  - first:
+      213: 7126244213587486533
+    second: tornado-PhotoRoom_50
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tornado_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 414
+        width: 57
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31adf9aeef1f23c80800000000000000
+      internalID: -8344341082403775981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 414
+        width: 51
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 803f4781ad007e870800000000000000
+      internalID: 8711932940884701960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 414
+        width: 48
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59ae8981f6286f340800000000000000
+      internalID: 4897245058477648533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_3
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 411
+        width: 46
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8537e416af5404190800000000000000
+      internalID: -7980301598023847080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_4
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 410
+        width: 49
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa56d0b0242a44610800000000000000
+      internalID: 1604585771787707823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_5
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 410
+        width: 52
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1ccfc00dc5b60880800000000000000
+      internalID: -8645022542604547041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_6
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 409
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2d939a78e9d62900800000000000000
+      internalID: 659453987968490796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado_7
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 407
+        width: 53
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dbd65b91b2ace050800000000000000
+      internalID: 5831214501237021655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_8
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 453
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4328983282bb57080800000000000000
+      internalID: -9190233683510328780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_9
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 315
+        width: 53
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09d72383e2a7ddb70800000000000000
+      internalID: 8925424375448108432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_10
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 361
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58b272ddda0460220800000000000000
+      internalID: 2451718162633665413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_11
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 315
+        width: 57
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d05719c939dae2da0800000000000000
+      internalID: -5967641606720752371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_12
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 313
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e265911563997f30800000000000000
+      internalID: 4573848958867432160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_13
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 349
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3493f55227824c230800000000000000
+      internalID: 3658093268050065731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_14
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 313
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99f1609e3b8979d60800000000000000
+      internalID: 7896948370093514649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_15
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 313
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7807abc203460960800000000000000
+      internalID: 7567809903128414335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_16
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 312
+        width: 49
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e59d3dee73d79fa70800000000000000
+      internalID: 8861251421011695966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_17
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 313
+        width: 49
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f52cb62493706e4d0800000000000000
+      internalID: -3105786950516489633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_18
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 309
+        width: 45
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b930ed073a3b7660800000000000000
+      internalID: 7384560022134471093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_19
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 307
+        width: 49
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04050a85e86b1a050800000000000000
+      internalID: 5810125716773163072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_20
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 306
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8226cf5e8b23ffec0800000000000000
+      internalID: -3531047813121285592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_21
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 334
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9730502a478c8470800000000000000
+      internalID: 8398236157578590109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_22
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 224
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99cf75849bb56a820800000000000000
+      internalID: 2929129458991889561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_23
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 224
+        width: 51
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8510c8cc8fb6a3c0800000000000000
+      internalID: -4348577778795276917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_24
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 224
+        width: 54
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf2f024ae7abb6d30800000000000000
+      internalID: 4425836111903912700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_25
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 270
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75b98985f5c9f4680800000000000000
+      internalID: -8768618016144843945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_26
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 268
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42357dbcbfca1b900800000000000000
+      internalID: 698529614675792676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_27
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 222
+        width: 52
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb3aae6ede049590800000000000000
+      internalID: -7668487917002933274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_28
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 219
+        width: 44
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bf9e1fb78f089c90800000000000000
+      internalID: -7162958131631317069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_29
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 256
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58897eb2c8a7f2850800000000000000
+      internalID: 6354432341693667461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_30
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 217
+        width: 43
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0579d27f91378280800000000000000
+      internalID: -9041203166026566390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_31
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 253
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97317edb287601010800000000000000
+      internalID: 1157538915463664505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_32
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 216
+        width: 57
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfc5a93e47af20960800000000000000
+      internalID: 7566885703877549307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_33
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 213
+        width: 59
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6688e29d6ad609b20800000000000000
+      internalID: 3139129503652939878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_34
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 213
+        width: 47
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e0c50d6eefd38dc0800000000000000
+      internalID: -3637817858860924699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_35
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 215
+        width: 47
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dfa961b6e4e1b6e0800000000000000
+      internalID: -1823424694638235692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_36
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 212
+        width: 45
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1635ae9c2296df010800000000000000
+      internalID: 1224250271852024673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_37
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 129
+        width: 47
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27315ccc9a4bdf360800000000000000
+      internalID: 7205113620240601970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_38
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 126
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0429c1600d6f6080800000000000000
+      internalID: -9192008466031893491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_39
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 122
+        width: 48
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e71e2ddc97efeb640800000000000000
+      internalID: 5097791627327627646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_40
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 122
+        width: 48
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c72b94639048f0d10800000000000000
+      internalID: 2094037526850941564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_41
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 120
+        width: 48
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be56165a3a4160270800000000000000
+      internalID: 8216277263270897131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_42
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 120
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8722e5447880d5d0800000000000000
+      internalID: -3039779715505051764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_43
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 167
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f0fa34e992496330800000000000000
+      internalID: 3704565397215441144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_44
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 121
+        width: 55
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a722cb1d37035bc20800000000000000
+      internalID: 3221534382451597946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_45
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 167
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cee46d6bbe41b070800000000000000
+      internalID: 8120358170026897094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_46
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 119
+        width: 57
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dc0854909f799ca0800000000000000
+      internalID: -6009631968808399661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_47
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 117
+        width: 43
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9455d3e031da14e0800000000000000
+      internalID: -2010064275756460899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_48
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 153
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e288b06f86b27cb80800000000000000
+      internalID: -8374677252267603922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_49
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 112
+        width: 57
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42b93a9bcd54b6910800000000000000
+      internalID: 1831634487765867300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tornado-PhotoRoom_50
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 54
+        width: 57
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 547a0951b5185e260800000000000000
+      internalID: 7126244213587486533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
