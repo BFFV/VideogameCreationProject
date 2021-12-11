@@ -7,7 +7,7 @@ using System.Linq;
 public class Fireball : MonoBehaviour {
 
     // References
-    Rigidbody2D body;
+    public Rigidbody2D body;
     public Vector2 direction;
     public float speed;
     public int distance;

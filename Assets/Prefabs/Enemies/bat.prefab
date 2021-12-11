@@ -141,9 +141,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 20
+  m_LinearDrag: 1
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   body: {fileID: 0}
   timeBetweenMove: 0
   timeToMove: 0
+  activityRadius: 20
   attack: 1
   timeBetweenAttack: 0
   attacks: []

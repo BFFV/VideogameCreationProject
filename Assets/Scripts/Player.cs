@@ -9,10 +9,10 @@ public class Player : SceneSingleton<Player> {
     // Movement
     float speed = 4;
     Vector2 direction = Vector2.zero;
-    Vector2 skillDirection = new Vector2(0, 1);
-    Vector2 lastDirection = new Vector2(0, 1);
+    Vector2 dynamicDirection = new Vector2(0, 1);
+    Vector2 fixedDirection = new Vector2(0, 1);
     Vector3 lastPosition = new Vector2(0, 0);
-    Rigidbody2D body;
+    public Rigidbody2D body;
     Animator animator;
 
     // Combat
@@ -38,6 +38,9 @@ public class Player : SceneSingleton<Player> {
     public bool gateActive = false;
     GameObject gate;
     public GameObject explosion;
+    public bool blast = false;
+    public bool vortex = false;
+    public GameObject blackHole;
 
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
@@ -67,7 +70,7 @@ public class Player : SceneSingleton<Player> {
 
         // TODO: testing only
         weapons.Add("Gun");
-        skills.Add("Explosion");
+        skills.Add("BlackHole");
     }
 
     // Player interactions
@@ -98,20 +101,20 @@ public class Player : SceneSingleton<Player> {
         // Last direction of movement
         if (direction.x != 0 || direction.y != 0){
             if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x < 0 ) {
-                lastDirection = new Vector2(-1, 0);
+                fixedDirection = new Vector2(-1, 0);
             } else if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x > 0) {
-                lastDirection = new Vector2(1, 0);
+                fixedDirection = new Vector2(1, 0);
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y < 0) {
-                lastDirection = new Vector2(0, -1);
+                fixedDirection = new Vector2(0, -1);
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y > 0) {
-                lastDirection = new Vector2(0, 1);
+                fixedDirection = new Vector2(0, 1);
             }
         }
 
         // Last direction for skills
-        skillDirection = (transform.position - lastPosition).normalized;
-        if (skillDirection.magnitude == 0) {
-            skillDirection = new Vector2(lastDirection.x, lastDirection.y);
+        dynamicDirection = (transform.position - lastPosition).normalized;
+        if (dynamicDirection.magnitude == 0) {
+            dynamicDirection = new Vector2(fixedDirection.x, fixedDirection.y);
         }
         lastPosition = transform.position;
 
@@ -151,10 +154,10 @@ public class Player : SceneSingleton<Player> {
         // Teleport skill input
         if (skills.Contains("Teleport")) {
             if (Input.GetKeyDown(KeyCode.F) && !gateActive) {
-                float initX = (float) (transform.position.x + skillDirection.x);
-                float initY = (float) (transform.position.y + skillDirection.y);
+                float initX = (float) (transform.position.x + dynamicDirection.x);
+                float initY = (float) (transform.position.y + dynamicDirection.y);
                 gate = Instantiate(portal, new Vector3(initX, initY, 0), Quaternion.identity);
-                gate.GetComponent<Teleport>().direction = skillDirection;
+                gate.GetComponent<Teleport>().direction = dynamicDirection;
                 gateActive = true;
             } else if (Input.GetKeyDown(KeyCode.F) && gate != null) {
                 gate.GetComponent<Teleport>().Warp();
@@ -163,8 +166,17 @@ public class Player : SceneSingleton<Player> {
 
         // Explosion skill input
         if (skills.Contains("Explosion")) {
-            if (Input.GetKeyDown(KeyCode.Q)) {
+            if (Input.GetKeyDown(KeyCode.Q) && !blast) {
                 Instantiate(explosion, transform.position, Quaternion.identity);
+                blast = true;
+            }
+        }
+
+        // Black Hole skill input
+        if (skills.Contains("BlackHole")) {
+            if (Input.GetKeyDown(KeyCode.L) && !vortex) {
+                Instantiate(blackHole, transform.position, Quaternion.identity);
+                vortex = true;
             }
         }
 
@@ -176,9 +188,7 @@ public class Player : SceneSingleton<Player> {
 
     // Player movement
     public void Move() {
-        // Move body
-        body.MovePosition(new Vector2(transform.position.x + direction.x * speed * Time.deltaTime,
-                transform.position.y + direction.y * speed * Time.deltaTime));
+        transform.Translate(direction * speed * Time.fixedDeltaTime);
     }
 
     // Start the attack
@@ -186,7 +196,7 @@ public class Player : SceneSingleton<Player> {
         if (!attacking) {
             if (Input.GetKey(KeyCode.O)) {
                 StartCoroutine(Attack());
-            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.L)) {
+            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.P)) {
                 StartCoroutine(Shoot());
             } else if (weapons.Contains("Wind") && Input.GetKeyDown(KeyCode.J)) {
                 StartCoroutine(WindShoot());
@@ -211,8 +221,8 @@ public class Player : SceneSingleton<Player> {
         attacking = true;
 
         // Set Sword Object
-        float initX = (float) (transform.position.x + lastDirection.x);
-        float initY = (float) (transform.position.y + lastDirection.y);
+        float initX = (float) (transform.position.x + fixedDirection.x);
+        float initY = (float) (transform.position.y + fixedDirection.y);
         GameObject sword = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
         yield return new WaitForSeconds(1);
         animator.SetLayerWeight(2,0);
@@ -223,24 +233,24 @@ public class Player : SceneSingleton<Player> {
     // Gun attack
     public IEnumerator Shoot() {
         attacking = true;
-        float initX = (float) (transform.position.x + lastDirection.x);
-        float initY = (float) (transform.position.y + lastDirection.y);
+        float initX = (float) (transform.position.x + dynamicDirection.x);
+        float initY = (float) (transform.position.y + dynamicDirection.y);
         GameObject newProjectile = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of the bullet
-        newProjectile.GetComponent<Bullet>().direction = lastDirection;
+        newProjectile.GetComponent<Bullet>().direction = dynamicDirection;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }
 
     // Wind attack
     public IEnumerator WindShoot() {
-        float initX = (float) (transform.position.x + 1.2 * lastDirection.x);
-        float initY = (float) (transform.position.y + 1.2 * lastDirection.y);
+        float initX = (float) (transform.position.x + 1.2 * dynamicDirection.x);
+        float initY = (float) (transform.position.y + 1.2 * dynamicDirection.y);
         GameObject newProjectile = Instantiate(attacks[2], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of wind
-        newProjectile.GetComponent<Wind>().direction = lastDirection;
+        newProjectile.GetComponent<Wind>().direction = dynamicDirection;
         yield return new WaitForSeconds(0.5f);
     }
 

@@ -10,8 +10,8 @@ TagManager:
   - Wind
   - Obstacle
   - Boss1
-  - Quake
   - Solid
+  - Fireball
   layers:
   - Default
   - TransparentFX

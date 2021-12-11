@@ -129,6 +129,7 @@ MonoBehaviour:
   body: {fileID: 0}
   timeBetweenMove: 0
   timeToMove: 0
+  activityRadius: 15
   attack: 3
   timeBetweenAttack: 5
   attacks:
@@ -150,8 +151,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
-  m_LinearDrag: 0
+  m_Mass: 80
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}

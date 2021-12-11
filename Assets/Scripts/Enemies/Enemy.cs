@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour {
     float timeToMoveCounter;
     Vector2 movement = Vector2.zero;
     Animator anim;
+    bool active = true;
+    public float activityRadius;
 
     // Combat
     public int attack;
@@ -57,6 +59,21 @@ public class Enemy : MonoBehaviour {
 
     // Enemy interactions
     void Update() {
+        // Activity range
+        float distance = (transform.position - Player.Instance.transform.position).magnitude;
+        if (active && distance > activityRadius) {
+            active = false;
+            moveSpeed = 0;
+            anim.enabled = false;
+        } else if (!active && distance <= activityRadius) {
+            active = true;
+            moveSpeed = speed;
+            anim.enabled = true;
+        }
+        if (!active) {
+            return;
+        }
+
         // Skeleton
         if (enemyType == "Skeleton") {
             if (moving) {
@@ -72,7 +89,6 @@ public class Enemy : MonoBehaviour {
                 timeBetweenMoveCounter -= Time.deltaTime;
                 if (timeBetweenMoveCounter < 0f) {
                     moving = true;
-                    timeToMoveCounter = Random.Range(timeToMove * 0.9f, timeToMove * 1.1f);
                     timeToMoveCounter = Random.Range(timeToMove * 0.9f, timeToMove * 1.1f);
                     Vector3 direction = player.transform.position - transform.position;
                     direction.Normalize();
@@ -142,7 +158,7 @@ public class Enemy : MonoBehaviour {
 
     // Enemy movement
     void MoveCharacter(Vector2 dir) {
-        body.MovePosition((Vector2) transform.position + (dir * moveSpeed * Time.deltaTime));
+        transform.Translate(dir * moveSpeed * Time.fixedDeltaTime);
     }
 
     // Take damage from player

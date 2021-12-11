@@ -8,10 +8,12 @@ public class SkeletonBoss : MonoBehaviour {
     // Movement
     public float speed;
     float moveSpeed;
-    Rigidbody2D body;
+    public Rigidbody2D body;
     bool moving = false;
     Vector2 movement = Vector2.zero;
     Animator anim;
+    bool active = true;
+    public float activityRadius;
 
     // Combat
     public int attack;
@@ -50,6 +52,19 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Boss interactions
     void Update() {
+        // Activity range
+        float distance = (transform.position - Player.Instance.transform.position).magnitude;
+        if (active && distance > activityRadius) {
+            active = false;
+            moveSpeed = 0;
+        } else if (!active && distance <= activityRadius) {
+            active = true;
+            moveSpeed = speed;
+        }
+        if (!active) {
+            return;
+        }
+
         // Movement
         Vector3 direction = player.transform.position - transform.position;
         direction.Normalize();
@@ -78,6 +93,8 @@ public class SkeletonBoss : MonoBehaviour {
             sprite.material.color = new Color(255, 1, 0, 1);
         }
 
+        // Phase design
+
         // Recovery frames
         Recover();
     }
@@ -91,7 +108,7 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Enemy movement
     void MoveCharacter(Vector2 dir) {
-        body.MovePosition((Vector2) transform.position + (dir * moveSpeed * Time.deltaTime));
+        transform.Translate(dir * moveSpeed * Time.fixedDeltaTime);
     }
 
     // Take damage from player
