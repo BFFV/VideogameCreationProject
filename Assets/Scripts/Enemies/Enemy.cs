@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour {
     // Movement
     public float speed;
     float moveSpeed;
-    Rigidbody2D body;
+    public Rigidbody2D body;
     bool moving = true;
     public float timeBetweenMove;
     float timeBetweenMoveCounter;

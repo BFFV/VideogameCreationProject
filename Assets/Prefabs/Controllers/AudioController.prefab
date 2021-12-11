@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8978802950783737096}
   - component: {fileID: 8978802950783737097}
+  - component: {fileID: -7187503038114134193}
   - component: {fileID: 8978802950783737098}
   m_Layer: 0
   m_Name: AudioController
@@ -128,6 +129,102 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &-7187503038114134193
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8978802950783737095}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &8978802950783737098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,8 +241,13 @@ MonoBehaviour:
   shrine: {fileID: 8300000, guid: 6cc57dbcebf184749a49661581ceaf1b, type: 3}
   lava: {fileID: 8300000, guid: a9d7cbdd764d0284d97898b7230206ce, type: 3}
   skeletonBoss: {fileID: 8300000, guid: 9a7f51d1f7fca214e919d6bf64a2f28d, type: 3}
-  fireball: {fileID: 8300000, guid: 3910ea2871dc2744ba7ec4eeddf7621e, type: 3}
   gun: {fileID: 8300000, guid: 20fd6e2c6df6fd04692bcea37783bb26, type: 3}
-  thunder: {fileID: 8300000, guid: b0fe34a08cba8ea408cb09eb9ac58832, type: 3}
   sword: {fileID: 8300000, guid: 0ecb086029ab3c34baf6895a4d56d0df, type: 3}
+  thunder: {fileID: 8300000, guid: b0fe34a08cba8ea408cb09eb9ac58832, type: 3}
+  sprint: {fileID: 8300000, guid: 7b879305006d9d04298e370169c781c0, type: 3}
+  barrier: {fileID: 8300000, guid: 93bb442c75b8f8143b0245b5ccfdc6b3, type: 3}
+  portal: {fileID: 8300000, guid: e7d49be2e39044e489e0673939705072, type: 3}
+  teleport: {fileID: 8300000, guid: 7414730ea4992ca4099a65a2a6ee8d49, type: 3}
+  explosion: {fileID: 8300000, guid: 45eec665d4603a64f9db59e6e908304e, type: 3}
+  fireball: {fileID: 8300000, guid: 3910ea2871dc2744ba7ec4eeddf7621e, type: 3}
   levelSong: tutorial

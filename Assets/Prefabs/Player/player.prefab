@@ -157,6 +157,10 @@ MonoBehaviour:
   skills: []
   barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}
   lightning: {fileID: 921108872460622288, guid: 0d169a318fc209b468927120c681f182, type: 3}
+  storm: 0
+  portal: {fileID: 5203837996468292732, guid: b3b89517282d40949b4a4842682e77cb, type: 3}
+  gateActive: 0
+  explosion: {fileID: 8375888138684464778, guid: b0a769c9def391541a5506059b1c1a8e, type: 3}
   currentCheckpoint: {fileID: 0}
 --- !u!95 &833101522849591642
 Animator:

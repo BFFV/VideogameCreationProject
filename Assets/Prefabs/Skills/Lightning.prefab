@@ -67,6 +67,11 @@ MonoBehaviour:
   - {fileID: 5804614420518462287, guid: e37235f908c61bf47a52d2134c6a94b4, type: 3}
   - {fileID: 4573718623057549050, guid: 96fe422e34f9e5b4a98df0b616b05f72, type: 3}
   - {fileID: 5910858218244103493, guid: 812d62359d584e9489885303c5ba49f0, type: 3}
+  targetTag:
+  - Enemy
+  - Boss1
+  - Boss2
+  - FinalBoss
 --- !u!212 &921108872460622300
 SpriteRenderer:
   m_ObjectHideFlags: 0
