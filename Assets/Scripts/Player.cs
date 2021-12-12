@@ -2,6 +2,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // Player
 public class Player : SceneSingleton<Player> {
@@ -25,7 +26,9 @@ public class Player : SceneSingleton<Player> {
 
     // Health
     public int hp;
-    float recoveryTime = 0;
+    float recoveryTime = 1f;
+    float recoveryDelta = 0.05f;
+    public bool isRecovering = false;
 
     // Skills & Experience
     public int exp;
@@ -56,6 +59,8 @@ public class Player : SceneSingleton<Player> {
     // Environmental damage
     int lavaDamage = 4;
 
+    // GUI
+
     // Initialize player
     void Start() {
         // Body & animator
@@ -83,6 +88,9 @@ public class Player : SceneSingleton<Player> {
 
     // Player interactions
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         GetInput();  // Process player input for movement/skills
         HandleAttack();  // Process player input for weapons
         Recover();  // Recovery time
@@ -304,16 +312,17 @@ public class Player : SceneSingleton<Player> {
     // Enemy damage
     void OnCollisionStay2D(Collision2D other) {
         string tag = other.gameObject.tag;
+        Vector2 knockbackDir = transform.position - other.gameObject.transform.position;
         // TODO: add other bosses
         if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             if (!enemy.frozen) {
-                TakeDamage(enemy.attack);
+                TakeDamage(enemy.attack, knockbackDir.normalized);
             }
         } else if (tag == "Boss1") {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
             if (!boss.frozen) {
-                TakeDamage(boss.attack);
+                TakeDamage(boss.attack, knockbackDir.normalized);
             }
         }
     }
@@ -327,9 +336,9 @@ public class Player : SceneSingleton<Player> {
     }
 
     // Take damage
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage, Vector2? origin = null) {
         // Invincibility
-        if (recoveryTime > 0 || invincible) {
+        if (isRecovering || invincible) {
             return;
         }
 
@@ -341,23 +350,35 @@ public class Player : SceneSingleton<Player> {
         }
         GUIManager.Instance.UpdatePlayerHealth(hp);
 
+        // Show damage taken
+
         // Death
         if (hp <= 0) {
             GameManager.Instance.StartGame();
         }
 
+        // Knockback
+        if (origin != null) {
+            body.AddForce((Vector2) origin * 1500, ForceMode2D.Impulse);
+        }
+
         // Recovery frames
-        recoveryTime = 0.8f;
+        StartCoroutine(Recover());
     }
 
     // Recovery state
-    void Recover() {
-        if (recoveryTime > 0) {
-            recoveryTime -= Time.deltaTime;
-            if (recoveryTime <= 0) {
-                recoveryTime = 0;
+    IEnumerator Recover() {
+        isRecovering = true;
+        for (float i = 0; i < recoveryTime; i += recoveryDelta) {
+            if (sprite.material.color.a == 1) {
+                sprite.material.color = new Color(1, 1, 1, 0);
+            } else {
+                sprite.material.color = new Color(1, 1, 1, 1);
             }
+            yield return new WaitForSeconds(recoveryDelta);
         }
+        sprite.material.color = new Color(1, 1, 1, 1);
+        isRecovering = false;
     }
 
     // Gain experience

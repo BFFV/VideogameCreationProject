@@ -255,4 +255,8 @@ MonoBehaviour:
   holyCharge: {fileID: 8300000, guid: b5eba76c4876f4b449b64b5226d3d0e7, type: 3}
   ice: {fileID: 8300000, guid: b380747730c8ddf41b9b61bed5ab5f80, type: 3}
   fireball: {fileID: 8300000, guid: 3910ea2871dc2744ba7ec4eeddf7621e, type: 3}
+  pause: {fileID: 8300000, guid: 2378f96d859e39d43910bb659ef6befe, type: 3}
+  unpause: {fileID: 8300000, guid: 5c1c380e0e7d25a4e9c35ebd1d797b71, type: 3}
+  switchWindow: {fileID: 8300000, guid: 74735417743d055439446e54329833f2, type: 3}
+  unlock: {fileID: 8300000, guid: 60a5251c45ddb7340b971213466cd3c4, type: 3}
   levelSong: tutorial

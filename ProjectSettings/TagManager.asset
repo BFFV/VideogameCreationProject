@@ -12,6 +12,7 @@ TagManager:
   - Boss1
   - Solid
   - Fireball
+  - Canvas
   layers:
   - Default
   - TransparentFX

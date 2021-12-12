@@ -23,7 +23,9 @@ public class SkeletonBoss : MonoBehaviour {
     // Health
     public int maxHp;
     public int hp;
-    float recoveryTime = 0;
+    float recoveryTime = 0.5f;
+    float recoveryDelta = 0.05f;
+    public bool isRecovering = false;
 
     // References
     GameObject player;
@@ -132,10 +134,10 @@ public class SkeletonBoss : MonoBehaviour {
     }
 
     // Take damage from player
-    public bool TakeDamage(int damage, bool forced = false) {
+    public void TakeDamage(int damage, bool forced = false) {
         // Invincibility
-        if (recoveryTime > 0) {
-            return false;
+        if (isRecovering) {
+            return;
         }
 
         // Lose HP
@@ -144,22 +146,26 @@ public class SkeletonBoss : MonoBehaviour {
         // Death
         if (hp <= 0) {
             BossDeath();
-            return true;
+            return;
         }
 
         // Recovery frames
-        recoveryTime = 0.5f;
-        return false;
+        StartCoroutine(Recover());
     }
 
-    // Recover from attacks
-    void Recover() {
-        if (recoveryTime > 0) {
-            recoveryTime -= Time.deltaTime;
-            if (recoveryTime <= 0) {
-                recoveryTime = 0;
+    // Recovery state
+    IEnumerator Recover() {
+        isRecovering = true;
+        for (float i = 0; i < recoveryTime; i += recoveryDelta) {
+            if (sprite.material.color.a == 1) {
+                sprite.material.color = new Color(1, 1, 1, 0);
+            } else {
+                sprite.material.color = currentColor;
             }
+            yield return new WaitForSeconds(recoveryDelta);
         }
+        sprite.material.color = currentColor;
+        isRecovering = false;
     }
 
     // Freeze

@@ -31,7 +31,9 @@ public class Enemy : MonoBehaviour {
     // Health
     public int maxHp;
     public int hp;
-    float recoveryTime = 0;
+    float recoveryTime = 0.5f;
+    float recoveryDelta = 0.05f;
+    public bool isRecovering = false;
 
     // Experience
     public int expValue;
@@ -179,10 +181,10 @@ public class Enemy : MonoBehaviour {
     }
 
     // Take damage from player
-    public bool TakeDamage(int damage, bool forced = false) {
+    public void TakeDamage(int damage, bool forced = false) {
         // Invincibility
-        if (recoveryTime > 0 && !forced) {
-            return false;
+        if (isRecovering && !forced) {
+            return;
         }
 
         // Lose HP
@@ -197,22 +199,26 @@ public class Enemy : MonoBehaviour {
             // Reward player with exp
             Player.Instance.GainExp(expValue);
             Destroy(gameObject);
-            return true;
+            return;
         }
 
         // Recovery frames
-        recoveryTime = 0.5f;
-        return false;
+        StartCoroutine(Recover());
     }
 
-    // Recover from attacks
-    void Recover() {
-        if (recoveryTime > 0) {
-            recoveryTime -= Time.deltaTime;
-            if (recoveryTime <= 0) {
-                recoveryTime = 0;
+    // Recovery state
+    IEnumerator Recover() {
+        isRecovering = true;
+        for (float i = 0; i < recoveryTime; i += recoveryDelta) {
+            if (sprite.material.color.a == 1) {
+                sprite.material.color = new Color(1, 1, 1, 0);
+            } else {
+                sprite.material.color = new Color(1, 1, 1, 1);
             }
+            yield return new WaitForSeconds(recoveryDelta);
         }
+        sprite.material.color = new Color(1, 1, 1, 1);
+        isRecovering = false;
     }
 
     // Freeze

@@ -12,7 +12,7 @@ public class Lightning : MonoBehaviour {
     public float maxTime;
     float timeout = 5;
     public List<GameObject> strikes;
-    int damage = 10;
+    int damage = 3;
     bool active = true;
     public List<string> targetTag;
 
@@ -88,18 +88,18 @@ public class Lightning : MonoBehaviour {
             // TODO: add other bosses
             if (t.CompareTag("Enemy") && targetTag.Contains("Enemy")) {
                 Enemy enemy = t.GetComponent<Enemy>();
-                if (enemy.hp <= damage) {
+                if (!enemy.isRecovering && enemy.hp <= damage) {
                     targets.RemoveAt(i);
                 }
-                enemy.TakeDamage(damage, forced: true);
+                enemy.TakeDamage(damage);
             } else if (t.CompareTag("Boss1") && targetTag.Contains("Boss1")) {
                 SkeletonBoss boss = t.GetComponent<SkeletonBoss>();
-                if (boss.hp <= damage) {
+                if (!boss.isRecovering && boss.hp <= damage) {
                     targets.RemoveAt(i);
                 }
-                boss.TakeDamage(damage, forced: true);
+                boss.TakeDamage(damage);
             } else if (t.CompareTag("Player") && targetTag.Contains("Player")) {
-                if (Player.Instance.hp <= damage) {
+                if (!Player.Instance.isRecovering && Player.Instance.hp <= damage) {
                     targets.RemoveAt(i);
                 }
                 Player.Instance.TakeDamage(damage);
