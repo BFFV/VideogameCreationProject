@@ -8,10 +8,14 @@ public class SkeletonBoss : MonoBehaviour {
     // Movement
     public float speed;
     float moveSpeed;
-    Rigidbody2D body;
+    public Rigidbody2D body;
     bool moving = false;
     Vector2 movement = Vector2.zero;
     Animator anim;
+    bool active = true;
+    public float activityRadius;
+    public bool frozen = false;
+    float freezeTimeout = 1;
 
     // Combat
     public int attack;
@@ -25,6 +29,7 @@ public class SkeletonBoss : MonoBehaviour {
     GameObject player;
     public GameObject rock;
     public SpriteRenderer sprite;
+    Color currentColor;
 
     // Phases
     int phase = 0;
@@ -45,11 +50,38 @@ public class SkeletonBoss : MonoBehaviour {
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        currentColor = new Color(1, 1, 1, 1);
         player = Player.Instance.gameObject;
     }
 
     // Boss interactions
     void Update() {
+        // Frozen
+        if (frozen) {
+            freezeTimeout -= Time.deltaTime;
+            if (freezeTimeout <= 0) {
+                freezeTimeout = 1;
+                frozen = false;
+                moveSpeed = speed;
+                anim.enabled = true;
+                sprite.material.color = currentColor;
+            }
+            return;
+        }
+
+        // Activity range
+        float distance = (transform.position - Player.Instance.transform.position).magnitude;
+        if (active && distance > activityRadius) {
+            active = false;
+            moveSpeed = 0;
+        } else if (!active && distance <= activityRadius) {
+            active = true;
+            moveSpeed = speed;
+        }
+        if (!active) {
+            return;
+        }
+
         // Movement
         Vector3 direction = player.transform.position - transform.position;
         direction.Normalize();
@@ -71,12 +103,17 @@ public class SkeletonBoss : MonoBehaviour {
         // Phases
         if (phase <= 1 && hp <= maxHp * 0.7) {
             phase = 2;
-            moveSpeed = speed * 1.5f;
+            speed *= 1.5f;
+            moveSpeed = speed;
             sprite.material.color = new Color(50, 0.5f, 0, 1);
+            currentColor = sprite.material.color;
         } else if (phase == 2 && hp <= maxHp * 0.3) {
             phase = 3;
             sprite.material.color = new Color(255, 1, 0, 1);
+            currentColor = sprite.material.color;
         }
+
+        // Phase design
 
         // Recovery frames
         Recover();
@@ -91,7 +128,7 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Enemy movement
     void MoveCharacter(Vector2 dir) {
-        body.MovePosition((Vector2) transform.position + (dir * moveSpeed * Time.deltaTime));
+        transform.Translate(dir * moveSpeed * Time.fixedDeltaTime);
     }
 
     // Take damage from player
@@ -123,6 +160,14 @@ public class SkeletonBoss : MonoBehaviour {
                 recoveryTime = 0;
             }
         }
+    }
+
+    // Freeze
+    public void Freeze() {
+        moveSpeed = 0;
+        anim.enabled = false;
+        frozen = true;
+        sprite.material.color = new Color(0, 2f, 2f, 1);
     }
 
     // Death sequence

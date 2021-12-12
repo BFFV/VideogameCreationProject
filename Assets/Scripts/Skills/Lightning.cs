@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 // Lightning skill
 public class Lightning : MonoBehaviour {
@@ -13,18 +14,25 @@ public class Lightning : MonoBehaviour {
     public List<GameObject> strikes;
     int damage = 10;
     bool active = true;
+    public List<string> targetTag;
 
     // Start skill
     void Start() {
-        StartCoroutine(Cast(15, 1));
+        AudioManager.Instance.PlaySound("storm", 2f);
+        StartCoroutine(Cast(3.5f, 1));
         StartCoroutine(Storm());
+    }
+
+    // Assign to enemy
+    public void AssignToEnemy() {
+        targetTag = new List<string> {"Player"};
     }
 
     // Cast skill
     IEnumerator Cast(float sValue, float sTime) {
         float x = transform.localScale.x;
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / sTime) {
-            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 0);
+            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 1);
             yield return null;
         }
     }
@@ -39,6 +47,7 @@ public class Lightning : MonoBehaviour {
 
     // Skill activity
     void Update() {
+        transform.Rotate(0, 0, 60 * Time.deltaTime, Space.World);
         timeout -= Time.deltaTime;
         if (timeout <= 0) {
             if (active) {
@@ -47,6 +56,7 @@ public class Lightning : MonoBehaviour {
                 active = false;
             } else {
                 StopCoroutine(Storm());
+                Player.Instance.storm = false;
                 Destroy(gameObject);
             }
         }
@@ -55,8 +65,7 @@ public class Lightning : MonoBehaviour {
     // Enemy enters strike zone
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
-        // TODO: add other bosses
-        if (!other.isTrigger && (tag == "Enemy" || tag == "Boss1")) {
+        if (!other.isTrigger && targetTag.Contains(tag)) {
             targets.Add(other.gameObject);
         }
     }
@@ -65,7 +74,7 @@ public class Lightning : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other) {
         string tag = other.gameObject.tag;
          // TODO: add other bosses
-        if (!other.isTrigger && (tag == "Enemy" || tag == "Boss1")) {
+        if (!other.isTrigger && targetTag.Contains(tag)) {
             targets.Remove(other.gameObject);
         }
     }
@@ -77,18 +86,23 @@ public class Lightning : MonoBehaviour {
             Vector3 pos = t.transform.position;
             Instantiate(strikes[Random.Range(0, 3)], pos, Quaternion.identity);
             // TODO: add other bosses
-            if (t.CompareTag("Enemy")) {
+            if (t.CompareTag("Enemy") && targetTag.Contains("Enemy")) {
                 Enemy enemy = t.GetComponent<Enemy>();
                 if (enemy.hp <= damage) {
                     targets.RemoveAt(i);
                 }
                 enemy.TakeDamage(damage, forced: true);
-            } else if (t.CompareTag("Boss1")) {
+            } else if (t.CompareTag("Boss1") && targetTag.Contains("Boss1")) {
                 SkeletonBoss boss = t.GetComponent<SkeletonBoss>();
                 if (boss.hp <= damage) {
                     targets.RemoveAt(i);
                 }
                 boss.TakeDamage(damage, forced: true);
+            } else if (t.CompareTag("Player") && targetTag.Contains("Player")) {
+                if (Player.Instance.hp <= damage) {
+                    targets.RemoveAt(i);
+                }
+                Player.Instance.TakeDamage(damage);
             }
         }
     }

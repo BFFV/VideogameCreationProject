@@ -8,6 +8,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
     // References
     AudioSource player;
+    AudioSource loop;
 
     // Map string to audio
     Dictionary<string, AudioClip> songs = new Dictionary<string, AudioClip>();
@@ -19,25 +20,67 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip skeletonBoss;
 
     // Sound Effects
-    public AudioClip fireball;
+
+    // Weapons
     public AudioClip gun;
-    public AudioClip thunder;
     public AudioClip sword;
+
+    // Skills
+    public AudioClip thunder;
+    public AudioClip storm;
+    public AudioClip sprint;
+    public AudioClip barrier;
+    public AudioClip portal;
+    public AudioClip teleport;
+    public AudioClip explosion;
+    public AudioClip blackHole;
+    public AudioClip holyBeam;
+    public AudioClip holyCharge;
+    public AudioClip ice;
+
+    // Enemies
+    public AudioClip fireball;
 
     // Level
     public string levelSong;
 
     // Setup
     void Start() {
-        player = gameObject.GetComponent<AudioSource>();
+        // Get players
+        AudioSource[] sources = gameObject.GetComponents<AudioSource>();
+        player = sources[0];
+        loop = sources[1];
+        player.loop = true;
+        loop.loop = true;
+        loop.volume = 0.5f;
+
+        // Music
         songs.Add("tutorial", tutorial);
         songs.Add("shrine", shrine);
         songs.Add("lava", lava);
         songs.Add("skeletonBoss", skeletonBoss);
-        songs.Add("fireball", fireball);
+
+        // Weapons
         songs.Add("sword", sword);
         songs.Add("gun", gun);
+
+        // Skills
         songs.Add("thunder", thunder);
+        songs.Add("storm", storm);
+        songs.Add("sprint", sprint);
+        songs.Add("barrier", barrier);
+        songs.Add("portal", portal);
+        songs.Add("teleport", teleport);
+        songs.Add("explosion", explosion);
+        songs.Add("blackHole", blackHole);
+        songs.Add("holyCharge", holyCharge);
+        songs.Add("holyBeam", holyBeam);
+        songs.Add("ice", ice);
+
+        // Enemies
+        songs.Add("fireball", fireball);
+
+        // Play level music
         PlaySoundtrack(levelSong);
     }
 
@@ -48,7 +91,18 @@ public class AudioManager : SceneSingleton<AudioManager> {
     }
 
     // Play SFX
-    public void PlaySound(string sound) {
-        player.PlayOneShot(songs[sound]);
+    public void PlaySound(string sound, float volume = 1) {
+        player.PlayOneShot(songs[sound], volume);
+    }
+
+    // Start Looping SFX
+    public void StartLoop(string sound) {
+        loop.clip = songs[sound];
+        loop.Play();
+    }
+
+    // Stop Looping SFX
+    public void StopLoop() {
+        loop.Stop();
     }
 }

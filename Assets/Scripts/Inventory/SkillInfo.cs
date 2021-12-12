@@ -19,6 +19,11 @@ public class SkillInfo : MonoBehaviour {
         if (newCost > 0) {
             icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 0.47f);
             cost.text = "Unlock: " + newCost + " EXP";
+            if (newName == "Black Hole") {
+                cost.text = "Unlock: Defeat the Dark Lord";
+            } else if (newName == "Holy Beam") {
+                cost.text = "Unlock: Defeat the Holy Lord";
+            }
         }
         description.text = newDesc;
     }

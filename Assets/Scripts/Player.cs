@@ -8,10 +8,14 @@ public class Player : SceneSingleton<Player> {
 
     // Movement
     float speed = 4;
+    float moveSpeed = 4;
     Vector2 direction = Vector2.zero;
-    Vector2 lastDirection = new Vector2(0, 1);
-    Rigidbody2D body;
+    Vector2 dynamicDirection = new Vector2(0, 1);
+    Vector2 fixedDirection = new Vector2(0, 1);
+    Vector3 lastPosition = new Vector2(0, 0);
+    public Rigidbody2D body;
     Animator animator;
+    SpriteRenderer sprite;
 
     // Combat
     bool attacking = false;
@@ -26,10 +30,25 @@ public class Player : SceneSingleton<Player> {
     // Skills & Experience
     public int exp;
     public List<string> skills;
+    bool sprinting = false;
     bool invincible = false;
     GameObject barrierSkill = null;
     public GameObject barrier;
     public GameObject lightning;
+    public bool storm = false;
+    public GameObject portal;
+    public bool gateActive = false;
+    GameObject gate;
+    public GameObject explosion;
+    public bool blast = false;
+    public bool vortex = false;
+    public GameObject blackHole;
+    public GameObject holyBeam;
+    public GameObject holyCharge;
+    public bool holy = false;
+    public GameObject iceShot;
+    public bool frozen = false;
+    float freezeTimeout = 1;
 
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
@@ -42,6 +61,7 @@ public class Player : SceneSingleton<Player> {
         // Body & animator
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
 
         // Spawn state
         PlayerData state;
@@ -55,8 +75,10 @@ public class Player : SceneSingleton<Player> {
         exp = state.spawnExp;
         weapons = new List<string>(state.spawnWeapons);
         skills = new List<string>(state.spawnSkills);
+
         GUIManager.Instance.UpdatePlayerStatus(hp, exp);
-        GUIManager.Instance.ToggleGunIcon(weapons.Contains("Gun"));  // TODO: change later
+        // TODO: testing only
+        weapons.Add("Gun");
     }
 
     // Player interactions
@@ -73,6 +95,20 @@ public class Player : SceneSingleton<Player> {
 
     // Receive player input
     private void GetInput() {
+        // Frozen
+        if (frozen) {
+            freezeTimeout -= Time.deltaTime;
+            if (freezeTimeout <= 0) {
+                freezeTimeout = 1;
+                frozen = false;
+                moveSpeed = speed;
+                sprinting = false;
+                animator.enabled = true;
+                sprite.material.color = new Color(1, 1, 1, 1);
+            }
+            return;
+        }
+
         // Movement input
         if (!attacking) {
             direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -87,29 +123,40 @@ public class Player : SceneSingleton<Player> {
         // Last direction of movement
         if (direction.x != 0 || direction.y != 0){
             if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x < 0 ) {
-                lastDirection = new Vector2(-1,0);
+                fixedDirection = new Vector2(-1, 0);
             } else if (Math.Abs(direction.x) > Math.Abs(direction.y) && direction.x > 0) {
-                lastDirection = new Vector2(1,0);
+                fixedDirection = new Vector2(1, 0);
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y < 0) {
-                lastDirection = new Vector2(0, -1);
+                fixedDirection = new Vector2(0, -1);
             } else if (Math.Abs(direction.y) > Math.Abs(direction.x) && direction.y > 0) {
-                lastDirection = new Vector2(0, 1);
+                fixedDirection = new Vector2(0, 1);
             }
         }
 
+        // Last direction for skills
+        dynamicDirection = (transform.position - lastPosition).normalized;
+        if (dynamicDirection.magnitude == 0) {
+            dynamicDirection = new Vector2(fixedDirection.x, fixedDirection.y);
+        }
+        lastPosition = transform.position;
+
         // Sprint skill input
         if (skills.Contains("Sprint")) {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) {
-                speed *= 2;
-            } else if (Input.GetKeyUp(KeyCode.LeftShift)) {
-                speed /= 2;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !sprinting) {
+                sprinting = true;
+                moveSpeed *= 2.5f;
+                AudioManager.Instance.PlaySound("sprint");
+            } else if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting) {
+                sprinting = false;
+                moveSpeed /= 2.5f;
             }
         }
 
         // Lightning skill input
         if (skills.Contains("Lightning")) {
-            if (Input.GetKeyDown(KeyCode.R)) {
+            if (Input.GetKeyDown(KeyCode.R) && !storm) {
                 Instantiate(lightning, transform.position, Quaternion.identity);
+                storm = true;
             }
         }
 
@@ -118,9 +165,65 @@ public class Player : SceneSingleton<Player> {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 invincible = true;
                 barrierSkill = Instantiate(barrier, transform);
+                AudioManager.Instance.StartLoop("barrier");
             } else if (Input.GetKeyUp(KeyCode.Space)) {
                 invincible = false;
                 Destroy(barrierSkill);
+                AudioManager.Instance.StopLoop();
+            }
+        }
+
+        // Teleport skill input
+        if (skills.Contains("Teleport")) {
+            if (Input.GetKeyDown(KeyCode.F) && !gateActive) {
+                float initX = (float) (transform.position.x + dynamicDirection.x);
+                float initY = (float) (transform.position.y + dynamicDirection.y);
+                gate = Instantiate(portal, new Vector3(initX, initY, 0), Quaternion.identity);
+                gate.GetComponent<Teleport>().direction = dynamicDirection;
+                gateActive = true;
+            } else if (Input.GetKeyDown(KeyCode.F) && gate != null) {
+                gate.GetComponent<Teleport>().Warp();
+            }
+        }
+
+        // Explosion skill input
+        if (skills.Contains("Explosion")) {
+            if (Input.GetKeyDown(KeyCode.Q) && !blast) {
+                Instantiate(explosion, transform.position, Quaternion.identity);
+                blast = true;
+            }
+        }
+
+        // Ice Shot skill input
+        if (skills.Contains("Ice")) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                float initX = (float) (transform.position.x + dynamicDirection.x);
+                float initY = (float) (transform.position.y + dynamicDirection.y);
+                Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
+                Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
+                GameObject ice = Instantiate(iceShot, new Vector3(initX, initY, 0), rotation);
+                IceShot iceBlast = ice.GetComponent<IceShot>();
+                iceBlast.direction = dynamicDirection;
+            }
+        }
+
+        // Black Hole skill input
+        if (skills.Contains("BlackHole")) {
+            if (Input.GetKeyDown(KeyCode.L) && !vortex) {
+                Instantiate(blackHole, transform.position, Quaternion.identity);
+                vortex = true;
+            }
+        }
+
+        // Holy Beam skill input
+        if (skills.Contains("HolyBeam")) {
+            if (Input.GetKeyDown(KeyCode.K) && !holy) {
+                Vector3 offset = (transform.position + (Vector3) dynamicDirection * 1.5f);
+                Instantiate(holyCharge, offset, Quaternion.identity);
+                Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
+                Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
+                Instantiate(holyBeam, offset, rotation);
+                holy = true;
             }
         }
 
@@ -132,9 +235,7 @@ public class Player : SceneSingleton<Player> {
 
     // Player movement
     public void Move() {
-        // Move body
-        body.MovePosition(new Vector2(transform.position.x + direction.x * speed * Time.deltaTime,
-                transform.position.y + direction.y * speed * Time.deltaTime));
+        transform.Translate(direction * moveSpeed * Time.fixedDeltaTime);
     }
 
     // Start the attack
@@ -142,7 +243,7 @@ public class Player : SceneSingleton<Player> {
         if (!attacking) {
             if (Input.GetKey(KeyCode.O)) {
                 StartCoroutine(Attack());
-            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.L)) {
+            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.P)) {
                 StartCoroutine(Shoot());
             } else if (weapons.Contains("Wind") && Input.GetKeyDown(KeyCode.J)) {
                 StartCoroutine(WindShoot());
@@ -157,8 +258,8 @@ public class Player : SceneSingleton<Player> {
         } else {
             animator.SetLayerWeight(1,0);
         }
-        animator.SetFloat("x", direction.x * speed);
-        animator.SetFloat("y", direction.y * speed);
+        animator.SetFloat("x", direction.x * moveSpeed);
+        animator.SetFloat("y", direction.y * moveSpeed);
     }
 
     // Sword attack
@@ -167,8 +268,8 @@ public class Player : SceneSingleton<Player> {
         attacking = true;
 
         // Set Sword Object
-        float initX = (float) (transform.position.x + lastDirection.x);
-        float initY = (float) (transform.position.y + lastDirection.y);
+        float initX = (float) (transform.position.x + fixedDirection.x);
+        float initY = (float) (transform.position.y + fixedDirection.y);
         GameObject sword = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
         yield return new WaitForSeconds(1);
         animator.SetLayerWeight(2,0);
@@ -179,24 +280,24 @@ public class Player : SceneSingleton<Player> {
     // Gun attack
     public IEnumerator Shoot() {
         attacking = true;
-        float initX = (float) (transform.position.x + lastDirection.x);
-        float initY = (float) (transform.position.y + lastDirection.y);
+        float initX = (float) (transform.position.x + dynamicDirection.x);
+        float initY = (float) (transform.position.y + dynamicDirection.y);
         GameObject newProjectile = Instantiate(attacks[1], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of the bullet
-        newProjectile.GetComponent<Bullet>().direction = lastDirection;
+        newProjectile.GetComponent<Bullet>().direction = dynamicDirection;
         yield return new WaitForSeconds(0.5f);
         attacking = false;
     }
 
     // Wind attack
     public IEnumerator WindShoot() {
-        float initX = (float) (transform.position.x + 1.2 * lastDirection.x);
-        float initY = (float) (transform.position.y + 1.2 * lastDirection.y);
+        float initX = (float) (transform.position.x + 1.2 * dynamicDirection.x);
+        float initY = (float) (transform.position.y + 1.2 * dynamicDirection.y);
         GameObject newProjectile = Instantiate(attacks[2], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of wind
-        newProjectile.GetComponent<Wind>().direction = lastDirection;
+        newProjectile.GetComponent<Wind>().direction = dynamicDirection;
         yield return new WaitForSeconds(0.5f);
     }
 
@@ -206,10 +307,14 @@ public class Player : SceneSingleton<Player> {
         // TODO: add other bosses
         if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            TakeDamage(enemy.attack);
+            if (!enemy.frozen) {
+                TakeDamage(enemy.attack);
+            }
         } else if (tag == "Boss1") {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
-            TakeDamage(boss.attack);
+            if (!boss.frozen) {
+                TakeDamage(boss.attack);
+            }
         }
     }
 
@@ -259,5 +364,31 @@ public class Player : SceneSingleton<Player> {
     public void GainExp(int expValue) {
         exp += expValue;
         GUIManager.Instance.UpdatePlayerExp(exp);
+    }
+
+    // Warp effect
+    public void OnWarp() {
+        gateActive = false;
+        StartCoroutine(FadeTo(1, 0.5f));
+    }
+
+    // Fade In/Out
+    IEnumerator FadeTo(float cValue, float cTime) {
+        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+        float g = sprite.material.color.g;
+        float b = sprite.material.color.b;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / cTime) {
+            Color newColor = new Color(1, Mathf.Lerp(g, cValue, t), Mathf.Lerp(b, cValue, t), 1);
+            sprite.material.color = newColor;
+            yield return null;
+        }
+    }
+
+    // Freeze
+    public void Freeze() {
+        moveSpeed = 0;
+        animator.enabled = false;
+        frozen = true;
+        sprite.material.color = new Color(0, 2f, 2f, 1);
     }
 }

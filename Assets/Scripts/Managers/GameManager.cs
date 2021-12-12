@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager> {
 
     // Checkpoints & save data
     public int slot = 0;
-    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default"); // TODO: remove
+    public PlayerData playerData = new PlayerData("Shrine", new Vector3(70, 0, 0), "default");  // TODO: reset test (70, 0, 0)
 
     // Settings
     void Start() {
