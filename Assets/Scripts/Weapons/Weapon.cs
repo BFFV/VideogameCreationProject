@@ -22,9 +22,9 @@ public class Weapon : MonoBehaviour {
     // Player obtains weapon
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            Player.Instance.weapons.Add(gameObject.tag);
+            Inventory.Instance.SetWeapon(gameObject.tag);
             if (gameObject.tag == "Gun") {
-                GUIManager.Instance.ToggleGunIcon(true);  // will be changed later
+                GUIManager.Instance.ToggleGunIcon(true);  // TODO: will be changed later
                 GUIManager.Instance.ShowEvent("You have acquired a " + gameObject.tag + "!");
             }
             if (gameObject.tag == "Wind") {

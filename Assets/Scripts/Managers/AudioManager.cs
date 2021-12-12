@@ -41,6 +41,12 @@ public class AudioManager : SceneSingleton<AudioManager> {
     // Enemies
     public AudioClip fireball;
 
+    // Inventory
+    public AudioClip pause;
+    public AudioClip unpause;
+    public AudioClip switchWindow;
+    public AudioClip unlock;
+
     // Level
     public string levelSong;
 
@@ -79,6 +85,12 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
         // Enemies
         songs.Add("fireball", fireball);
+
+        // Inventory
+        songs.Add("pause", pause);
+        songs.Add("unpause", unpause);
+        songs.Add("switchWindow", switchWindow);
+        songs.Add("unlock", unlock);
 
         // Play level music
         PlaySoundtrack(levelSong);

@@ -167,9 +167,11 @@ MonoBehaviour:
   timeBetweenMove: 0
   timeToMove: 0
   activityRadius: 20
+  frozen: 0
   attack: 1
   timeBetweenAttack: 0
   attacks: []
+  damageText: {fileID: 3816975705448875436, guid: 99112ff4ef0e9b84a84bd2eb4dddf20e, type: 3}
   maxHp: 2
   hp: 2
   expValue: 15
