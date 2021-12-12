@@ -482,8 +482,8 @@ MonoBehaviour:
   info: {fileID: 0}
   skill: HolyBeam
   skillName: Holy Beam
-  cost: 200
-  description: C
+  cost: 999999
+  description: Press <K> to shoot an energy beam and decimate your enemies.
 --- !u!1 &126262300
 GameObject:
   m_ObjectHideFlags: 0
@@ -83724,9 +83724,9 @@ MonoBehaviour:
   infoUI: {fileID: 1803378970}
   info: {fileID: 0}
   skill: Ice
-  skillName: Ice Ball
+  skillName: Ice Shot
   cost: 200
-  description: C
+  description: Press <E> to shoot an ice blast that freezes your enemies.
 --- !u!1 &154534505
 GameObject:
   m_ObjectHideFlags: 0
@@ -97093,7 +97093,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: beb9d646e02582e48a931c56f831b5a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -98950,8 +98950,8 @@ MonoBehaviour:
   info: {fileID: 0}
   skill: BlackHole
   skillName: Black Hole
-  cost: 200
-  description: C
+  cost: 999999
+  description: Press <L> to form a black hole and obliterate your enemies.
 --- !u!1 &1077037346
 GameObject:
   m_ObjectHideFlags: 0
@@ -138464,7 +138464,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e5e4cf2c229ff80449569a28f0fc6ee3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -138539,7 +138539,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1c8016e04ff988e4a83dc96a825247aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -30,6 +30,9 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             unlockButton.interactable = false;
             icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 1f);
         }
+        if (skillName == "BlackHole" || skillName == "HolyBeam") {
+            unlockButton.interactable = false;
+        }
     }
 
     // Unlock skill

@@ -16,6 +16,11 @@ public class Explosion : MonoBehaviour {
         AudioManager.Instance.PlaySound("explosion");
     }
 
+    // Assign to enemy
+    public void AssignToEnemy() {
+        targetTag = new List<string> {"Player"};
+    }
+
     // Skill activity
     void Update() {
         timeout -= Time.deltaTime;

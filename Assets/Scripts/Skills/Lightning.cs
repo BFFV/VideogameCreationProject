@@ -18,15 +18,21 @@ public class Lightning : MonoBehaviour {
 
     // Start skill
     void Start() {
-        StartCoroutine(Cast(15, 1));
+        AudioManager.Instance.PlaySound("storm", 2f);
+        StartCoroutine(Cast(3.5f, 1));
         StartCoroutine(Storm());
+    }
+
+    // Assign to enemy
+    public void AssignToEnemy() {
+        targetTag = new List<string> {"Player"};
     }
 
     // Cast skill
     IEnumerator Cast(float sValue, float sTime) {
         float x = transform.localScale.x;
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / sTime) {
-            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 0);
+            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 1);
             yield return null;
         }
     }
@@ -41,6 +47,7 @@ public class Lightning : MonoBehaviour {
 
     // Skill activity
     void Update() {
+        transform.Rotate(0, 0, 60 * Time.deltaTime, Space.World);
         timeout -= Time.deltaTime;
         if (timeout <= 0) {
             if (active) {

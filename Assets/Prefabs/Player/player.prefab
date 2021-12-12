@@ -157,7 +157,7 @@ MonoBehaviour:
   exp: 0
   skills: []
   barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}
-  lightning: {fileID: 921108872460622288, guid: 0d169a318fc209b468927120c681f182, type: 3}
+  lightning: {fileID: 749787904355031690, guid: 0d169a318fc209b468927120c681f182, type: 3}
   storm: 0
   portal: {fileID: 5203837996468292732, guid: b3b89517282d40949b4a4842682e77cb, type: 3}
   gateActive: 0
@@ -165,6 +165,10 @@ MonoBehaviour:
   blast: 0
   vortex: 0
   blackHole: {fileID: 5623354847732807814, guid: 6da803723c4f4734aa98fb09fce5c66f, type: 3}
+  holyBeam: {fileID: 3949892118607451988, guid: 937ea492a6a7e074fbd02bf212329a3d, type: 3}
+  holyCharge: {fileID: 9142842301012320788, guid: 798ada2ede5bcbc4885c7e97eb01259a, type: 3}
+  holy: 0
+  iceShot: {fileID: 8982258414888064180, guid: f9edaba0ff0c3c746afafe0cdd12e99f, type: 3}
   currentCheckpoint: {fileID: 0}
 --- !u!95 &833101522849591642
 Animator:

@@ -8,12 +8,14 @@ public class Player : SceneSingleton<Player> {
 
     // Movement
     float speed = 4;
+    float moveSpeed = 4;
     Vector2 direction = Vector2.zero;
     Vector2 dynamicDirection = new Vector2(0, 1);
     Vector2 fixedDirection = new Vector2(0, 1);
     Vector3 lastPosition = new Vector2(0, 0);
     public Rigidbody2D body;
     Animator animator;
+    SpriteRenderer sprite;
 
     // Combat
     bool attacking = false;
@@ -41,6 +43,12 @@ public class Player : SceneSingleton<Player> {
     public bool blast = false;
     public bool vortex = false;
     public GameObject blackHole;
+    public GameObject holyBeam;
+    public GameObject holyCharge;
+    public bool holy = false;
+    public GameObject iceShot;
+    public bool frozen = false;
+    float freezeTimeout = 1;
 
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
@@ -53,6 +61,7 @@ public class Player : SceneSingleton<Player> {
         // Body & animator
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
 
         // Spawn state
         PlayerData state;
@@ -66,11 +75,10 @@ public class Player : SceneSingleton<Player> {
         exp = state.spawnExp;
         weapons = new List<string>(state.spawnWeapons);
         skills = new List<string>(state.spawnSkills);
-        GUIManager.Instance.UpdatePlayerStatus(hp, exp);
 
+        GUIManager.Instance.UpdatePlayerStatus(hp, exp);
         // TODO: testing only
         weapons.Add("Gun");
-        skills.Add("BlackHole");
     }
 
     // Player interactions
@@ -87,6 +95,20 @@ public class Player : SceneSingleton<Player> {
 
     // Receive player input
     private void GetInput() {
+        // Frozen
+        if (frozen) {
+            freezeTimeout -= Time.deltaTime;
+            if (freezeTimeout <= 0) {
+                freezeTimeout = 1;
+                frozen = false;
+                moveSpeed = speed;
+                sprinting = false;
+                animator.enabled = true;
+                sprite.material.color = new Color(1, 1, 1, 1);
+            }
+            return;
+        }
+
         // Movement input
         if (!attacking) {
             direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -122,11 +144,11 @@ public class Player : SceneSingleton<Player> {
         if (skills.Contains("Sprint")) {
             if (Input.GetKeyDown(KeyCode.LeftShift) && !sprinting) {
                 sprinting = true;
-                speed *= 2.5f;
+                moveSpeed *= 2.5f;
                 AudioManager.Instance.PlaySound("sprint");
             } else if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting) {
                 sprinting = false;
-                speed /= 2.5f;
+                moveSpeed /= 2.5f;
             }
         }
 
@@ -172,11 +194,36 @@ public class Player : SceneSingleton<Player> {
             }
         }
 
+        // Ice Shot skill input
+        if (skills.Contains("Ice")) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                float initX = (float) (transform.position.x + dynamicDirection.x);
+                float initY = (float) (transform.position.y + dynamicDirection.y);
+                Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
+                Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
+                GameObject ice = Instantiate(iceShot, new Vector3(initX, initY, 0), rotation);
+                IceShot iceBlast = ice.GetComponent<IceShot>();
+                iceBlast.direction = dynamicDirection;
+            }
+        }
+
         // Black Hole skill input
         if (skills.Contains("BlackHole")) {
             if (Input.GetKeyDown(KeyCode.L) && !vortex) {
                 Instantiate(blackHole, transform.position, Quaternion.identity);
                 vortex = true;
+            }
+        }
+
+        // Holy Beam skill input
+        if (skills.Contains("HolyBeam")) {
+            if (Input.GetKeyDown(KeyCode.K) && !holy) {
+                Vector3 offset = (transform.position + (Vector3) dynamicDirection * 1.5f);
+                Instantiate(holyCharge, offset, Quaternion.identity);
+                Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
+                Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
+                Instantiate(holyBeam, offset, rotation);
+                holy = true;
             }
         }
 
@@ -188,7 +235,7 @@ public class Player : SceneSingleton<Player> {
 
     // Player movement
     public void Move() {
-        transform.Translate(direction * speed * Time.fixedDeltaTime);
+        transform.Translate(direction * moveSpeed * Time.fixedDeltaTime);
     }
 
     // Start the attack
@@ -211,8 +258,8 @@ public class Player : SceneSingleton<Player> {
         } else {
             animator.SetLayerWeight(1,0);
         }
-        animator.SetFloat("x", direction.x * speed);
-        animator.SetFloat("y", direction.y * speed);
+        animator.SetFloat("x", direction.x * moveSpeed);
+        animator.SetFloat("y", direction.y * moveSpeed);
     }
 
     // Sword attack
@@ -260,10 +307,14 @@ public class Player : SceneSingleton<Player> {
         // TODO: add other bosses
         if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            TakeDamage(enemy.attack);
+            if (!enemy.frozen) {
+                TakeDamage(enemy.attack);
+            }
         } else if (tag == "Boss1") {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
-            TakeDamage(boss.attack);
+            if (!boss.frozen) {
+                TakeDamage(boss.attack);
+            }
         }
     }
 
@@ -331,5 +382,13 @@ public class Player : SceneSingleton<Player> {
             sprite.material.color = newColor;
             yield return null;
         }
+    }
+
+    // Freeze
+    public void Freeze() {
+        moveSpeed = 0;
+        animator.enabled = false;
+        frozen = true;
+        sprite.material.color = new Color(0, 2f, 2f, 1);
     }
 }

@@ -16,14 +16,20 @@ public class BlackHole : MonoBehaviour {
 
     // Start skill
     void Start() {
+        AudioManager.Instance.PlaySound("blackHole", 2);
         StartCoroutine(Cast(2.5f, 2));
+    }
+
+    // Assign to enemy
+    public void AssignToEnemy() {
+        targetTag = new List<string> {"Player"};
     }
 
     // Cast skill
     IEnumerator Cast(float sValue, float sTime) {
         float x = transform.localScale.x;
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / sTime) {
-            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 0);
+            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 1);
             yield return null;
         }
     }

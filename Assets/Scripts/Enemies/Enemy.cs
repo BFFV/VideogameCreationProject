@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour {
     Animator anim;
     bool active = true;
     public float activityRadius;
+    public bool frozen = false;
+    float freezeTimeout = 5;
+    SpriteRenderer sprite;
 
     // Combat
     public int attack;
@@ -46,6 +49,7 @@ public class Enemy : MonoBehaviour {
         moveSpeed = speed;
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         player = Player.Instance.gameObject;
         timeBetweenMoveCounter = Random.Range(timeBetweenMove * 0.75f, timeBetweenMove * 1.25f);
         timeToMoveCounter = Random.Range(timeToMove * 0.75f, timeToMove * 1.25f);
@@ -59,6 +63,19 @@ public class Enemy : MonoBehaviour {
 
     // Enemy interactions
     void Update() {
+        // Frozen
+        if (frozen) {
+            freezeTimeout -= Time.deltaTime;
+            if (freezeTimeout <= 0) {
+                freezeTimeout = 5;
+                frozen = false;
+                moveSpeed = speed;
+                anim.enabled = true;
+                sprite.material.color = new Color(1, 1, 1, 1);
+            }
+            return;
+        }
+
         // Activity range
         float distance = (transform.position - Player.Instance.transform.position).magnitude;
         if (active && distance > activityRadius) {
@@ -196,5 +213,13 @@ public class Enemy : MonoBehaviour {
                 recoveryTime = 0;
             }
         }
+    }
+
+    // Freeze
+    public void Freeze() {
+        moveSpeed = 0;
+        anim.enabled = false;
+        frozen = true;
+        sprite.material.color = new Color(0, 2f, 2f, 1);
     }
 }

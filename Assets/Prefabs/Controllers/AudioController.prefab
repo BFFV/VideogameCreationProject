@@ -244,10 +244,15 @@ MonoBehaviour:
   gun: {fileID: 8300000, guid: 20fd6e2c6df6fd04692bcea37783bb26, type: 3}
   sword: {fileID: 8300000, guid: 0ecb086029ab3c34baf6895a4d56d0df, type: 3}
   thunder: {fileID: 8300000, guid: b0fe34a08cba8ea408cb09eb9ac58832, type: 3}
+  storm: {fileID: 8300000, guid: e7d3b717869182f4bbbb73708ae3ff50, type: 3}
   sprint: {fileID: 8300000, guid: 7b879305006d9d04298e370169c781c0, type: 3}
   barrier: {fileID: 8300000, guid: 93bb442c75b8f8143b0245b5ccfdc6b3, type: 3}
   portal: {fileID: 8300000, guid: e7d49be2e39044e489e0673939705072, type: 3}
   teleport: {fileID: 8300000, guid: 7414730ea4992ca4099a65a2a6ee8d49, type: 3}
   explosion: {fileID: 8300000, guid: 45eec665d4603a64f9db59e6e908304e, type: 3}
+  blackHole: {fileID: 8300000, guid: 3ee03cd13a3870148a24b315b8063a07, type: 3}
+  holyBeam: {fileID: 8300000, guid: 2270c7e2e384fc049a54fdb90994256b, type: 3}
+  holyCharge: {fileID: 8300000, guid: b5eba76c4876f4b449b64b5226d3d0e7, type: 3}
+  ice: {fileID: 8300000, guid: b380747730c8ddf41b9b61bed5ab5f80, type: 3}
   fireball: {fileID: 8300000, guid: 3910ea2871dc2744ba7ec4eeddf7621e, type: 3}
   levelSong: tutorial
