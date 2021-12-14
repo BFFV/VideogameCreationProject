@@ -131,13 +131,13 @@ MonoBehaviour:
   timeToMove: 0
   activityRadius: 15
   frozen: 0
-  attack: 3
+  attack: 10
   timeBetweenAttack: 5
   attacks:
   - {fileID: 5569558701137803408, guid: f38b6dc07c758f546864dc69085fc9c0, type: 3}
-  damageText: {fileID: 3816975705448875436, guid: 99112ff4ef0e9b84a84bd2eb4dddf20e, type: 3}
-  maxHp: 10
-  hp: 10
+  maxHp: 80
+  hp: 80
+  isRecovering: 0
   expValue: 20
   spawner: {fileID: 0}
   enemyType: LavaEnemy

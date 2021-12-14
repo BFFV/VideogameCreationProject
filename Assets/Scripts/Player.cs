@@ -20,17 +20,17 @@ public class Player : SceneSingleton<Player> {
 
     // Combat
     bool attacking = false;
-    public int attack;
     public List<string> weapons;
     public GameObject[] attacks;
 
     // Health
-    public int hp;
+    public int hp = 100;
     float recoveryTime = 1f;
     float recoveryDelta = 0.05f;
     public bool isRecovering = false;
 
-    // Skills & Experience
+    // Skills & Experience/Magic
+    public float mp = 100;
     public int exp;
     public List<string> skills;
     bool sprinting = false;
@@ -52,12 +52,15 @@ public class Player : SceneSingleton<Player> {
     public GameObject iceShot;
     public bool frozen = false;
     float freezeTimeout = 1;
+    float sprintRate = 0.12f;
+    float barrierRate = 0.24f;
+    float replenishRate = 0.08f;
 
     // Checkpoints
     public Checkpoint currentCheckpoint = null;
 
     // Environmental damage
-    int lavaDamage = 4;
+    int lavaDamage = 40;
 
     // GUI
 
@@ -72,6 +75,7 @@ public class Player : SceneSingleton<Player> {
         PlayerData state;
         if (GameManager.Instance.warping) {  // Warping to new level
             hp = GameManager.Instance.warpHp;
+            mp = GameManager.Instance.warpMp;
             state = GameManager.Instance.warpData;
         } else {  // Respawning at checkpoint
             state = GameManager.Instance.playerData;
@@ -81,9 +85,11 @@ public class Player : SceneSingleton<Player> {
         weapons = new List<string>(state.spawnWeapons);
         skills = new List<string>(state.spawnSkills);
 
-        GUIManager.Instance.UpdatePlayerStatus(hp, exp);
+        GUIManager.Instance.UpdatePlayerStatus(hp, exp, mp);
         // TODO: testing only
         weapons.Add("Gun");
+        skills.Add("Explosion");
+        exp = 99999;
     }
 
     // Player interactions
@@ -148,9 +154,41 @@ public class Player : SceneSingleton<Player> {
         }
         lastPosition = transform.position;
 
+        // Deplete magic for constant skills
+        if (sprinting) {
+            mp -= sprintRate;
+            if (mp <= 0) {
+                mp = 0;
+                sprinting = false;
+                moveSpeed /= 2.5f;
+            }
+            GUIManager.Instance.UpdatePlayerMagic(mp);
+        }
+        if (invincible) {
+            mp -= barrierRate;
+            if (mp <= 0) {
+                mp = 0;
+                invincible = false;
+                Destroy(barrierSkill);
+                AudioManager.Instance.StopLoop();
+            }
+            GUIManager.Instance.UpdatePlayerMagic(mp);
+        }
+
+        // Recharge magic
+        if (mp < 100) {
+            mp += replenishRate;
+            if (mp >= 100) {
+                mp = 100;
+            }
+            GUIManager.Instance.UpdatePlayerMagic(mp);
+        }
+
         // Sprint skill input
-        if (skills.Contains("Sprint")) {
+        if (skills.Contains("Sprint") && Inventory.Instance.SkillCost("Sprint") <= mp) {
             if (Input.GetKeyDown(KeyCode.LeftShift) && !sprinting) {
+                mp -= Inventory.Instance.SkillCost("Sprint");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 sprinting = true;
                 moveSpeed *= 2.5f;
                 AudioManager.Instance.PlaySound("sprint");
@@ -161,20 +199,24 @@ public class Player : SceneSingleton<Player> {
         }
 
         // Lightning skill input
-        if (skills.Contains("Lightning")) {
+        if (skills.Contains("Lightning") && Inventory.Instance.SkillCost("Lightning") <= mp) {
             if (Input.GetKeyDown(KeyCode.R) && !storm) {
+                mp -= Inventory.Instance.SkillCost("Lightning");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 Instantiate(lightning, transform.position, Quaternion.identity);
                 storm = true;
             }
         }
 
         // Barrier skill input
-        if (skills.Contains("Barrier")) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
+        if (skills.Contains("Barrier") && Inventory.Instance.SkillCost("Barrier") <= mp) {
+            if (Input.GetKeyDown(KeyCode.Space) && !invincible) {
+                mp -= Inventory.Instance.SkillCost("Barrier");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 invincible = true;
                 barrierSkill = Instantiate(barrier, transform);
                 AudioManager.Instance.StartLoop("barrier");
-            } else if (Input.GetKeyUp(KeyCode.Space)) {
+            } else if (Input.GetKeyUp(KeyCode.Space) && invincible) {
                 invincible = false;
                 Destroy(barrierSkill);
                 AudioManager.Instance.StopLoop();
@@ -182,7 +224,7 @@ public class Player : SceneSingleton<Player> {
         }
 
         // Teleport skill input
-        if (skills.Contains("Teleport")) {
+        if (skills.Contains("Teleport") && Inventory.Instance.SkillCost("Teleport") <= mp) {
             if (Input.GetKeyDown(KeyCode.F) && !gateActive) {
                 float initX = (float) (transform.position.x + dynamicDirection.x);
                 float initY = (float) (transform.position.y + dynamicDirection.y);
@@ -190,21 +232,27 @@ public class Player : SceneSingleton<Player> {
                 gate.GetComponent<Teleport>().direction = dynamicDirection;
                 gateActive = true;
             } else if (Input.GetKeyDown(KeyCode.F) && gate != null) {
+                mp -= Inventory.Instance.SkillCost("Teleport");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 gate.GetComponent<Teleport>().Warp();
             }
         }
 
         // Explosion skill input
-        if (skills.Contains("Explosion")) {
+        if (skills.Contains("Explosion") && Inventory.Instance.SkillCost("Explosion") <= mp) {
             if (Input.GetKeyDown(KeyCode.Q) && !blast) {
+                mp -= Inventory.Instance.SkillCost("Explosion");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 Instantiate(explosion, transform.position, Quaternion.identity);
                 blast = true;
             }
         }
 
         // Ice Shot skill input
-        if (skills.Contains("Ice")) {
+        if (skills.Contains("Ice") && Inventory.Instance.SkillCost("Ice") <= mp) {
             if (Input.GetKeyDown(KeyCode.E)) {
+                mp -= Inventory.Instance.SkillCost("Ice");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 float initX = (float) (transform.position.x + dynamicDirection.x);
                 float initY = (float) (transform.position.y + dynamicDirection.y);
                 Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
@@ -216,16 +264,20 @@ public class Player : SceneSingleton<Player> {
         }
 
         // Black Hole skill input
-        if (skills.Contains("BlackHole")) {
+        if (skills.Contains("BlackHole") && Inventory.Instance.SkillCost("BlackHole") <= mp) {
             if (Input.GetKeyDown(KeyCode.L) && !vortex) {
+                mp -= Inventory.Instance.SkillCost("BlackHole");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 Instantiate(blackHole, transform.position, Quaternion.identity);
                 vortex = true;
             }
         }
 
         // Holy Beam skill input
-        if (skills.Contains("HolyBeam")) {
+        if (skills.Contains("HolyBeam") && Inventory.Instance.SkillCost("HolyBeam") <= mp) {
             if (Input.GetKeyDown(KeyCode.K) && !holy) {
+                mp -= Inventory.Instance.SkillCost("HolyBeam");
+                GUIManager.Instance.UpdatePlayerMagic(mp);
                 Vector3 offset = (transform.position + (Vector3) dynamicDirection * 1.5f);
                 Instantiate(holyCharge, offset, Quaternion.identity);
                 Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
@@ -384,6 +436,9 @@ public class Player : SceneSingleton<Player> {
     // Gain experience
     public void GainExp(int expValue) {
         exp += expValue;
+        if (exp > 99999) {  // Max experience
+            exp = 99999;
+        }
         GUIManager.Instance.UpdatePlayerExp(exp);
     }
 
@@ -411,5 +466,18 @@ public class Player : SceneSingleton<Player> {
         animator.enabled = false;
         frozen = true;
         sprite.material.color = new Color(0, 2f, 2f, 1);
+    }
+
+    // Reset constant skills
+    public void ResetState() {
+        if (sprinting) {
+            sprinting = false;
+            moveSpeed /= 2.5f;
+        }
+        if (invincible) {
+            invincible = false;
+            Destroy(barrierSkill);
+            AudioManager.Instance.StopLoop();
+        }
     }
 }

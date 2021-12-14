@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
+// Weapon Item
 public class Weapon : MonoBehaviour {
 
     // Only spawn if player doesn't already have this weapon

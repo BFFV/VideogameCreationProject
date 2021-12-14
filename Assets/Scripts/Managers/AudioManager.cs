@@ -2,13 +2,17 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 // Audio Manager
 public class AudioManager : SceneSingleton<AudioManager> {
 
     // References
-    AudioSource player;
-    AudioSource loop;
+    AudioSource music;
+    AudioSource sfx;
+    AudioSource sfxLoop;
+    public AudioMixer musicMixer;
+    public AudioMixer sfxMixer;
 
     // Map string to audio
     Dictionary<string, AudioClip> songs = new Dictionary<string, AudioClip>();
@@ -20,6 +24,9 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip skeletonBoss;
 
     // Sound Effects
+
+    // Events
+    public AudioClip victory;
 
     // Weapons
     public AudioClip gun;
@@ -54,17 +61,25 @@ public class AudioManager : SceneSingleton<AudioManager> {
     void Start() {
         // Get players
         AudioSource[] sources = gameObject.GetComponents<AudioSource>();
-        player = sources[0];
-        loop = sources[1];
-        player.loop = true;
-        loop.loop = true;
-        loop.volume = 0.5f;
+        music = sources[0];
+        sfx = sources[1];
+        sfxLoop = sources[2];
+        music.loop = true;
+        sfxLoop.loop = true;
+        sfxLoop.volume = 0.5f;
+
+        // Adjust initial volume
+        musicMixer.SetFloat("MusicVol", Mathf.Log10(PlayerPrefs.GetFloat("MusicVol", 1)) * 20);
+        sfxMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefs.GetFloat("SFXVol", 1)) * 20);
 
         // Music
         songs.Add("tutorial", tutorial);
         songs.Add("shrine", shrine);
         songs.Add("lava", lava);
         songs.Add("skeletonBoss", skeletonBoss);
+
+        // Events
+        songs.Add("victory", victory);
 
         // Weapons
         songs.Add("sword", sword);
@@ -98,23 +113,23 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
     // Play background music
     public void PlaySoundtrack(string song) {
-        player.clip = songs[song];
-        player.Play();
+        music.clip = songs[song];
+        music.Play();
     }
 
     // Play SFX
     public void PlaySound(string sound, float volume = 1) {
-        player.PlayOneShot(songs[sound], volume);
+        sfx.PlayOneShot(songs[sound], volume);
     }
 
     // Start Looping SFX
     public void StartLoop(string sound) {
-        loop.clip = songs[sound];
-        loop.Play();
+        sfxLoop.clip = songs[sound];
+        sfxLoop.Play();
     }
 
     // Stop Looping SFX
     public void StopLoop() {
-        loop.Stop();
+        sfxLoop.Stop();
     }
 }

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Sword weapon
 public class Sword : MonoBehaviour {
+
     // References
     Rigidbody2D body;
-    public int damage;
+    int damage = 10;
 
     // Setup
     void Start() {

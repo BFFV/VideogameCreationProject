@@ -19,6 +19,7 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Combat
     public int attack;
+    bool idle = true;
 
     // Health
     public int maxHp;
@@ -36,6 +37,11 @@ public class SkeletonBoss : MonoBehaviour {
     // Phases
     int phase = 0;
     float rageTimeout = 0;
+    public GameObject explosion;
+    public GameObject blackHole;
+    List<GameObject> attacks = new List<GameObject>();
+    float minAttackInterval = 2f;
+    float maxAttackInterval = 5f;
 
     // Initialize boss
     void Start() {
@@ -54,6 +60,7 @@ public class SkeletonBoss : MonoBehaviour {
         sprite = GetComponent<SpriteRenderer>();
         currentColor = new Color(1, 1, 1, 1);
         player = Player.Instance.gameObject;
+        StartCoroutine(ChooseAttack());
     }
 
     // Boss interactions
@@ -109,16 +116,13 @@ public class SkeletonBoss : MonoBehaviour {
             moveSpeed = speed;
             sprite.material.color = new Color(50, 0.5f, 0, 1);
             currentColor = sprite.material.color;
+            attacks.Add(explosion);
         } else if (phase == 2 && hp <= maxHp * 0.3) {
             phase = 3;
             sprite.material.color = new Color(255, 1, 0, 1);
             currentColor = sprite.material.color;
+            attacks.Add(blackHole);
         }
-
-        // Phase design
-
-        // Recovery frames
-        Recover();
     }
 
     // Rigidbody movement
@@ -136,7 +140,7 @@ public class SkeletonBoss : MonoBehaviour {
     // Take damage from player
     public void TakeDamage(int damage, bool forced = false) {
         // Invincibility
-        if (isRecovering) {
+        if (isRecovering || idle) {
             return;
         }
 
@@ -168,6 +172,34 @@ public class SkeletonBoss : MonoBehaviour {
         isRecovering = false;
     }
 
+    // Choose special skills to attack randomly
+    IEnumerator ChooseAttack() {
+        while (true) {
+            yield return new WaitForSeconds(Random.Range(minAttackInterval, maxAttackInterval + 1));
+            if (attacks.Count > 0 && !frozen && active) {
+                int chosen = Random.Range(0, attacks.Count);
+                yield return UseAttack(chosen);
+            }
+        }
+    }
+
+    // Use special attack
+    IEnumerator UseAttack(int attackID) {
+        moveSpeed = 0;
+        anim.enabled = false;
+        if (attackID == 0) {  // Explosion
+            GameObject exp = Instantiate(explosion, transform.position, Quaternion.identity);
+            exp.GetComponent<Explosion>().AssignToEnemy();
+        }
+        if (attackID == 1) {  // Black Hole
+            GameObject vortex = Instantiate(blackHole, transform.position, Quaternion.identity);
+            vortex.GetComponent<BlackHole>().AssignToEnemy();
+            yield return new WaitForSeconds(5);
+        }
+        moveSpeed = speed;
+        anim.enabled = true;
+    }
+
     // Freeze
     public void Freeze() {
         moveSpeed = 0;
@@ -178,6 +210,8 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Death sequence
     void BossDeath() {
+        StopAllCoroutines();
+        AudioManager.Instance.PlaySound("victory", 2f);
         AudioManager.Instance.PlaySoundtrack("lava");
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach (GameObject rock in obstacles) {
@@ -196,6 +230,7 @@ public class SkeletonBoss : MonoBehaviour {
             Instantiate(rock, entrance, Quaternion.identity);
             anim.SetBool("Enraged", true);
             rageTimeout = 0.5f;
+            idle = false;
             AudioManager.Instance.PlaySoundtrack("skeletonBoss");
         }
     }

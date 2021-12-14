@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Fireball
 public class Fireball : MonoBehaviour {
 
-    // References
+    // Setup
     public Rigidbody2D body;
     public Vector2 direction;
-    public float speed;
-    public int distance;
-    public int damage;
+    float speed = 4;
+    int distance = 300;
+    int damage = 30;
 
     // Setup
     void Start() {
@@ -27,7 +24,7 @@ public class Fireball : MonoBehaviour {
         }
     }
 
-    // Bullet movement
+    // Fireball movement
     private void FixedUpdate() {
         body.velocity = direction.normalized * speed;
     }
@@ -36,7 +33,7 @@ public class Fireball : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D other) {
         string tag = other.gameObject.tag;
         if (tag == "Player") {
-            other.gameObject.GetComponent<Player>().TakeDamage(damage);
+            Player.Instance.TakeDamage(damage);
         }
         Destroy(gameObject);
     }

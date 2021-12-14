@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Gun weapon
 public class Bullet : MonoBehaviour {
+
     // References
     Rigidbody2D body;
     public Vector2 direction;
-    public float speed;
-    public int distance;
-    public int damage;
+    float speed = 15;
+    int distance = 100;
+    int damage = 5;
 
     // Setup
     void Start() {
@@ -27,7 +25,7 @@ public class Bullet : MonoBehaviour {
     }
 
     // Bullet movement
-    private void FixedUpdate() {
+    void FixedUpdate() {
         body.velocity = direction.normalized * speed;
     }
 
