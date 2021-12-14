@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 9f06b3c8517fc7541b95e87b34c5c850
+guid: f802b6b729dfa964faf71ac1518cc352
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8547308708325284560
-    second: lightball1a_0
+      213: 6694069052880835020
+    second: light2b_0
   - first:
-      213: 6891961156203020401
-    second: lightball1a_1
+      213: 6469954868958444688
+    second: light2b_1
   - first:
-      213: 8319738190093718223
-    second: lightball1a_2
+      213: 4671936878913712295
+    second: light2b_2
   - first:
-      213: 8465117396442821843
-    second: lightball1a_3
+      213: -761373202756569240
+    second: light2b_3
   - first:
-      213: 7016342527463949335
-    second: lightball1a_4
+      213: -7354794273842719991
+    second: light2b_4
   - first:
-      213: -3370318355261990004
-    second: lightball1a_5
+      213: -55541430954441978
+    second: light2b_5
   - first:
-      213: -5246782970469532519
-    second: lightball1a_6
+      213: 2212420416857692234
+    second: light2b_6
   - first:
-      213: 8139426146536851657
-    second: lightball1a_7
+      213: -1982031000912838321
+    second: light2b_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,73 +127,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lightball1a_0
+      name: light2b_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 0
-        width: 47
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0dad4511cf32e9670800000000000000
-      internalID: 8547308708325284560
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lightball1a_1
-      rect:
-        serializedVersion: 2
-        x: 58
-        y: 0
-        width: 48
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1708549082a25af50800000000000000
-      internalID: 6891961156203020401
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lightball1a_2
-      rect:
-        serializedVersion: 2
-        x: 106
-        y: 0
-        width: 49
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc299c4ddc5a57370800000000000000
-      internalID: 8319738190093718223
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lightball1a_3
-      rect:
-        serializedVersion: 2
-        x: 155
+        x: 3
         y: 0
         width: 46
         height: 54
@@ -204,38 +141,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d434f40c632a7570800000000000000
-      internalID: 8465117396442821843
+      spriteID: cc1d5ee365c16ec50800000000000000
+      internalID: 6694069052880835020
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lightball1a_4
+      name: light2b_1
       rect:
         serializedVersion: 2
-        x: 201
-        y: 0
-        width: 51
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 71484f3ca5e0f5160800000000000000
-      internalID: 7016342527463949335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lightball1a_5
-      rect:
-        serializedVersion: 2
-        x: 252
+        x: 52
         y: 0
         width: 46
         height: 54
@@ -246,19 +162,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8b51a600593a31d0800000000000000
-      internalID: -3370318355261990004
+      spriteID: 09cb31d8ca5e9c950800000000000000
+      internalID: 6469954868958444688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lightball1a_6
+      name: light2b_2
       rect:
         serializedVersion: 2
-        x: 298
+        x: 100
         y: 0
-        width: 49
+        width: 46
         height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -267,19 +183,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99c389fdfaeaf27b0800000000000000
-      internalID: -5246782970469532519
+      spriteID: 7a0f2b0a6dd06d040800000000000000
+      internalID: 4671936878913712295
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lightball1a_7
+      name: light2b_3
       rect:
         serializedVersion: 2
-        x: 347
+        x: 149
         y: 0
-        width: 51
+        width: 46
         height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -288,8 +204,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c80bdba4fc05f070800000000000000
-      internalID: 8139426146536851657
+      spriteID: 86771342b1f0f65f0800000000000000
+      internalID: -761373202756569240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light2b_4
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 0
+        width: 46
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 903178743958ee990800000000000000
+      internalID: -7354794273842719991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light2b_5
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 0
+        width: 46
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 603c4a1ec5daa3ff0800000000000000
+      internalID: -55541430954441978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light2b_6
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 0
+        width: 46
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a48df90b5a814be10800000000000000
+      internalID: 2212420416857692234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light2b_7
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 46
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4147c05e496e74e0800000000000000
+      internalID: -1982031000912838321
       vertices: []
       indices: 
       edges: []

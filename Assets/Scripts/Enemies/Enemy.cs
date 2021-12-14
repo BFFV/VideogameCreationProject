@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour {
                         "Bat",
                         "LavaEnemy",
                         "Light",
+                        "Lightball",
                         "Paladin"                    
                     };
     private List<string> attackingEnemies = new List<string>()
@@ -60,6 +61,10 @@ public class Enemy : MonoBehaviour {
                         "Angel",
                         "Paladin"                    
                     };
+
+    // Light elemental second form
+
+    public GameObject secondForm;
 
     // Initialize enemy
     void Start() {
@@ -143,7 +148,7 @@ public class Enemy : MonoBehaviour {
             movement = direction;
         }
 
-        // Lava Enemy
+        // Enemies with repeating attack/spell
         if (attackingEnemies.Contains(enemyType)) {
             timeBetweenAttackCounter -= Time.deltaTime;
             if (timeBetweenAttackCounter <= 0f) {
@@ -155,6 +160,14 @@ public class Enemy : MonoBehaviour {
                     // ataque angel (rayo?)
                 }
                 
+            }
+        }
+
+        // Light elemental second form
+        if (enemyType == "Light") {
+            if (hp <= Mathf.Floor(maxHp / 2)) {
+                GameObject lightBall = Instantiate(secondForm, gameObject.transform.position, Quaternion.identity);
+                Destroy(gameObject);
             }
         }
 

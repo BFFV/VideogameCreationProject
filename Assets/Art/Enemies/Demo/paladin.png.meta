@@ -20,6 +20,18 @@ TextureImporter:
   - first:
       213: 6562948103004220163
     second: paladin_5
+  - first:
+      213: -3367803073686910783
+    second: paladin_6
+  - first:
+      213: -8853773835310648867
+    second: paladin_7
+  - first:
+      213: 5512771530832924106
+    second: paladin_8
+  - first:
+      213: 4752693428389152475
+    second: paladin_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -83,7 +95,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -95,7 +107,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -107,7 +119,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -125,9 +137,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 67
-        width: 57
-        height: 67
+        y: 69
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,10 +157,10 @@ TextureImporter:
       name: paladin_1
       rect:
         serializedVersion: 2
-        x: 61
-        y: 67
-        width: 69
-        height: 67
+        x: 67
+        y: 68
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +178,10 @@ TextureImporter:
       name: paladin_2
       rect:
         serializedVersion: 2
-        x: 134
-        y: 67
-        width: 73
-        height: 67
+        x: 138
+        y: 70
+        width: 74
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,10 +199,10 @@ TextureImporter:
       name: paladin_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 65
-        height: 67
+        x: 219
+        y: 72
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,10 +220,10 @@ TextureImporter:
       name: paladin_4
       rect:
         serializedVersion: 2
-        x: 65
-        y: 0
-        width: 71
-        height: 67
+        x: 283
+        y: 73
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,10 +241,10 @@ TextureImporter:
       name: paladin_5
       rect:
         serializedVersion: 2
-        x: 138
+        x: 5
         y: 0
-        width: 69
-        height: 67
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,6 +254,90 @@ TextureImporter:
       bones: []
       spriteID: 30be3e61786441b50800000000000000
       internalID: 6562948103004220163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paladin_6
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 0
+        width: 69
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c84c67a2f82341d0800000000000000
+      internalID: -3367803073686910783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paladin_7
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 1
+        width: 69
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd139a82b93112580800000000000000
+      internalID: -8853773835310648867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paladin_8
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 2
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acdce27df7c418c40800000000000000
+      internalID: 5512771530832924106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: paladin_9
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 2
+        width: 68
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd608750e75f4f140800000000000000
+      internalID: 4752693428389152475
       vertices: []
       indices: 
       edges: []

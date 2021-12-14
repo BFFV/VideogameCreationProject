@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: b729cf0745029ea45b9de77325949ca5
+guid: f26572d7589a9304ab15021acbbe75f0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7463333868663033232
-    second: lightball2a_0
+      213: 6880383096547995508
+    second: light1b_0
   - first:
-      213: 729795011981435584
-    second: lightball2a_1
+      213: -7749039375097890491
+    second: light1b_1
   - first:
-      213: 5622528395825806826
-    second: lightball2a_2
+      213: -8235176744857089715
+    second: light1b_2
   - first:
-      213: 6681815018845667818
-    second: lightball2a_3
+      213: -438408493117336047
+    second: light1b_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lightball2a_0
+      name: light1b_0
       rect:
         serializedVersion: 2
-        x: 22
+        x: 10
         y: 0
-        width: 77
-        height: 115
+        width: 84
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,20 +129,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09d4dc17c96139760800000000000000
-      internalID: 7463333868663033232
+      spriteID: 47f6854f8f70c7f50800000000000000
+      internalID: 6880383096547995508
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lightball2a_1
+      name: light1b_1
       rect:
         serializedVersion: 2
-        x: 114
+        x: 102
         y: 0
-        width: 79
-        height: 115
+        width: 84
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c2610062b0c02a00800000000000000
-      internalID: 729795011981435584
+      spriteID: 54976c89eb1e57490800000000000000
+      internalID: -7749039375097890491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lightball2a_2
+      name: light1b_2
       rect:
         serializedVersion: 2
-        x: 212
+        x: 194
         y: 0
-        width: 73
-        height: 115
+        width: 84
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +171,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aed7ebc59cb370e40800000000000000
-      internalID: 5622528395825806826
+      spriteID: d494c34e166c6bd80800000000000000
+      internalID: -8235176744857089715
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lightball2a_3
+      name: light1b_3
       rect:
         serializedVersion: 2
-        x: 306
+        x: 285
         y: 0
-        width: 71
-        height: 115
+        width: 84
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,8 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae18a2d9b539abc50800000000000000
-      internalID: 6681815018845667818
+      spriteID: 1161a3d5cc57ae9f0800000000000000
+      internalID: -438408493117336047
       vertices: []
       indices: 
       edges: []
