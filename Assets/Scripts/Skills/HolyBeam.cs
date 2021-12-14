@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Holy Beam skill
 public class HolyBeam : MonoBehaviour {
 
     // Setup
     float timeout = 5;
-    int damage = 10;
+    int damage = 40;
     bool active = true;
     public List<string> targetTag;
 
@@ -43,7 +42,9 @@ public class HolyBeam : MonoBehaviour {
                 timeout = 2;
                 active = false;
             } else {
-                Player.Instance.holy = false;
+                if (!targetTag.Contains("Player")) {
+                    Player.Instance.holy = false;
+                }
                 Destroy(gameObject);
             }
         }

@@ -169,11 +169,15 @@ MonoBehaviour:
   speed: 3
   body: {fileID: 0}
   activityRadius: 40
-  attack: 5
-  maxHp: 15
-  hp: 15
+  frozen: 0
+  attack: 10
+  maxHp: 300
+  hp: 300
+  isRecovering: 0
   rock: {fileID: 7421803797852565109, guid: fbc5d0293c2bce341ad5ba14e8fd8e16, type: 3}
   sprite: {fileID: 0}
+  explosion: {fileID: 8375888138684464778, guid: b0a769c9def391541a5506059b1c1a8e, type: 3}
+  blackHole: {fileID: 5623354847732807814, guid: 6da803723c4f4734aa98fb09fce5c66f, type: 3}
 --- !u!58 &-1451863230720038305
 CircleCollider2D:
   m_ObjectHideFlags: 0

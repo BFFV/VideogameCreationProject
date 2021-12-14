@@ -159,7 +159,9 @@ MonoBehaviour:
   - {fileID: 4217426930786536418, guid: f963e9e521c5f6e4197297d34313ae23, type: 3}
   - {fileID: 757851957709202160, guid: 7ddb7f001b749fa45a2e23402c835c80, type: 3}
   - {fileID: 7265667205566160918, guid: 486e4109263e4174a97e9f70ace97ada, type: 3}
-  hp: 10
+  hp: 100
+  isRecovering: 0
+  mp: 100
   exp: 0
   skills: []
   barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}

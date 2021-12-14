@@ -13,6 +13,8 @@ TagManager:
   - Solid
   - Fireball
   - Canvas
+  - MusicSlider
+  - SFXSlider
   layers:
   - Default
   - TransparentFX

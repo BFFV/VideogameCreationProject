@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Checkpoints
 public class Checkpoint : MonoBehaviour {
 
     // Level
@@ -25,6 +25,7 @@ public class Checkpoint : MonoBehaviour {
 
     // Save game state
     public void SaveGame() {
+        AudioManager.Instance.PlaySound("save", 2f);
         GameManager.Instance.SaveCheckpoint(level, transform.position);
         GUIManager.Instance.ShowEvent("Progress Saved!");
     }

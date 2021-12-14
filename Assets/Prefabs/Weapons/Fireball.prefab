@@ -127,7 +127,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -148,9 +148,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 0}
   direction: {x: 0, y: 0}
-  speed: 3
-  distance: 3000
-  damage: 3
+  speed: 4
+  distance: 200
+  damage: 20
 --- !u!95 &4279797654504953350
 Animator:
   serializedVersion: 3

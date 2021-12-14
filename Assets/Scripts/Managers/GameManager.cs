@@ -10,10 +10,11 @@ public class GameManager : Singleton<GameManager> {
     public bool warping = false;
     public PlayerData warpData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
     public int warpHp = 0;
+    public float warpMp = 0;
 
     // Checkpoints & save data
     public int slot = 0;
-    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");  // TODO: reset test (70, 0, 0)
+    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
 
     // Settings
     void Start() {
@@ -36,6 +37,7 @@ public class GameManager : Singleton<GameManager> {
         warping = true;
         warpData = new PlayerData(level, pos, "saved");
         warpHp = Player.Instance.hp;
+        warpMp = Player.Instance.mp;
         SceneManager.LoadScene(level);
     }
 
@@ -43,5 +45,10 @@ public class GameManager : Singleton<GameManager> {
     public void SaveCheckpoint(string level, Vector3 pos) {
         playerData = new PlayerData(level, pos, "saved");
         SaveSystem.SaveData(slot, playerData);
+    }
+
+    // Back to main menu
+    public void MainMenu() {
+        SceneManager.LoadScene("Menu");
     }
 }
