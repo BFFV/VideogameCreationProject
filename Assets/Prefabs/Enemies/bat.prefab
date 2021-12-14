@@ -174,7 +174,7 @@ MonoBehaviour:
   maxHp: 10
   hp: 10
   isRecovering: 0
-  expValue: 15
+  expValue: 10
   spawner: {fileID: 0}
   enemyType: Bat
 --- !u!95 &195637380556508569

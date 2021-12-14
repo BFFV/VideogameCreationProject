@@ -16,6 +16,7 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public string skillName;
     public int cost;
     public string description;
+    public string mp;
 
     // Skill already unlocked
     void Start() {
@@ -43,7 +44,7 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             GUIManager.Instance.UpdatePlayerExp(player.exp);
             Inventory.Instance.SetSkill(skill);
             unlockButton.interactable = false;
-            info.UpdateInfo(icon.sprite, skillName, 0, description);
+            info.UpdateInfo(icon.sprite, skillName, 0, description, mp);
             infoUI.SetActive(true);
         }
     }
@@ -54,7 +55,7 @@ public class SkillSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (Player.Instance.skills.Contains(skill)) {
             newCost = 0;
         }
-        info.UpdateInfo(icon.sprite, skillName, newCost, description);
+        info.UpdateInfo(icon.sprite, skillName, newCost, description, mp);
         infoUI.SetActive(true);
     }
 

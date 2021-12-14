@@ -20,12 +20,12 @@ public class PlayerData {
         spawnPos[1] = pos.y;
         spawnPos[2] = 0;
         if (state == "default") {  // For testing
-            spawnExp = 200;
-            spawnWeapons = new List<string>();
+            spawnExp = 301;
+            spawnWeapons = new List<string>() {"Sword"};
             spawnSkills = new List<string>();
         } else if (state == "new") {  // New game
-            spawnExp = 0;
-            spawnWeapons = new List<string>{"Sword"};
+            spawnExp = 1;
+            spawnWeapons = new List<string> {"Sword"};
             spawnSkills = new List<string>();
         } else if (state == "saved") {  // Checkpoint
             Player player = Player.Instance;

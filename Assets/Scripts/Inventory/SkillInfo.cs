@@ -9,9 +9,10 @@ public class SkillInfo : MonoBehaviour {
     public Text skillName;
     public Text cost;
     public Text description;
+    public Text mpCost;
 
     // Show info of skill
-    public void UpdateInfo(Sprite newIcon, string newName, int newCost, string newDesc) {
+    public void UpdateInfo(Sprite newIcon, string newName, int newCost, string newDesc, string mp) {
         icon.sprite = newIcon;
         icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 1f);
         skillName.text = newName;
@@ -26,5 +27,6 @@ public class SkillInfo : MonoBehaviour {
             }
         }
         description.text = newDesc;
+        mpCost.text = "MP Cost: " + mp;
     }
 }

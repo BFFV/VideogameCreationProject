@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 // Inventory logic
 public class Inventory : SceneSingleton<Inventory> {
@@ -26,24 +24,24 @@ public class Inventory : SceneSingleton<Inventory> {
 
         //Skills MP
         skillsMp.Add("Sprint", 1);
-        skillsMp.Add("Lightning", 10);
+        skillsMp.Add("Lightning", 70);
         skillsMp.Add("Barrier", 1);
         skillsMp.Add("Teleport", 10);
-        skillsMp.Add("Explosion", 10);
-        skillsMp.Add("Ice", 10);
+        skillsMp.Add("Explosion", 30);
+        skillsMp.Add("Ice", 30);
         skillsMp.Add("BlackHole", 100);
         skillsMp.Add("HolyBeam", 100);
 
         // Weapons
-        skills.Add("Sword", 0);
-        skills.Add("Gun", 1);
-        skills.Add("Wind", 2);
-        skills.Add("Fire", 3);
+        weapons.Add("Sword", 0);
+        weapons.Add("Gun", 1);
+        weapons.Add("Wind", 2);
+        weapons.Add("Fire", 3);
     }
 
     // Activate new skill
     public void SetSkill(string skill) {
-        AudioManager.Instance.PlaySound("unlock");
+        AudioManager.Instance.PlaySound("unlock", 2f);
         Player.Instance.skills.Add(skill);
         InventoryUI.Instance.UpdateSkill(skills[skill]);
     }

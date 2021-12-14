@@ -27,6 +27,8 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
     // Events
     public AudioClip victory;
+    public AudioClip item;
+    public AudioClip save;
 
     // Weapons
     public AudioClip gun;
@@ -80,6 +82,8 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
         // Events
         songs.Add("victory", victory);
+        songs.Add("item", item);
+        songs.Add("save", save);
 
         // Weapons
         songs.Add("sword", sword);

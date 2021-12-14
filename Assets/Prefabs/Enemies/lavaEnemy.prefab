@@ -138,7 +138,7 @@ MonoBehaviour:
   maxHp: 80
   hp: 80
   isRecovering: 0
-  expValue: 20
+  expValue: 30
   spawner: {fileID: 0}
   enemyType: LavaEnemy
 --- !u!50 &203980776

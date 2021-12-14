@@ -52,8 +52,8 @@ public class Player : SceneSingleton<Player> {
     public GameObject iceShot;
     public bool frozen = false;
     float freezeTimeout = 1;
-    float sprintRate = 0.12f;
-    float barrierRate = 0.24f;
+    float sprintRate = 0.1f;
+    float barrierRate = 0.3f;
     float replenishRate = 0.08f;
 
     // Checkpoints
@@ -88,8 +88,6 @@ public class Player : SceneSingleton<Player> {
         GUIManager.Instance.UpdatePlayerStatus(hp, exp, mp);
         // TODO: testing only
         weapons.Add("Gun");
-        skills.Add("Explosion");
-        exp = 99999;
     }
 
     // Player interactions

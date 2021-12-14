@@ -40,8 +40,8 @@ public class SkeletonBoss : MonoBehaviour {
     public GameObject explosion;
     public GameObject blackHole;
     List<GameObject> attacks = new List<GameObject>();
-    float minAttackInterval = 2f;
-    float maxAttackInterval = 5f;
+    float minAttackInterval = 1f;
+    float maxAttackInterval = 4f;
 
     // Initialize boss
     void Start() {
@@ -119,6 +119,8 @@ public class SkeletonBoss : MonoBehaviour {
             attacks.Add(explosion);
         } else if (phase == 2 && hp <= maxHp * 0.3) {
             phase = 3;
+            speed *= 1.5f;
+            moveSpeed = speed;
             sprite.material.color = new Color(255, 1, 0, 1);
             currentColor = sprite.material.color;
             attacks.Add(blackHole);
@@ -190,6 +192,7 @@ public class SkeletonBoss : MonoBehaviour {
         if (attackID == 0) {  // Explosion
             GameObject exp = Instantiate(explosion, transform.position, Quaternion.identity);
             exp.GetComponent<Explosion>().AssignToEnemy();
+            yield return new WaitForSeconds(0.5f);
         }
         if (attackID == 1) {  // Black Hole
             GameObject vortex = Instantiate(blackHole, transform.position, Quaternion.identity);
