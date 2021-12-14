@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Holy Charge (from Holy Beam)
 public class HolyCharge : MonoBehaviour {

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Lightning skill
 public class Lightning : MonoBehaviour {
@@ -12,7 +11,7 @@ public class Lightning : MonoBehaviour {
     public float maxTime;
     float timeout = 5;
     public List<GameObject> strikes;
-    int damage = 3;
+    int damage = 15;
     bool active = true;
     public List<string> targetTag;
 
@@ -56,7 +55,9 @@ public class Lightning : MonoBehaviour {
                 active = false;
             } else {
                 StopCoroutine(Storm());
-                Player.Instance.storm = false;
+                if (!targetTag.Contains("Player")) {
+                    Player.Instance.storm = false;
+                }
                 Destroy(gameObject);
             }
         }
@@ -73,7 +74,6 @@ public class Lightning : MonoBehaviour {
     // Enemy exits strike zone
     void OnTriggerExit2D(Collider2D other) {
         string tag = other.gameObject.tag;
-         // TODO: add other bosses
         if (!other.isTrigger && targetTag.Contains(tag)) {
             targets.Remove(other.gameObject);
         }

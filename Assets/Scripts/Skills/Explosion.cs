@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ using UnityEngine;
 public class Explosion : MonoBehaviour {
 
     // Setup
-    public int damage;
+    int damage = 30;
     public List<string> targetTag;
     float timeout = 0.5f;
     float impulse = 100f;
@@ -25,7 +24,9 @@ public class Explosion : MonoBehaviour {
     void Update() {
         timeout -= Time.deltaTime;
         if (timeout <= 0) {
-            Player.Instance.blast = false;
+            if (!targetTag.Contains("Player")) {
+                Player.Instance.blast = false;
+            }
             Destroy(gameObject);
         }
     }

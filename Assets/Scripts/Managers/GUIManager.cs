@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class GUIManager : SceneSingleton<GUIManager> {
 
     // References
-    public GameObject hpNumber;
+    public GameObject hpNumber;  // TODO: replace with hp bar
+    public GameObject mpNumber;  // TODO: replace with mp bar
     public GameObject expNumber;
     public GameObject gunIcon;
     public GameObject actionMessage;
@@ -53,7 +54,7 @@ public class GUIManager : SceneSingleton<GUIManager> {
 
     // Update player HP
     public void UpdatePlayerHealth(int hp) {
-        hpNumber.GetComponent<Text>().text = "HP: " + hp + "/" + 10;
+        hpNumber.GetComponent<Text>().text = "HP: " + hp + "/" + 100;
     }
 
     // Update player EXP
@@ -61,13 +62,19 @@ public class GUIManager : SceneSingleton<GUIManager> {
         expNumber.GetComponent<Text>().text = "EXP: " + exp;
     }
 
+     // Update player MP
+    public void UpdatePlayerMagic(float mp) {
+        mpNumber.GetComponent<Text>().text = "MP: " + (int) mp + "/" + 100;
+    }
+
     // Update player status
-    public void UpdatePlayerStatus(int hp, int exp) {
+    public void UpdatePlayerStatus(int hp, int exp, float mp) {
         UpdatePlayerHealth(hp);
+        UpdatePlayerMagic(mp);
         UpdatePlayerExp(exp);
     }
 
-    // Update gun icon (will be removed later)
+    // TODO: Update gun icon (will be removed later)
     public void ToggleGunIcon(bool state) {
         gunIcon.SetActive(state);
     }

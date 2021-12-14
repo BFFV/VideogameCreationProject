@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 // Black Hole skill
 public class BlackHole : MonoBehaviour {
 
     // Setup
     float timeout = 5;
-    int damage = 10;
+    int damage = 20;
     bool active = true;
     public List<string> targetTag;
-    float force = 800f;
+    float force = 10000f;
     public Collider2D singularity;
 
     // Start skill
@@ -44,7 +43,9 @@ public class BlackHole : MonoBehaviour {
                 timeout = 2;
                 active = false;
             } else {
-                Player.Instance.vortex = false;
+                if (!targetTag.Contains("Player")) {
+                    Player.Instance.vortex = false;
+                }
                 Destroy(gameObject);
             }
         }
@@ -63,9 +64,6 @@ public class BlackHole : MonoBehaviour {
         if (tag == "Enemy" && targetTag.Contains("Enemy")) {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             enemy.body.AddForce(direction * force, ForceMode2D.Force);
-        } else if (tag == "Boss1" && targetTag.Contains("Boss1")) {
-            SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
-            boss.body.AddForce(direction * force, ForceMode2D.Force);
         } else if (tag == "Player" && targetTag.Contains("Player")) {
             Player.Instance.body.AddForce(direction * force, ForceMode2D.Force);
         } else if (tag == "Fireball" && targetTag.Contains("Fireball")) {
@@ -79,9 +77,6 @@ public class BlackHole : MonoBehaviour {
             if (tag == "Enemy" && targetTag.Contains("Enemy")) {
                 Enemy enemy = other.gameObject.GetComponent<Enemy>();
                 enemy.TakeDamage(damage);
-            } else if (tag == "Boss1" && targetTag.Contains("Boss1")) {
-                SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
-                boss.TakeDamage(damage);
             } else if (tag == "Player" && targetTag.Contains("Player")) {
                 Player.Instance.TakeDamage(damage);
             } else if (tag == "Fireball" && targetTag.Contains("Fireball")) {

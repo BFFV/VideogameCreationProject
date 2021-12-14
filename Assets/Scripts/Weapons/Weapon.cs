@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
+// Weapon Item
 public class Weapon : MonoBehaviour {
 
     // Only spawn if player doesn't already have this weapon
@@ -23,6 +21,7 @@ public class Weapon : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             Inventory.Instance.SetWeapon(gameObject.tag);
+            AudioManager.Instance.PlaySound("item", 1.5f);
             if (gameObject.tag == "Gun") {
                 GUIManager.Instance.ToggleGunIcon(true);  // TODO: will be changed later
                 GUIManager.Instance.ShowEvent("You have acquired a " + gameObject.tag + "!");
