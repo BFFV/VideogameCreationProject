@@ -38,6 +38,9 @@ public class Bullet : MonoBehaviour {
         } else if (tag == "Boss1") {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
             boss.TakeDamage(damage);
+        } else if (tag == "Boss2") {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            boss.TakeDamage(damage);
         }
         // TODO: add other bosses
         Destroy(gameObject);

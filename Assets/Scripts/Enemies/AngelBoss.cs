@@ -18,7 +18,7 @@ public class AngelBoss : MonoBehaviour
 
     // Combat
     public int attack;
-    bool idle = true;
+    bool idle = false;
 
     // Health
     public int maxHp;
@@ -97,10 +97,10 @@ public class AngelBoss : MonoBehaviour
         // Phases
         if (phase == 0 && hp <= maxHp * 0.7) {
             phase = 1;
-            attacks.Add(holyBeam);
+            attacks.Add(lightning);
         } else if (phase == 1 && hp <= maxHp * 0.3) {
             phase = 2;
-            attacks.Add(lightning);
+            attacks.Add(holyBeam);
         }
     }
 
@@ -118,6 +118,7 @@ public class AngelBoss : MonoBehaviour
 
     // Take damage from player
     public void TakeDamage(int damage, bool forced = false) {
+
         // Invincibility
         if (isRecovering || idle) {
             return;
@@ -176,16 +177,19 @@ public class AngelBoss : MonoBehaviour
         } else {
             moveSpeed = 0;
             anim.enabled = false;
-            if (attackID == 1) {  // Holy Beam
-                GameObject holyBeamSkill = Instantiate(holyBeam, transform.position, Quaternion.identity);
-                holyBeamSkill.GetComponent<HolyBeam>().AssignToEnemy();
-                yield return new WaitForSeconds(0.5f);
-            }
-            if (attackID == 2) { // Storm
+            if (attackID == 1) {  // Storm
                 GameObject stormSkill = Instantiate(lightning, transform.position, Quaternion.identity);
                 stormSkill.GetComponent<Lightning>().AssignToEnemy();
                 storm = true;
                 yield return new WaitForSeconds(2f);
+            }
+            if (attackID == 2) { // Holy Beam
+                Vector3 vectorToTarget = player.transform.position - transform.position;
+                Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, 90) * vectorToTarget;
+                Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
+                GameObject holyBeamSkill = Instantiate(holyBeam, transform.position, targetRotation);
+                holyBeamSkill.GetComponent<HolyBeam>().AssignToEnemy();
+                yield return new WaitForSeconds(0.5f);
             }
             moveSpeed = speed;
             anim.enabled = true;

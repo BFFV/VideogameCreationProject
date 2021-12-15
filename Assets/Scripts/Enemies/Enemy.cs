@@ -29,7 +29,8 @@ public class Enemy : MonoBehaviour {
     public float attackDuration;
     public GameObject[] attacks;
     public GameObject barrier;
-    public GameObject holyBeam;
+    public GameObject lightning;
+    public bool storm = false;
 
     // Health
     public int maxHp;
@@ -282,10 +283,11 @@ public class Enemy : MonoBehaviour {
             AudioManager.Instance.StopLoop();
             isRecovering = false;
         }
-        if (attackID == 1) {  // Holy Beam
-            GameObject holyBeamSkill = Instantiate(holyBeam, transform.position, Quaternion.identity);
-            holyBeamSkill.GetComponent<HolyBeam>().AssignToEnemy();
-            yield return new WaitForSeconds(attackDuration);
+        if (attackID == 1) {  // Storm
+            GameObject stormSkill = Instantiate(lightning, transform.position, Quaternion.identity);
+            stormSkill.GetComponent<Lightning>().AssignToEnemy();
+            storm = true;
+            yield return new WaitForSeconds(2f);
         }
         moveSpeed = speed;
         anim.enabled = true;
