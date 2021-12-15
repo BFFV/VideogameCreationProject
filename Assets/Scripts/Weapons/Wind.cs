@@ -71,7 +71,11 @@ public class Wind : MonoBehaviour {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
             boss.TakeDamage(damage);
             boss.body.AddForce(direction * impulse, ForceMode2D.Impulse);
-
+          
+        } else if (tag == "Boss2") {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            boss.TakeDamage(damage);
+            boss.body.AddForce(direction * impulse, ForceMode2D.Impulse);
         }
     }
 }
