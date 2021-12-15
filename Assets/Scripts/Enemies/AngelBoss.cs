@@ -172,7 +172,7 @@ public class AngelBoss : MonoBehaviour
             isRecovering = true;
             yield return new WaitForSeconds(1.5f);
             Destroy(barrierSkill);
-            AudioManager.Instance.StopLoop();
+            AudioManager.Instance.StopLoop("barrier");
             isRecovering = false;
         } else {
             moveSpeed = 0;

@@ -280,7 +280,7 @@ public class Enemy : MonoBehaviour {
             isRecovering = true;
             yield return new WaitForSeconds(attackDuration);
             Destroy(barrierSkill);
-            AudioManager.Instance.StopLoop();
+            AudioManager.Instance.StopLoop("barrier");
             isRecovering = false;
         }
         if (attackID == 1) {  // Storm
