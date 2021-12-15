@@ -20,7 +20,7 @@ public class Fire : MonoBehaviour
         duration--;
         if (duration == 0) {
             Player.Instance.fire_attacking = false;
-            AudioManager.Instance.StopLoop();
+            AudioManager.Instance.StopLoop("fire");
             Destroy(gameObject);
         }
     }

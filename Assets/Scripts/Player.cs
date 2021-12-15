@@ -169,7 +169,7 @@ public class Player : SceneSingleton<Player> {
                 mp = 0;
                 invincible = false;
                 Destroy(barrierSkill);
-                AudioManager.Instance.StopLoop();
+                AudioManager.Instance.StopLoop("barrier");
             }
             GUIManager.Instance.UpdatePlayerMagic(mp);
         }
@@ -218,7 +218,7 @@ public class Player : SceneSingleton<Player> {
             } else if (Input.GetKeyUp(KeyCode.Space) && invincible) {
                 invincible = false;
                 Destroy(barrierSkill);
-                AudioManager.Instance.StopLoop();
+                AudioManager.Instance.StopLoop("barrier");
             }
         }
 
@@ -414,9 +414,9 @@ public class Player : SceneSingleton<Player> {
     }
 
     // Take damage
-    public void TakeDamage(int damage, Vector2? origin = null) {
+    public void TakeDamage(int damage, Vector2? origin = null,  bool forced = false) {
         // Invincibility
-        if (isRecovering || invincible) {
+        if (isRecovering || invincible && !forced) {
             return;
         }
 
@@ -504,7 +504,7 @@ public class Player : SceneSingleton<Player> {
         if (invincible) {
             invincible = false;
             Destroy(barrierSkill);
-            AudioManager.Instance.StopLoop();
+            AudioManager.Instance.StopLoop("barrier");
         }
     }
 }

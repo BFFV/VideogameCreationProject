@@ -48,7 +48,7 @@ public class Laser : MonoBehaviour {
             AudioManager.Instance.StartLoop("laser");
         } else if (close && distance > 20) {
             close = false;
-            AudioManager.Instance.StopLoop();
+            AudioManager.Instance.StopLoop("laser");
         }
     }
 
@@ -61,7 +61,7 @@ public class Laser : MonoBehaviour {
 
         // Laser damage
         if (tag == "Player") {
-            Player.Instance.TakeDamage(damage);
+            Player.Instance.TakeDamage(damage, null, true);
         }
     }
 }

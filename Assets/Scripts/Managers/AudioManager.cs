@@ -10,14 +10,17 @@ public class AudioManager : SceneSingleton<AudioManager> {
     // References
     AudioSource music;
     AudioSource sfx;
-    AudioSource sfxLoop;
     AudioSource menu;
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
+    public AudioMixerGroup loopMixer;
     public string currentMusic;
 
     // Map string to audio
     Dictionary<string, AudioClip> songs = new Dictionary<string, AudioClip>();
+
+    // Map string to audiosource for loops
+    Dictionary<string, AudioSource> loops = new Dictionary<string, AudioSource>();
 
     // Background music
     public AudioClip tutorial;
@@ -81,11 +84,8 @@ public class AudioManager : SceneSingleton<AudioManager> {
         AudioSource[] sources = gameObject.GetComponents<AudioSource>();
         music = sources[0];
         sfx = sources[1];
-        sfxLoop = sources[2];
-        menu = sources[3];
+        menu = sources[2];
         music.loop = true;
-        sfxLoop.loop = true;
-        sfxLoop.volume = 0.5f;
         music.ignoreListenerPause = true;
         menu.ignoreListenerPause = true;
 
@@ -163,13 +163,23 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
     // Start Looping SFX
     public void StartLoop(string sound) {
-        sfxLoop.clip = songs[sound];
-        sfxLoop.Play();
+        AudioSource looper;
+        if (loops.ContainsKey(sound)) {
+            looper = loops[sound];
+        } else {
+            looper = gameObject.AddComponent<AudioSource>();
+            looper.outputAudioMixerGroup = loopMixer;
+            looper.loop = true;
+            looper.volume = 0.5f;
+            looper.clip = songs[sound];
+            loops.Add(sound, looper);
+        }
+        looper.Play();
     }
 
     // Stop Looping SFX
-    public void StopLoop() {
-        sfxLoop.Stop();
+    public void StopLoop(string loop) {
+        loops[loop].Stop();
     }
 
     // Play Menu SFX
