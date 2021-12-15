@@ -14,6 +14,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     AudioSource menu;
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
+    public string currentMusic;
 
     // Map string to audio
     Dictionary<string, AudioClip> songs = new Dictionary<string, AudioClip>();
@@ -22,7 +23,14 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip tutorial;
     public AudioClip shrine;
     public AudioClip lava;
+    public AudioClip heaven1;
+    public AudioClip heaven2;
+    public AudioClip finalArena;
     public AudioClip skeletonBoss;
+    public AudioClip angelBoss;
+    public AudioClip finalBoss1;
+    public AudioClip finalBoss2;
+    public AudioClip finalBoss3;
 
     // Sound Effects
 
@@ -30,6 +38,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip victory;
     public AudioClip item;
     public AudioClip save;
+    public AudioClip laser;
 
     // Weapons
     public AudioClip gun;
@@ -85,15 +94,24 @@ public class AudioManager : SceneSingleton<AudioManager> {
         sfxMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefs.GetFloat("SFXVol", 1)) * 20);
 
         // Music
+        currentMusic = levelSong;
         songs.Add("tutorial", tutorial);
         songs.Add("shrine", shrine);
         songs.Add("lava", lava);
+        songs.Add("heaven1", heaven1);
+        songs.Add("heaven2", heaven2);
+        songs.Add("finalArena", finalArena);
         songs.Add("skeletonBoss", skeletonBoss);
+        songs.Add("angelBoss", angelBoss);
+        songs.Add("finalBoss1", finalBoss1);
+        songs.Add("finalBoss2", finalBoss2);
+        songs.Add("finalBoss3", finalBoss3);
 
         // Events
         songs.Add("victory", victory);
         songs.Add("item", item);
         songs.Add("save", save);
+        songs.Add("laser", laser);
 
         // Weapons
         songs.Add("sword", sword);
@@ -135,6 +153,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public void PlaySoundtrack(string song) {
         music.clip = songs[song];
         music.Play();
+        currentMusic = song;
     }
 
     // Play SFX

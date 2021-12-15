@@ -433,13 +433,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixer: {fileID: 24100000, guid: 4188ffafab1c9894ab4de15fbcaa7886, type: 2}
   sfxMixer: {fileID: 24100000, guid: c0f319287b635344bb4bf638a3f42302, type: 2}
+  currentMusic: 
   tutorial: {fileID: 8300000, guid: 66bbee02068db9d439f5909536c5e1e6, type: 3}
   shrine: {fileID: 8300000, guid: 6cc57dbcebf184749a49661581ceaf1b, type: 3}
   lava: {fileID: 8300000, guid: a9d7cbdd764d0284d97898b7230206ce, type: 3}
+  heaven1: {fileID: 8300000, guid: ba745af06ceffb34d957a84f74c1814f, type: 3}
+  heaven2: {fileID: 8300000, guid: 29f77e642c7e2a0438572c96b440cfcb, type: 3}
+  finalArena: {fileID: 8300000, guid: b947250bfb410154f81801c7102a2f9f, type: 3}
   skeletonBoss: {fileID: 8300000, guid: 9a7f51d1f7fca214e919d6bf64a2f28d, type: 3}
+  angelBoss: {fileID: 8300000, guid: 2d24c1188006d6d449ba6be2b8dd7798, type: 3}
+  finalBoss1: {fileID: 8300000, guid: 5c0fe30e9a57ce149ad9a5fb3fcccc15, type: 3}
+  finalBoss2: {fileID: 8300000, guid: 69840b639b90e3441b76c0fca6d04bd1, type: 3}
+  finalBoss3: {fileID: 8300000, guid: 27ad51a12e8559b49bb22ef5d63ca3a8, type: 3}
   victory: {fileID: 8300000, guid: b973b8721c217fd4380e9aff48f57f6e, type: 3}
   item: {fileID: 8300000, guid: 2fec3de0a629b674c998ead2fa49e70c, type: 3}
   save: {fileID: 8300000, guid: a34f732ccc636be4086a5a45929f8715, type: 3}
+  laser: {fileID: 8300000, guid: d46cfac37ecf2de43ab721e86775149c, type: 3}
   gun: {fileID: 8300000, guid: 20fd6e2c6df6fd04692bcea37783bb26, type: 3}
   sword: {fileID: 8300000, guid: 0ecb086029ab3c34baf6895a4d56d0df, type: 3}
   wind: {fileID: 8300000, guid: 3b4633750eadee44cb9460041bdc0c2b, type: 3}

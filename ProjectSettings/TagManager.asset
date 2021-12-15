@@ -16,6 +16,7 @@ TagManager:
   - MusicSlider
   - SFXSlider
   - Fire
+  - Laser
   layers:
   - Default
   - TransparentFX
