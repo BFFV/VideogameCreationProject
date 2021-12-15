@@ -26,7 +26,7 @@ public class Wind : MonoBehaviour {
     void Update() {
         distance--;
         if (distance <= 0) {
-            AudioManager.Instance.StopLoop();
+            AudioManager.Instance.StopLoop("wind");
             Destroy(gameObject);
             Player.Instance.wind_attacking = false;
         }
@@ -35,18 +35,16 @@ public class Wind : MonoBehaviour {
     // Wind movement
     private void FixedUpdate() {
         System.Random random = new System.Random();
-
         Vector2 vr;
-        int sum_or_sust_x = random.Next(0,2);
-        int sum_or_sust_y = random.Next(0,2);
+        int sum_or_subs_x = random.Next(0,2);
+        int sum_or_subs_y = random.Next(0,2);
         vr = new Vector2((float) random.NextDouble(), (float) random.NextDouble());
-    
-        if (sum_or_sust_x == 1) {
+        if (sum_or_subs_x == 1) {
             direction.x = direction.x + vr.x;
         } else {
             direction.x = direction.x - vr.x;
         }
-        if (sum_or_sust_y == 1) {
+        if (sum_or_subs_y == 1) {
             direction.y = direction.y + vr.y;
         } else {
             direction.y = direction.y - vr.y;

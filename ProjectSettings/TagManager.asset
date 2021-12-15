@@ -17,6 +17,7 @@ TagManager:
   - SFXSlider
   - Boss2
   - Fire
+  - Laser
   layers:
   - Default
   - TransparentFX

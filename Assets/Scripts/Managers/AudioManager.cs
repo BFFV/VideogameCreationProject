@@ -10,19 +10,30 @@ public class AudioManager : SceneSingleton<AudioManager> {
     // References
     AudioSource music;
     AudioSource sfx;
-    AudioSource sfxLoop;
     AudioSource menu;
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
+    public AudioMixerGroup loopMixer;
+    public string currentMusic;
 
     // Map string to audio
     Dictionary<string, AudioClip> songs = new Dictionary<string, AudioClip>();
+
+    // Map string to audiosource for loops
+    Dictionary<string, AudioSource> loops = new Dictionary<string, AudioSource>();
 
     // Background music
     public AudioClip tutorial;
     public AudioClip shrine;
     public AudioClip lava;
+    public AudioClip heaven1;
+    public AudioClip heaven2;
+    public AudioClip finalArena;
     public AudioClip skeletonBoss;
+    public AudioClip angelBoss;
+    public AudioClip finalBoss1;
+    public AudioClip finalBoss2;
+    public AudioClip finalBoss3;
 
     // Sound Effects
 
@@ -30,6 +41,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip victory;
     public AudioClip item;
     public AudioClip save;
+    public AudioClip laser;
 
     // Weapons
     public AudioClip gun;
@@ -72,11 +84,8 @@ public class AudioManager : SceneSingleton<AudioManager> {
         AudioSource[] sources = gameObject.GetComponents<AudioSource>();
         music = sources[0];
         sfx = sources[1];
-        sfxLoop = sources[2];
-        menu = sources[3];
+        menu = sources[2];
         music.loop = true;
-        sfxLoop.loop = true;
-        sfxLoop.volume = 0.5f;
         music.ignoreListenerPause = true;
         menu.ignoreListenerPause = true;
 
@@ -85,15 +94,24 @@ public class AudioManager : SceneSingleton<AudioManager> {
         sfxMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefs.GetFloat("SFXVol", 1)) * 20);
 
         // Music
+        currentMusic = levelSong;
         songs.Add("tutorial", tutorial);
         songs.Add("shrine", shrine);
         songs.Add("lava", lava);
+        songs.Add("heaven1", heaven1);
+        songs.Add("heaven2", heaven2);
+        songs.Add("finalArena", finalArena);
         songs.Add("skeletonBoss", skeletonBoss);
+        songs.Add("angelBoss", angelBoss);
+        songs.Add("finalBoss1", finalBoss1);
+        songs.Add("finalBoss2", finalBoss2);
+        songs.Add("finalBoss3", finalBoss3);
 
         // Events
         songs.Add("victory", victory);
         songs.Add("item", item);
         songs.Add("save", save);
+        songs.Add("laser", laser);
 
         // Weapons
         songs.Add("sword", sword);
@@ -135,6 +153,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public void PlaySoundtrack(string song) {
         music.clip = songs[song];
         music.Play();
+        currentMusic = song;
     }
 
     // Play SFX
@@ -144,13 +163,23 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
     // Start Looping SFX
     public void StartLoop(string sound) {
-        sfxLoop.clip = songs[sound];
-        sfxLoop.Play();
+        AudioSource looper;
+        if (loops.ContainsKey(sound)) {
+            looper = loops[sound];
+        } else {
+            looper = gameObject.AddComponent<AudioSource>();
+            looper.outputAudioMixerGroup = loopMixer;
+            looper.loop = true;
+            looper.volume = 0.5f;
+            looper.clip = songs[sound];
+            loops.Add(sound, looper);
+        }
+        looper.Play();
     }
 
     // Stop Looping SFX
-    public void StopLoop() {
-        sfxLoop.Stop();
+    public void StopLoop(string loop) {
+        loops[loop].Stop();
     }
 
     // Play Menu SFX
