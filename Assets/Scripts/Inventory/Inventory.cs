@@ -41,14 +41,13 @@ public class Inventory : SceneSingleton<Inventory> {
 
     // Activate new skill
     public void SetSkill(string skill) {
-        AudioManager.Instance.PlaySound("unlock", 2f);
+        AudioManager.Instance.PlayMenu("unlock", 2f);
         Player.Instance.skills.Add(skill);
         InventoryUI.Instance.UpdateSkill(skills[skill]);
     }
 
     // Activate new weapon
     public void SetWeapon(string weapon) {
-        AudioManager.Instance.PlaySound("unlock");
         Player.Instance.weapons.Add(weapon);
         InventoryUI.Instance.UpdateWeapon(weapons[weapon]);
     }

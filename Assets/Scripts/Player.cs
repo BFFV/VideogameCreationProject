@@ -22,6 +22,8 @@ public class Player : SceneSingleton<Player> {
     bool attacking = false;
     public List<string> weapons;
     public GameObject[] attacks;
+    int currentWeaponIdx = 0;
+    string currentWeapon = "Sword";
 
     // Health
     public int hp = 100;
@@ -45,6 +47,8 @@ public class Player : SceneSingleton<Player> {
     public GameObject explosion;
     public bool blast = false;
     public bool vortex = false;
+    public bool wind_attacking = false;
+    public bool fire_attacking = false;
     public GameObject blackHole;
     public GameObject holyBeam;
     public GameObject holyCharge;
@@ -84,10 +88,7 @@ public class Player : SceneSingleton<Player> {
         exp = state.spawnExp;
         weapons = new List<string>(state.spawnWeapons);
         skills = new List<string>(state.spawnSkills);
-
         GUIManager.Instance.UpdatePlayerStatus(hp, exp, mp);
-        // TODO: testing only
-        weapons.Add("Gun");
     }
 
     // Player interactions
@@ -289,6 +290,17 @@ public class Player : SceneSingleton<Player> {
         if (Input.GetKeyDown(KeyCode.G) && currentCheckpoint != null) {
             currentCheckpoint.SaveGame();
         }
+
+        // Switch weapons input
+        if (Input.GetKeyDown(KeyCode.C)) {
+            if (currentWeaponIdx == weapons.Count - 1) {
+                currentWeaponIdx = 0;
+            } else {
+                currentWeaponIdx += 1;
+            }
+            currentWeapon = weapons[currentWeaponIdx];
+            AudioManager.Instance.PlaySound("switchWeapon");
+        }
     }
 
     // Player movement
@@ -298,13 +310,18 @@ public class Player : SceneSingleton<Player> {
 
     // Start the attack
     public void HandleAttack() {
-        if (!attacking) {
-            if (Input.GetKey(KeyCode.O)) {
+        if (!attacking && Input.GetKey(KeyCode.O)) {
+            if (currentWeapon == "Sword") {
                 StartCoroutine(Attack());
-            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.P)) {
+            }
+            if (currentWeapon == "Gun") {
                 StartCoroutine(Shoot());
-            } else if (weapons.Contains("Wind") && Input.GetKeyDown(KeyCode.J)) {
+            }
+            if (currentWeapon == "Wind" && !wind_attacking) {
                 StartCoroutine(WindShoot());
+            }
+            if (currentWeapon == "Fire" && !fire_attacking) {
+                StartCoroutine(FireAttack());
             }
         }
     }
@@ -350,13 +367,24 @@ public class Player : SceneSingleton<Player> {
 
     // Wind attack
     public IEnumerator WindShoot() {
+        wind_attacking = true;
         float initX = (float) (transform.position.x + 1.2 * dynamicDirection.x);
         float initY = (float) (transform.position.y + 1.2 * dynamicDirection.y);
         GameObject newProjectile = Instantiate(attacks[2], new Vector3(initX, initY, 0), transform.rotation);
 
         // Set direction of wind
         newProjectile.GetComponent<Wind>().direction = dynamicDirection;
+
         yield return new WaitForSeconds(0.5f);
+    }
+
+    public IEnumerator FireAttack() {
+        fire_attacking = true;
+        float initX = (float) (transform.position.x + fixedDirection.x);
+        float initY = (float) (transform.position.y + fixedDirection.y);
+        GameObject fire = Instantiate(attacks[3], new Vector3(initX, initY, 0), transform.rotation);
+        yield return new WaitForSeconds(0.5f);
+
     }
 
     // Enemy damage
@@ -403,6 +431,7 @@ public class Player : SceneSingleton<Player> {
         } else {
             hp -= damage;
         }
+        AudioManager.Instance.PlaySound("damage");
         GUIManager.Instance.UpdatePlayerHealth(hp);
 
         // Show damage taken

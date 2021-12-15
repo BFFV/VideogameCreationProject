@@ -36,8 +36,9 @@ public class InventoryUI : SceneSingleton<InventoryUI> {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
             if (inventoryUI.activeSelf) {  // Pause
                 Time.timeScale = 0;
+                AudioListener.pause = true;
                 Player.Instance.ResetState();
-                AudioManager.Instance.PlaySound("pause", 0.5f);
+                AudioManager.Instance.PlayMenu("pause", 0.5f);
                 windowIdx = 1;
                 UpdateNavigation();
                 windows[1].SetActive(true);
@@ -45,7 +46,8 @@ public class InventoryUI : SceneSingleton<InventoryUI> {
                 sfxSlider.value = PlayerPrefs.GetFloat("SFXVol", 1);
             } else {  // Unpause
                 Time.timeScale = 1;
-                AudioManager.Instance.PlaySound("unpause");
+                AudioListener.pause = false;
+                AudioManager.Instance.PlayMenu("unpause");
                 foreach (GameObject w in windows) {
                     w.SetActive(false);
                 }
@@ -55,13 +57,13 @@ public class InventoryUI : SceneSingleton<InventoryUI> {
         // Navigate
         if (inventoryUI.activeSelf) {
             if (Input.GetKeyDown(KeyCode.A) && windowIdx > 0) {
-                AudioManager.Instance.PlaySound("switchWindow");
+                AudioManager.Instance.PlayMenu("switchWindow");
                 windows[windowIdx].SetActive(false);
                 windowIdx -= 1;
                 UpdateNavigation();
                 windows[windowIdx].SetActive(true);
             } else if (Input.GetKeyDown(KeyCode.D) && windowIdx < 3) {
-                AudioManager.Instance.PlaySound("switchWindow");
+                AudioManager.Instance.PlayMenu("switchWindow");
                 windows[windowIdx].SetActive(false);
                 windowIdx += 1;
                 UpdateNavigation();

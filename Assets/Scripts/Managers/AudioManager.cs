@@ -11,6 +11,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     AudioSource music;
     AudioSource sfx;
     AudioSource sfxLoop;
+    AudioSource menu;
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
 
@@ -33,6 +34,8 @@ public class AudioManager : SceneSingleton<AudioManager> {
     // Weapons
     public AudioClip gun;
     public AudioClip sword;
+    public AudioClip wind;
+    public AudioClip fire;
 
     // Skills
     public AudioClip thunder;
@@ -46,6 +49,10 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip holyBeam;
     public AudioClip holyCharge;
     public AudioClip ice;
+
+    // PLayer
+    public AudioClip damage;
+    public AudioClip switchWeapon;
 
     // Enemies
     public AudioClip fireball;
@@ -66,9 +73,12 @@ public class AudioManager : SceneSingleton<AudioManager> {
         music = sources[0];
         sfx = sources[1];
         sfxLoop = sources[2];
+        menu = sources[3];
         music.loop = true;
         sfxLoop.loop = true;
         sfxLoop.volume = 0.5f;
+        music.ignoreListenerPause = true;
+        menu.ignoreListenerPause = true;
 
         // Adjust initial volume
         musicMixer.SetFloat("MusicVol", Mathf.Log10(PlayerPrefs.GetFloat("MusicVol", 1)) * 20);
@@ -88,6 +98,8 @@ public class AudioManager : SceneSingleton<AudioManager> {
         // Weapons
         songs.Add("sword", sword);
         songs.Add("gun", gun);
+        songs.Add("wind", wind);
+        songs.Add("fire", fire);
 
         // Skills
         songs.Add("thunder", thunder);
@@ -101,6 +113,10 @@ public class AudioManager : SceneSingleton<AudioManager> {
         songs.Add("holyCharge", holyCharge);
         songs.Add("holyBeam", holyBeam);
         songs.Add("ice", ice);
+
+        // Player
+        songs.Add("damage", damage);
+        songs.Add("switchWeapon", switchWeapon);
 
         // Enemies
         songs.Add("fireball", fireball);
@@ -135,5 +151,10 @@ public class AudioManager : SceneSingleton<AudioManager> {
     // Stop Looping SFX
     public void StopLoop() {
         sfxLoop.Stop();
+    }
+
+    // Play Menu SFX
+    public void PlayMenu(string sound, float volume = 1) {
+        menu.PlayOneShot(songs[sound], volume);
     }
 }
