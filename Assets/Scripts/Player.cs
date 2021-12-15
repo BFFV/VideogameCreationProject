@@ -22,6 +22,8 @@ public class Player : SceneSingleton<Player> {
     bool attacking = false;
     public List<string> weapons;
     public GameObject[] attacks;
+    int currentWeaponIdx = 0;
+    string currentWeapon = "Sword";
 
     // Health
     public int hp = 100;
@@ -86,10 +88,7 @@ public class Player : SceneSingleton<Player> {
         exp = state.spawnExp;
         weapons = new List<string>(state.spawnWeapons);
         skills = new List<string>(state.spawnSkills);
-
         GUIManager.Instance.UpdatePlayerStatus(hp, exp, mp);
-        // TODO: testing only
-        weapons.Add("Gun");
     }
 
     // Player interactions
@@ -291,6 +290,17 @@ public class Player : SceneSingleton<Player> {
         if (Input.GetKeyDown(KeyCode.G) && currentCheckpoint != null) {
             currentCheckpoint.SaveGame();
         }
+
+        // Switch weapons input
+        if (Input.GetKeyDown(KeyCode.C)) {
+            if (currentWeaponIdx == weapons.Count - 1) {
+                currentWeaponIdx = 0;
+            } else {
+                currentWeaponIdx += 1;
+            }
+            currentWeapon = weapons[currentWeaponIdx];
+            AudioManager.Instance.PlaySound("switchWeapon");
+        }
     }
 
     // Player movement
@@ -300,14 +310,17 @@ public class Player : SceneSingleton<Player> {
 
     // Start the attack
     public void HandleAttack() {
-        if (!attacking) {
-            if (Input.GetKey(KeyCode.O)) {
+        if (!attacking && Input.GetKey(KeyCode.O)) {
+            if (currentWeapon == "Sword") {
                 StartCoroutine(Attack());
-            } else if (weapons.Contains("Gun") && Input.GetKeyDown(KeyCode.P)) {
+            }
+            if (currentWeapon == "Gun") {
                 StartCoroutine(Shoot());
-            } else if (weapons.Contains("Wind") && Input.GetKeyDown(KeyCode.J) && !wind_attacking) {
+            }
+            if (currentWeapon == "Wind" && !wind_attacking) {
                 StartCoroutine(WindShoot());
-            } else if (weapons.Contains("Fire") && Input.GetKeyDown(KeyCode.K) && !fire_attacking) {
+            }
+            if (currentWeapon == "Fire" && !fire_attacking) {
                 StartCoroutine(FireAttack());
             }
         }
@@ -413,6 +426,7 @@ public class Player : SceneSingleton<Player> {
         } else {
             hp -= damage;
         }
+        AudioManager.Instance.PlaySound("damage");
         GUIManager.Instance.UpdatePlayerHealth(hp);
 
         // Show damage taken
