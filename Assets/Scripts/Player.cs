@@ -374,6 +374,11 @@ public class Player : SceneSingleton<Player> {
             if (!boss.frozen) {
                 TakeDamage(boss.attack, knockbackDir.normalized);
             }
+        } else if (tag == "Boss2") {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            if (!boss.frozen) {
+                TakeDamage(boss.attack, knockbackDir.normalized);
+            }
         }
     }
 

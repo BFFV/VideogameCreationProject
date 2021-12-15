@@ -27,9 +27,9 @@ public class Enemy : MonoBehaviour {
     public float timeBetweenAttack;
     float timeBetweenAttackCounter;
     public float attackDuration;
-    float attackDurationElapsed = 0;
     public GameObject[] attacks;
-    GameObject barrier;
+    public GameObject barrier;
+    public GameObject holyBeam;
 
     // Health
     public int maxHp;
@@ -81,6 +81,7 @@ public class Enemy : MonoBehaviour {
         }
         if (attackingEnemies.Contains(enemyType)) {
             timeBetweenAttackCounter = timeBetweenAttack;
+            StartCoroutine(ChooseAttack());
         }
     }
 
@@ -146,21 +147,6 @@ public class Enemy : MonoBehaviour {
             anim.SetFloat("MoveX", movement[0]);
             anim.SetFloat("MoveY", movement[1]);
             movement = direction;
-        }
-
-        // Enemies with repeating attack/spell
-        if (attackingEnemies.Contains(enemyType)) {
-            timeBetweenAttackCounter -= Time.deltaTime;
-            if (timeBetweenAttackCounter <= 0f) {
-                if (enemyType == "LavaEnemy") {
-                    shootFireball();
-                } else if (enemyType == "Paladin") {
-                    // barrera paladin
-                } else if (enemyType == "Angel") {
-                    // ataque angel (rayo?)
-                }
-                
-            }
         }
 
         // Light elemental second form
@@ -236,8 +222,22 @@ public class Enemy : MonoBehaviour {
         sprite.material.color = new Color(0, 2f, 2f, 1);
     }
 
+    IEnumerator ChooseAttack() {
+        while (true) {
+            yield return new WaitForSeconds(timeBetweenAttack);
+            if (!frozen && active) {
+                if (enemyType == "LavaEnemy") {
+                    yield return shootFireball();
+                } else {
+                    int attackID = enemyType == "Paladin" ? 0 : 1;
+                    yield return useAttack(attackID);
+                }
+            }
+        }
+    }
+
     // Lava enemy shoot fireball
-    void shootFireball() {
+    IEnumerator shootFireball() {
         float initX = (float) (transform.position.x);
         float initY = (float) (transform.position.y);
         float playerX = initX - player.transform.position.x;
@@ -266,6 +266,28 @@ public class Enemy : MonoBehaviour {
         // Set direction of the fireball
         newProjectile.GetComponent<Fireball>().direction = player.transform.position - transform.position;
         newProjectile.GetComponent<Fireball>().transform.Rotate(0.0f, 0.0f, angle, Space.Self);
+        yield return new WaitForSeconds(attackDuration);
         timeBetweenAttackCounter = timeBetweenAttack;
+    }
+
+    IEnumerator useAttack(int attackID) {
+        moveSpeed = 0;
+        anim.enabled = false;
+        if (attackID == 0) {  // Barrier
+            GameObject barrierSkill = Instantiate(barrier, transform);
+            AudioManager.Instance.StartLoop("barrier");
+            isRecovering = true;
+            yield return new WaitForSeconds(attackDuration);
+            Destroy(barrierSkill);
+            AudioManager.Instance.StopLoop();
+            isRecovering = false;
+        }
+        if (attackID == 1) {  // Holy Beam
+            GameObject holyBeamSkill = Instantiate(holyBeam, transform.position, Quaternion.identity);
+            holyBeamSkill.GetComponent<HolyBeam>().AssignToEnemy();
+            yield return new WaitForSeconds(attackDuration);
+        }
+        moveSpeed = speed;
+        anim.enabled = true;
     }
 }

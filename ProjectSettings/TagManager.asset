@@ -15,6 +15,7 @@ TagManager:
   - Canvas
   - MusicSlider
   - SFXSlider
+  - Boss2
   layers:
   - Default
   - TransparentFX
