@@ -345,6 +345,8 @@ MonoBehaviour:
   save: {fileID: 8300000, guid: a34f732ccc636be4086a5a45929f8715, type: 3}
   gun: {fileID: 8300000, guid: 20fd6e2c6df6fd04692bcea37783bb26, type: 3}
   sword: {fileID: 8300000, guid: 0ecb086029ab3c34baf6895a4d56d0df, type: 3}
+  wind: {fileID: 8300000, guid: 3b4633750eadee44cb9460041bdc0c2b, type: 3}
+  fire: {fileID: 8300000, guid: 798d430f7a8fbeb428dac583854d9674, type: 3}
   thunder: {fileID: 8300000, guid: b0fe34a08cba8ea408cb09eb9ac58832, type: 3}
   storm: {fileID: 8300000, guid: e7d3b717869182f4bbbb73708ae3ff50, type: 3}
   sprint: {fileID: 8300000, guid: 7b879305006d9d04298e370169c781c0, type: 3}
@@ -361,4 +363,4 @@ MonoBehaviour:
   unpause: {fileID: 8300000, guid: 5c1c380e0e7d25a4e9c35ebd1d797b71, type: 3}
   switchWindow: {fileID: 8300000, guid: 74735417743d055439446e54329833f2, type: 3}
   unlock: {fileID: 8300000, guid: 60a5251c45ddb7340b971213466cd3c4, type: 3}
-  levelSong: tutorial
+  levelSong: lava
