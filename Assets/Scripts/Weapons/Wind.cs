@@ -59,17 +59,16 @@ public class Wind : MonoBehaviour {
         if (other.isTrigger) {
             return;
         }
+        // TODO: add other bosses
         string tag = other.gameObject.tag;
         if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
             enemy.body.AddForce(direction * impulse, ForceMode2D.Impulse);
-
         } else if (tag == "Boss1") {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
             boss.TakeDamage(damage);
             boss.body.AddForce(direction * impulse, ForceMode2D.Impulse);
-          
         } else if (tag == "Boss2") {
             AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
             boss.TakeDamage(damage);

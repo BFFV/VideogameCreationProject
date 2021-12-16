@@ -20,7 +20,7 @@ public class PlayerData {
         spawnPos[1] = pos.y;
         spawnPos[2] = 0;
         if (state == "default") {  // For testing
-            spawnExp = 301;
+            spawnExp = 3000;
             spawnWeapons = new List<string>() {"Sword", "Gun"};
             spawnSkills = new List<string>() {};
         } else if (state == "new") {  // New game

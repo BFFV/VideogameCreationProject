@@ -15,7 +15,7 @@ public class BlackHole : MonoBehaviour {
 
     // Start skill
     void Start() {
-        AudioManager.Instance.PlaySound("blackHole", 2);
+        AudioManager.Instance.PlaySound("blackHole", 3f);
         StartCoroutine(Cast(2.5f, 2));
     }
 
@@ -69,6 +69,9 @@ public class BlackHole : MonoBehaviour {
         } else if (tag == "Fireball" && targetTag.Contains("Fireball")) {
             Fireball fireball = other.gameObject.GetComponent<Fireball>();
             fireball.body.AddForce(direction * force, ForceMode2D.Force);
+        } else if (tag == "Boss2" && targetTag.Contains("Boss2")) {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            boss.body.AddForce(direction * force, ForceMode2D.Force);
         }
 
         // Singularity
@@ -81,6 +84,9 @@ public class BlackHole : MonoBehaviour {
                 Player.Instance.TakeDamage(damage);
             } else if (tag == "Fireball" && targetTag.Contains("Fireball")) {
                 Destroy(other.gameObject);
+            } else if (tag == "Boss2" && targetTag.Contains("Boss2")) {
+                AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+                boss.TakeDamage(damage);
             }
         }
     }

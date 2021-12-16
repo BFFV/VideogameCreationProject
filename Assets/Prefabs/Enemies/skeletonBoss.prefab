@@ -171,8 +171,8 @@ MonoBehaviour:
   activityRadius: 40
   frozen: 0
   attack: 10
-  maxHp: 300
-  hp: 300
+  maxHp: 400
+  hp: 400
   isRecovering: 0
   rock: {fileID: 7421803797852565109, guid: fbc5d0293c2bce341ad5ba14e8fd8e16, type: 3}
   sprite: {fileID: 0}

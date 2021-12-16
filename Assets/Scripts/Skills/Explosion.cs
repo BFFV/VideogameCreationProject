@@ -50,6 +50,10 @@ public class Explosion : MonoBehaviour {
         } else if (tag == "Player" && targetTag.Contains("Player")) {
             Player.Instance.TakeDamage(damage);
             Player.Instance.body.AddForce(direction * impulse, ForceMode2D.Impulse);
+        } else if (tag == "Boss2" && targetTag.Contains("Boss2")) {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            boss.TakeDamage(damage);
+            boss.body.AddForce(direction * impulse, ForceMode2D.Impulse);
         }
     }
 }

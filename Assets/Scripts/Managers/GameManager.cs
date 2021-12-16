@@ -14,7 +14,7 @@ public class GameManager : Singleton<GameManager> {
 
     // Checkpoints & save data
     public int slot = 0;
-    public PlayerData playerData = new PlayerData("Shrine", new Vector3(46, 186, 0), "default");
+    public PlayerData playerData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
 
     // Settings
     void Start() {

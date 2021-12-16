@@ -98,6 +98,12 @@ public class Lightning : MonoBehaviour {
                     targets.RemoveAt(i);
                 }
                 boss.TakeDamage(damage);
+            } else if (t.CompareTag("Boss2") && targetTag.Contains("Boss2")) {
+                AngelBoss boss = t.GetComponent<AngelBoss>();
+                if ((!boss.isRecovering && !boss.invincible) && boss.hp <= damage) {
+                    targets.RemoveAt(i);
+                }
+                boss.TakeDamage(damage);
             } else if (t.CompareTag("Player") && targetTag.Contains("Player")) {
                 if (!Player.Instance.isRecovering && Player.Instance.hp <= damage) {
                     targets.RemoveAt(i);

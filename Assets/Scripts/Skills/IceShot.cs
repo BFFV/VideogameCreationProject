@@ -44,6 +44,9 @@ public class IceShot: MonoBehaviour {
             boss.Freeze();
         } else if (tag == "Player" && targetTag.Contains("Player")) {
             Player.Instance.Freeze();
+        } else if (tag == "Boss2" && targetTag.Contains("Boss2")) {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            boss.Freeze();
         }
     }
 }
