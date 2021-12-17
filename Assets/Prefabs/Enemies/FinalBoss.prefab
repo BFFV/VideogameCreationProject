@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4149695803137010134}
   - component: {fileID: 27294448719054390}
   - component: {fileID: 1349800188312458607}
+  - component: {fileID: 1578101070}
   m_Layer: 0
   m_Name: FinalBoss
   m_TagString: Boss3
@@ -154,6 +155,7 @@ MonoBehaviour:
   maxHp: 350
   hp: 350
   isRecovering: 0
+  invincible: 1
   sprite: {fileID: 4149695803137010128}
   barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}
   lightning: {fileID: 749787904355031690, guid: 0d169a318fc209b468927120c681f182, type: 3}
@@ -185,3 +187,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &1578101070
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4149695803137010135}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2

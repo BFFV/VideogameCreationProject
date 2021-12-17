@@ -101,7 +101,7 @@ MonoBehaviour:
   targetTag:
   - Enemy
   - Boss2
-  - FinalBoss
+  - Boss3
   - Fireball
   singularity: {fileID: -1641778318140918544}
 --- !u!58 &5623354847732807810

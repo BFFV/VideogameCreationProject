@@ -154,9 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ff8eab9283e1a4ea74c1b59b875213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
   targetTag:
   - Enemy
   - Boss1
   - Boss2
-  - FinalBoss
+  - Boss3

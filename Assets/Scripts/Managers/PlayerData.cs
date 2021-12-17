@@ -20,10 +20,10 @@ public class PlayerData {
         spawnPos[2] = 0;
         if (state == "default") {  // For testing
             spawnExp = 3000;
-            spawnWeapons = new List<string>() {"Sword"};
-            spawnSkills = new List<string>() {};
+            spawnWeapons = new List<string>() {"Sword", "Gun", "Wind", "Fire"};
+            spawnSkills = new List<string>() {"BlackHole", "HolyBeam"};
         } else if (state == "new") {  // New game
-            spawnExp = 1;
+            spawnExp = 3000;
             spawnWeapons = new List<string> {"Sword"};
             spawnSkills = new List<string>();
         } else if (state == "saved") {  // Checkpoint

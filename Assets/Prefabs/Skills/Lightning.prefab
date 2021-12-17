@@ -71,7 +71,7 @@ MonoBehaviour:
   - Enemy
   - Boss1
   - Boss2
-  - FinalBoss
+  - Boss3
 --- !u!212 &749787904355031691
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinalBoss : MonoBehaviour
-{
+public class FinalBoss : MonoBehaviour {
     // Movement
     public float speed;
     float moveSpeed;
     public Rigidbody2D body;
-    bool moving = true;
+    bool moving = false;
     Vector2 movement = Vector2.zero;
     Animator anim;
-    bool active = true;
+    bool active = false;
     public float activityRadius;
     public bool frozen = false;
     float freezeTimeout = 1;
@@ -26,6 +25,7 @@ public class FinalBoss : MonoBehaviour
     float recoveryTime = 0.5f;
     float recoveryDelta = 0.05f;
     public bool isRecovering = false;
+    public bool invincible = false;
 
     // References
     GameObject player;
@@ -52,15 +52,9 @@ public class FinalBoss : MonoBehaviour
     public float overheatTime;
     float cooldownElapsed;
     public float cooldown;
-    
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Boss already defeated
-        if (Player.Instance.skills.Contains("BlackHole") && Player.Instance.skills.Contains("HolyBeam")) {
-            Destroy(gameObject);
-        }
+    // Setup
+    void Start() {
         hp = maxHp;
         moveSpeed = speed;
         anim = GetComponent<Animator>();
@@ -74,16 +68,17 @@ public class FinalBoss : MonoBehaviour
         StartCoroutine(ChooseAttack());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // Update
+    void Update() {
+        if (idle) {
+            return;
+        }
         overheatTimeElapsed += Time.deltaTime;
         if (overheatTimeElapsed >= overheatTime) {
             overheat = true;
             anim.SetFloat("MoveX", 0);
             anim.SetFloat("MoveY", 0);
         }
-
         if (overheat) {
             moveSpeed = 0;
             cooldownElapsed += Time.deltaTime;
@@ -96,52 +91,53 @@ public class FinalBoss : MonoBehaviour
                 overheatTimeElapsed = 0;
             }
         } else {
-
-        // Frozen
-        if (frozen) {
-            freezeTimeout -= Time.deltaTime;
-            if (freezeTimeout <= 0) {
-                freezeTimeout = 1;
-                frozen = false;
-                moveSpeed = speed;
-                anim.enabled = true;
-                sprite.material.color = currentColor;
+            // Frozen
+            if (frozen) {
+                freezeTimeout -= Time.deltaTime;
+                if (freezeTimeout <= 0) {
+                    freezeTimeout = 1;
+                    frozen = false;
+                    moveSpeed = speed;
+                    anim.enabled = true;
+                    sprite.material.color = currentColor;
+                }
+                return;
             }
-            return;
-        }
 
-        // Activity range
-        float distance = (transform.position - Player.Instance.transform.position).magnitude;
-        if (active && distance > activityRadius) {
-            active = false;
-            moveSpeed = 0;
-        } else if (!active && distance <= activityRadius) {
-            active = true;
-            moveSpeed = speed;
-        }
-        if (!active) {
-            return;
-        }
+            // Activity range
+            float distance = (transform.position - Player.Instance.transform.position).magnitude;
+            if (active && distance > activityRadius) {
+                active = false;
+                moveSpeed = 0;
+            } else if (!active && distance <= activityRadius) {
+                active = true;
+                moveSpeed = speed;
+            }
+            if (!active) {
+                return;
+            }
 
-        // Movement
-        Vector3 direction = player.transform.position - transform.position;
-        direction.Normalize();
-        movement = direction;
-        anim.SetFloat("MoveX", movement[0]);
-        anim.SetFloat("MoveY", movement[1]);
+            // Movement
+            Vector3 direction = player.transform.position - transform.position;
+            direction.Normalize();
+            movement = direction;
+            anim.SetFloat("MoveX", movement[0]);
+            anim.SetFloat("MoveY", movement[1]);
 
-        // Phases
-        if (phase == 0 && hp <= maxHp * 0.75) {
-            phase = 1;
-            attacks.Add(explosion);
-        } else if (phase == 1 && hp <= maxHp * 0.5) {
-            phase = 2;
-            attacks.Add(lightning);
-        } else if (phase == 2 && hp <= maxHp * 0.25) {
-            phase = 3;
-            attacks.Add(holyBeam);
-            attacks.Add(blackHole);
-        }
+            // Phases
+            if (phase == 0 && hp <= maxHp * 0.75) {
+                phase = 1;
+                attacks.Add(explosion);
+            } else if (phase == 1 && hp <= maxHp * 0.5) {
+                phase = 2;
+                attacks.Add(lightning);
+                AudioManager.Instance.PlaySoundtrack("finalBoss2");
+            } else if (phase == 2 && hp <= maxHp * 0.25) {
+                phase = 3;
+                attacks.Add(holyBeam);
+                attacks.Add(blackHole);
+                AudioManager.Instance.PlaySoundtrack("finalBoss3");
+            }
 
         }
     }
@@ -162,7 +158,7 @@ public class FinalBoss : MonoBehaviour
     public void TakeDamage(int damage, bool forced = false) {
 
         // Invincibility
-        if (isRecovering || idle) {
+        if (isRecovering || invincible || idle) {
             return;
         }
 
@@ -180,7 +176,9 @@ public class FinalBoss : MonoBehaviour
         StartCoroutine(Recover());
     }
 
+    // Death
     IEnumerator DeathAnimation() {
+        AudioManager.Instance.PlaySoundtrack("finalVictory");
         moveSpeed = 0;
         anim.enabled = false;
         for (int i = 0; i < 16; i++) {
@@ -209,7 +207,7 @@ public class FinalBoss : MonoBehaviour
     IEnumerator ChooseAttack() {
         while (true) {
             yield return new WaitForSeconds(Random.Range(minAttackInterval, maxAttackInterval + 1));
-            if (attacks.Count > 0 && !frozen && active && !overheat) {
+            if (attacks.Count > 0 && !frozen && active && !overheat && !idle) {
                 int chosen = Random.Range(0, attacks.Count);
                 yield return UseAttack(chosen);
             }
@@ -222,11 +220,11 @@ public class FinalBoss : MonoBehaviour
             GameObject barrierSkill = Instantiate(barrier, transform);
             barrierSkill.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             AudioManager.Instance.StartLoop("barrier");
-            isRecovering = true;
+            invincible = true;
             yield return new WaitForSeconds(1.5f);
             Destroy(barrierSkill);
             AudioManager.Instance.StopLoop("barrier");
-            isRecovering = false;
+            invincible = false;
         } else {
             moveSpeed = 0;
             anim.enabled = false;
@@ -280,10 +278,11 @@ public class FinalBoss : MonoBehaviour
     void BossDeath() {
         player.GetComponent<Player>().Celebrate();
         StopAllCoroutines();
-        AudioManager.Instance.PlaySound("victory", 2f);
-        AudioManager.Instance.PlaySoundtrack("lava"); // CAMBIAR
-        GUIManager.Instance.ShowEvent("You have learned the superior skill Holy Beam!");
-        Inventory.Instance.SetSkill("HolyBeam");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject rock in obstacles) {
+            Destroy(rock);
+        }
+        GUIManager.Instance.ShowEvent("You Win!");
         Destroy(gameObject);
     }
 
@@ -292,7 +291,8 @@ public class FinalBoss : MonoBehaviour
         string tag = other.gameObject.tag;
         if (other.CompareTag("Player") && !moving) {
             idle = false;
-            //AudioManager.Instance.PlaySoundtrack("skeletonBoss");
+            moving = true;
+            AudioManager.Instance.PlaySoundtrack("finalBoss1");
         }
     }
 }

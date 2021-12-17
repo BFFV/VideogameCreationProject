@@ -126,5 +126,5 @@ MonoBehaviour:
   targetTag:
   - Enemy
   - Boss1
-  - FinalBoss
+  - Boss3
   - Fireball

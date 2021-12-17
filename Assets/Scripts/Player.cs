@@ -2,7 +2,6 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 // Player
 public class Player : SceneSingleton<Player> {
@@ -30,6 +29,7 @@ public class Player : SceneSingleton<Player> {
     float recoveryTime = 1f;
     float recoveryDelta = 0.05f;
     public bool isRecovering = false;
+    bool alive = true;
 
     // Skills & Experience/Magic
     public float mp = 100;
@@ -57,7 +57,7 @@ public class Player : SceneSingleton<Player> {
     public bool frozen = false;
     float freezeTimeout = 1;
     float sprintRate = 0.1f;
-    float barrierRate = 0.3f;
+    float barrierRate = 0.2f;
     float replenishRate = 0.08f;
 
     // Checkpoints
@@ -91,7 +91,7 @@ public class Player : SceneSingleton<Player> {
 
     // Player interactions
     void Update() {
-        if (Time.timeScale == 0) {  // Game is paused
+        if (Time.timeScale == 0 || !alive) {  // Game is paused
             return;
         }
         GetInput();  // Process player input for movement/skills
@@ -467,7 +467,7 @@ public class Player : SceneSingleton<Player> {
     // Take damage
     public void TakeDamage(int damage, Vector2? origin = null,  bool forced = false) {
         // Invincibility
-        if (isRecovering || invincible && !forced) {
+        if ((isRecovering || invincible && !forced) || !alive) {
             return;
         }
 
@@ -494,13 +494,15 @@ public class Player : SceneSingleton<Player> {
         StartCoroutine(Recover());
     }
 
+    // Death
     IEnumerator DeathAnimation() {
+        AudioManager.Instance.PlaySoundtrack("gameOver");
+        alive = false;
         moveSpeed = 0;
         animator.enabled = false;
-        AudioListener.pause = true;
         for (int i = 0; i < 16; i++) {
-            transform.localScale -= new Vector3(0.0625f, 0.0625f, 0f);
-            yield return new WaitForSeconds(0.25f);
+            transform.localScale -= new Vector3(0.12f, 0.12f, 0f);
+            yield return new WaitForSeconds(0.5f);
         }
         GameManager.Instance.StartGame();
     }
