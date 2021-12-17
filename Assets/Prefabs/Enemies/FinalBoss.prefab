@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -6711788675782502315, guid: 0f144d5a3912ce348b3aa490bd80f340, type: 3}
+  m_Sprite: {fileID: -6711788675782502315, guid: fac9e0077033d654283db190a5e69cba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.38, y: 0.72}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -105,7 +105,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.38, y: 0.72}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.38, y: 0.72}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -164,6 +164,8 @@ MonoBehaviour:
   vortex: 0
   blackHole: {fileID: 5623354847732807814, guid: 6da803723c4f4734aa98fb09fce5c66f, type: 3}
   iceShot: {fileID: 8982258414888064180, guid: f9edaba0ff0c3c746afafe0cdd12e99f, type: 3}
+  overheatTime: 15
+  cooldown: 5
 --- !u!95 &1349800188312458607
 Animator:
   serializedVersion: 3
