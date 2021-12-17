@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.04356533, g: 0.2984917, b: 0.8396226, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -351,7 +351,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &153987243
 GameObject:
@@ -529,7 +529,7 @@ RectTransform:
   - {fileID: 1284602859}
   - {fileID: 73355632}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -600,7 +600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284602858
 GameObject:
@@ -636,7 +636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -269, y: -40.131}
+  m_AnchoredPosition: {x: -284, y: 93}
   m_SizeDelta: {x: -1318.04, y: -364.494}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1284602860
@@ -672,9 +672,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Theos, un joven que perdi\xF3 a su familia, al verse envuelto en una caprichosa
-    disputa entre estos.\r\nEste, lleno de ira, decide enfrentarse a los dioses para
-    recuperar lo que le han quitado\r\n\n"
+  m_Text: 'Theos was a young man who one day lost all his family, due to their accidental
+    involvement in a fight between gods.
+
+    Full of rage, he decides to face the
+    gods to get back what was stolen from him.
+
+'
 --- !u!222 &1284602861
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -683,6 +687,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284602858}
   m_CullTransparentMesh: 1
+--- !u!1001 &1336113651
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8978802950783737095, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_Name
+      value: AudioController
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737096, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978802950783737098, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
+      propertyPath: levelSong
+      value: opening
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d6d8bb536b330714290e7b7931b45fa9, type: 3}
 --- !u!1 &1904902844
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,4 +14,9 @@ public class LoadMenu : MonoBehaviour {
         game.playerData = SaveSystem.LoadData(slot);
         game.StartGame();
     }
+
+    // Show opening
+    public void ShowIntro() {
+        GameManager.Instance.Opening();
+    }
 }
