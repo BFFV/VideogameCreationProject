@@ -65,6 +65,9 @@ public class HolyBeam : MonoBehaviour {
         } else if (tag == "Boss1" && targetTag.Contains("Boss1")) {
             SkeletonBoss boss = other.gameObject.GetComponent<SkeletonBoss>();
             boss.TakeDamage(damage);
+        } else if (tag == "Boss3" && targetTag.Contains("Boss3")) {
+            FinalBoss boss = other.gameObject.GetComponent<FinalBoss>();
+            boss.TakeDamage(damage);
         } else if (tag == "Player" && targetTag.Contains("Player")) {
             Player.Instance.TakeDamage(damage);
         } else if (tag == "Fireball" && targetTag.Contains("Fireball")) {

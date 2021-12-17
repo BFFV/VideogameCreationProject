@@ -272,24 +272,28 @@ public class Enemy : MonoBehaviour {
     }
 
     IEnumerator useAttack(int attackID) {
-        moveSpeed = 0;
-        anim.enabled = false;
         if (attackID == 0) {  // Barrier
+            anim.SetBool("Barrier", true);
+            yield return new WaitForSeconds(0.85f);
+            moveSpeed = 0;
             GameObject barrierSkill = Instantiate(barrier, transform);
             AudioManager.Instance.StartLoop("barrier");
             isRecovering = true;
             yield return new WaitForSeconds(attackDuration);
             Destroy(barrierSkill);
+            anim.SetBool("Barrier", false);
             AudioManager.Instance.StopLoop("barrier");
             isRecovering = false;
         }
         if (attackID == 1) {  // Storm
+            moveSpeed = 0;
+            anim.enabled = false;
             GameObject stormSkill = Instantiate(lightning, transform.position, Quaternion.identity);
             stormSkill.GetComponent<Lightning>().AssignToEnemy();
             storm = true;
             yield return new WaitForSeconds(2f);
+            anim.enabled = true;
         }
         moveSpeed = speed;
-        anim.enabled = true;
     }
 }

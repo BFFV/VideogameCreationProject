@@ -18,7 +18,7 @@ public class AngelBoss : MonoBehaviour
 
     // Combat
     public int attack;
-    bool idle = false;
+    bool idle = true;
 
     // Health
     public int maxHp;
@@ -129,12 +129,23 @@ public class AngelBoss : MonoBehaviour
 
         // Death
         if (hp <= 0) {
-            BossDeath();
+            StopAllCoroutines();
+            StartCoroutine(DeathAnimation());
             return;
         }
 
         // Recovery frames
         StartCoroutine(Recover());
+    }
+
+    IEnumerator DeathAnimation() {
+        moveSpeed = 0;
+        anim.enabled = false;
+        for (int i = 0; i < 16; i++) {
+            transform.localScale -= new Vector3(0.0625f, 0.0625f, 0f);
+            yield return new WaitForSeconds(0.25f);
+        }
+        BossDeath();
     }
 
     // Recovery state
@@ -206,15 +217,12 @@ public class AngelBoss : MonoBehaviour
 
     // Death sequence
     void BossDeath() {
+        player.GetComponent<Player>().Celebrate();
         StopAllCoroutines();
         AudioManager.Instance.PlaySound("victory", 2f);
-        AudioManager.Instance.PlaySoundtrack("lava");
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject rock in obstacles) {
-            Destroy(rock);
-        }
-        GUIManager.Instance.ShowEvent("You have learned the superior skill Black Hole!");
-        Inventory.Instance.SetSkill("BlackHole");
+        AudioManager.Instance.PlaySoundtrack("lava"); // CAMBIAR
+        GUIManager.Instance.ShowEvent("You have learned the superior skill Holy Beam!");
+        Inventory.Instance.SetSkill("HolyBeam");
         Destroy(gameObject);
     }
 
@@ -222,8 +230,7 @@ public class AngelBoss : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (other.CompareTag("Player") && !moving) {
-            //rageTimeout = 0.5f;
-            //idle = false;
+            idle = false;
             //AudioManager.Instance.PlaySoundtrack("skeletonBoss");
         }
     }

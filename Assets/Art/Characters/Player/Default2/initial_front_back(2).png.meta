@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 74e3c9ff2b7322c40b8fc7246fa0bb3a
+guid: 84f4f06ba48436b46af67ab407438f1f
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -125,9 +125,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3
-        y: 0
+        y: 5
         width: 32
-        height: 71
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,9 +146,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 43
-        y: 0
+        y: 5
         width: 32
-        height: 71
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +166,10 @@ TextureImporter:
       name: initial_front_back(2)_2
       rect:
         serializedVersion: 2
-        x: 85
-        y: 0
+        x: 84
+        y: 5
         width: 32
-        height: 71
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,9 +188,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 180
-        y: 0
+        y: 7
         width: 32
-        height: 71
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,9 +209,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 219
-        y: 0
+        y: 7
         width: 32
-        height: 71
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,9 +230,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 259
-        y: 0
+        y: 7
         width: 32
-        height: 71
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
