@@ -338,6 +338,11 @@ MonoBehaviour:
   sfxMixer: {fileID: 24100000, guid: c0f319287b635344bb4bf638a3f42302, type: 2}
   loopMixer: {fileID: 24300002, guid: c0f319287b635344bb4bf638a3f42302, type: 2}
   currentMusic: 
+  mainMenu: {fileID: 8300000, guid: 2aa7d2a95b1e3cb4aaed1234c186a9b1, type: 3}
+  controlsMenu: {fileID: 8300000, guid: d536a2cfb0e78bc4cb54e3118250b960, type: 3}
+  slotMenu: {fileID: 8300000, guid: 669bd70239f338c4698e9d2ace4ebcc2, type: 3}
+  gameOver: {fileID: 8300000, guid: a25b7b7bacacf6541822fd52d209fa8c, type: 3}
+  opening: {fileID: 8300000, guid: 843ea42272cee254c90165426932bae5, type: 3}
   tutorial: {fileID: 8300000, guid: 66bbee02068db9d439f5909536c5e1e6, type: 3}
   shrine: {fileID: 8300000, guid: 6cc57dbcebf184749a49661581ceaf1b, type: 3}
   lava: {fileID: 8300000, guid: a9d7cbdd764d0284d97898b7230206ce, type: 3}
@@ -349,7 +354,10 @@ MonoBehaviour:
   finalBoss1: {fileID: 8300000, guid: 5c0fe30e9a57ce149ad9a5fb3fcccc15, type: 3}
   finalBoss2: {fileID: 8300000, guid: 69840b639b90e3441b76c0fca6d04bd1, type: 3}
   finalBoss3: {fileID: 8300000, guid: 27ad51a12e8559b49bb22ef5d63ca3a8, type: 3}
+  ending: {fileID: 8300000, guid: 404be89074618bd48b25ca545e080909, type: 3}
   victory: {fileID: 8300000, guid: b973b8721c217fd4380e9aff48f57f6e, type: 3}
+  finalVictory: {fileID: 8300000, guid: fb14ce7e8d7654b4b8fb39047a39bf4b, type: 3}
+  rescued: {fileID: 8300000, guid: 284ed170dcdcd19488c8a502d9b52016, type: 3}
   item: {fileID: 8300000, guid: 2fec3de0a629b674c998ead2fa49e70c, type: 3}
   save: {fileID: 8300000, guid: a34f732ccc636be4086a5a45929f8715, type: 3}
   laser: {fileID: 8300000, guid: d46cfac37ecf2de43ab721e86775149c, type: 3}
@@ -357,6 +365,7 @@ MonoBehaviour:
   sword: {fileID: 8300000, guid: 0ecb086029ab3c34baf6895a4d56d0df, type: 3}
   wind: {fileID: 8300000, guid: 3b4633750eadee44cb9460041bdc0c2b, type: 3}
   fire: {fileID: 8300000, guid: 798d430f7a8fbeb428dac583854d9674, type: 3}
+  burning: {fileID: 8300000, guid: db798c616db1f4f4a8089e1699f20872, type: 3}
   thunder: {fileID: 8300000, guid: b0fe34a08cba8ea408cb09eb9ac58832, type: 3}
   storm: {fileID: 8300000, guid: e7d3b717869182f4bbbb73708ae3ff50, type: 3}
   sprint: {fileID: 8300000, guid: 7b879305006d9d04298e370169c781c0, type: 3}

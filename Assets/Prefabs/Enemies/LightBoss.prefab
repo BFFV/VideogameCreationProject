@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8807469366506305596}
   - component: {fileID: 8807469366506305595}
   - component: {fileID: 8807469366506305597}
+  - component: {fileID: 930497017859256061}
   - component: {fileID: 1188660876289248485}
   m_Layer: 0
   m_Name: LightBoss
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8807469366506305594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.16, y: 0.37, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 0b7b09ae45557194caaae96854b92a98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,9 +100,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 500
+  m_LinearDrag: 1
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -167,6 +168,22 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!58 &930497017859256061
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8807469366506305594}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 7
 --- !u!114 &1188660876289248485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,16 +196,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec86e0669f3888e4a8266e4257bf7bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2.5
   body: {fileID: 8807469366506305596}
-  activityRadius: 15
+  activityRadius: 40
   frozen: 0
   attack: 10
-  maxHp: 100
-  hp: 100
+  maxHp: 400
+  hp: 400
   isRecovering: 0
+  invincible: 0
+  rock: {fileID: 7421803797852565109, guid: fbc5d0293c2bce341ad5ba14e8fd8e16, type: 3}
   sprite: {fileID: 8807469366506305598}
   barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}
   lightning: {fileID: 749787904355031690, guid: 0d169a318fc209b468927120c681f182, type: 3}
-  storm: 0
   holyBeam: {fileID: 3949892118607451988, guid: 937ea492a6a7e074fbd02bf212329a3d, type: 3}
+  holyCharge: {fileID: 9142842301012320788, guid: 798ada2ede5bcbc4885c7e97eb01259a, type: 3}

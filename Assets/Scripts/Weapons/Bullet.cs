@@ -18,6 +18,9 @@ public class Bullet : MonoBehaviour {
 
     // Check distance for the bullet
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         distance--;
         if (distance <= 0) {
             Destroy(gameObject);

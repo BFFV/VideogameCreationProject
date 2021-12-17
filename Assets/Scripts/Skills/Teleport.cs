@@ -15,6 +15,9 @@ public class Teleport : MonoBehaviour {
 
     // Advance & rotate
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         distance--;
         if (distance <= 0) {
             Player.Instance.gateActive = false;

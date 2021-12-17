@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,8 +19,8 @@ public class PlayerData {
         spawnPos[1] = pos.y;
         spawnPos[2] = 0;
         if (state == "default") {  // For testing
-            spawnExp = 301;
-            spawnWeapons = new List<string>() {"Sword", "Gun"};
+            spawnExp = 3000;
+            spawnWeapons = new List<string>() {"Sword"};
             spawnSkills = new List<string>() {};
         } else if (state == "new") {  // New game
             spawnExp = 1;

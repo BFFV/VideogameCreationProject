@@ -9,9 +9,9 @@ public class GUIManager : SceneSingleton<GUIManager> {
     public GameObject mpNumber;  // TODO: replace with mp bar
     public GameObject expNumber;
     public GameObject gunIcon;
-    public GameObject actionMessage;
     public GameObject eventMessage;
     public GameObject tutorialMessage;
+    public Transform damagePopup;
 
     // Event Messages
     float eventTimeout = 0;
@@ -35,14 +35,14 @@ public class GUIManager : SceneSingleton<GUIManager> {
 
     // Show/hide action message
     public void ShowAction(string text, bool active) {
-        actionMessage.GetComponent<Text>().text = text;
-        actionMessage.SetActive(active);
+        eventMessage.GetComponent<Text>().text = text;
+        eventMessage.SetActive(active);
     }
 
     // Show event message
     public void ShowEvent(string text) {
         eventMessage.GetComponent<Text>().text = text;
-        eventTimeout = 4;
+        eventTimeout = 5;
         eventMessage.SetActive(true);
     }
 
@@ -77,5 +77,11 @@ public class GUIManager : SceneSingleton<GUIManager> {
     // TODO: Update gun icon (will be removed later)
     public void ToggleGunIcon(bool state) {
         gunIcon.SetActive(state);
+    }
+
+    // TODO: Show current weapon
+    public void ShowWeapon(string weapon) {
+        // Get object with the image
+        // Set image to weapon icon
     }
 }
