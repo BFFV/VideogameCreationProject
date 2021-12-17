@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,11 +17,6 @@ public class GameManager : Singleton<GameManager> {
     // Settings
     void Start() {
         Application.targetFrameRate = 60;
-    }
-
-    // Finish game (not in use)
-    public void EndGame(bool won) {
-        //
     }
 
     // Start level or respawn
@@ -50,5 +43,15 @@ public class GameManager : Singleton<GameManager> {
     // Back to main menu
     public void MainMenu() {
         SceneManager.LoadScene("Menu");
+    }
+
+    // Show opening
+    public void Opening() {
+        SceneManager.LoadScene("Opening");
+    }
+
+    // Show ending
+    public void Ending() {
+        SceneManager.LoadScene("Ending");
     }
 }

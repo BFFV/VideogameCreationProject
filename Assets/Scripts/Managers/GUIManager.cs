@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,20 +6,28 @@ using UnityEngine.UI;
 public class GUIManager : SceneSingleton<GUIManager> {
 
     // References
-    public GameObject hpNumber;  // TODO: replace with hp bar
-    public GameObject mpNumber;  // TODO: replace with mp bar
+    public Slider hpBar;
+    public Slider mpBar;
     public GameObject expNumber;
-    public GameObject gunIcon;
-    public GameObject actionMessage;
     public GameObject eventMessage;
     public GameObject tutorialMessage;
+    public Transform damagePopup;
+    public Image weaponIcon;
+    public List<Sprite> weaponIcons;
+
+    // Weapon mapping to image
+    Dictionary<string, Sprite> weapons = new Dictionary<string, Sprite>();
 
     // Event Messages
     float eventTimeout = 0;
 
     // Setup
     void Start() {
-        // Maybe add stuff later
+        weapons.Add("Sword", weaponIcons[0]);
+        weapons.Add("Gun", weaponIcons[1]);
+        weapons.Add("Wind", weaponIcons[2]);
+        weapons.Add("Fire", weaponIcons[3]);
+        ShowWeapon("Sword");
     }
 
     // Update
@@ -35,14 +44,14 @@ public class GUIManager : SceneSingleton<GUIManager> {
 
     // Show/hide action message
     public void ShowAction(string text, bool active) {
-        actionMessage.GetComponent<Text>().text = text;
-        actionMessage.SetActive(active);
+        eventMessage.GetComponent<Text>().text = text;
+        eventMessage.SetActive(active);
     }
 
     // Show event message
     public void ShowEvent(string text) {
         eventMessage.GetComponent<Text>().text = text;
-        eventTimeout = 4;
+        eventTimeout = 5;
         eventMessage.SetActive(true);
     }
 
@@ -54,7 +63,7 @@ public class GUIManager : SceneSingleton<GUIManager> {
 
     // Update player HP
     public void UpdatePlayerHealth(int hp) {
-        hpNumber.GetComponent<Text>().text = "HP: " + hp + "/" + 100;
+        hpBar.value = hp;
     }
 
     // Update player EXP
@@ -64,7 +73,7 @@ public class GUIManager : SceneSingleton<GUIManager> {
 
      // Update player MP
     public void UpdatePlayerMagic(float mp) {
-        mpNumber.GetComponent<Text>().text = "MP: " + (int) mp + "/" + 100;
+        mpBar.value = mp;
     }
 
     // Update player status
@@ -74,8 +83,8 @@ public class GUIManager : SceneSingleton<GUIManager> {
         UpdatePlayerExp(exp);
     }
 
-    // TODO: Update gun icon (will be removed later)
-    public void ToggleGunIcon(bool state) {
-        gunIcon.SetActive(state);
+    // Show current weapon
+    public void ShowWeapon(string weapon) {
+        weaponIcon.sprite = weapons[weapon];
     }
 }

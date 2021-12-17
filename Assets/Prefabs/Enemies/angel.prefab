@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7399345409676195821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.98, y: 2.07, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -125,9 +125,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 60
+  m_LinearDrag: 1
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -146,22 +146,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acfe1321c8a27949b5b83e7ffbca814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 6
   body: {fileID: 7399345409676195824}
   timeBetweenMove: 2
   timeToMove: 1
   activityRadius: 15
   frozen: 0
-  attack: 4
+  attack: 10
   timeBetweenAttack: 10
   attackDuration: 0
-  attacks: []
-  maxHp: 5
-  hp: 5
+  fireball: {fileID: 0}
+  barrier: {fileID: 0}
+  lightning: {fileID: 749787904355031690, guid: 0d169a318fc209b468927120c681f182, type: 3}
+  maxHp: 50
+  hp: 50
   isRecovering: 0
-  expValue: 30
+  invincible: 0
+  expValue: 25
   spawner: {fileID: 0}
   enemyType: Angel
+  secondForm: {fileID: 0}
 --- !u!95 &7399345409676195826
 Animator:
   serializedVersion: 3

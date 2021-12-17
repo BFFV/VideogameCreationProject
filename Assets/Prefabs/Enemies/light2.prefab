@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5233447741440971919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8381517, y: 0.003531292, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,9 +115,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 10
+  m_LinearDrag: 1
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -159,16 +159,19 @@ MonoBehaviour:
   body: {fileID: 5339751189568530067}
   timeBetweenMove: 0
   timeToMove: 0
-  activityRadius: 15
+  activityRadius: 20
   frozen: 0
-  attack: 1
+  attack: 10
   timeBetweenAttack: 0
   attackDuration: 0
-  attacks: []
-  maxHp: 5
-  hp: 5
+  fireball: {fileID: 0}
+  barrier: {fileID: 0}
+  lightning: {fileID: 0}
+  maxHp: 15
+  hp: 15
   isRecovering: 0
-  expValue: 20
+  invincible: 0
+  expValue: 15
   spawner: {fileID: 0}
   enemyType: Lightball
   secondForm: {fileID: 0}

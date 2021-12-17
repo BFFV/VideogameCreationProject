@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LoadMenu : MonoBehaviour {
 
@@ -14,5 +13,10 @@ public class LoadMenu : MonoBehaviour {
         game.slot = slot;
         game.playerData = SaveSystem.LoadData(slot);
         game.StartGame();
+    }
+
+    // Show opening
+    public void ShowIntro() {
+        GameManager.Instance.Opening();
     }
 }

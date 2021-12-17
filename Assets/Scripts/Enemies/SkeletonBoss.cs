@@ -15,7 +15,7 @@ public class SkeletonBoss : MonoBehaviour {
     bool active = true;
     public float activityRadius;
     public bool frozen = false;
-    float freezeTimeout = 1;
+    float freezeTimeout = 2;
 
     // Combat
     public int attack;
@@ -46,7 +46,13 @@ public class SkeletonBoss : MonoBehaviour {
     // Initialize boss
     void Start() {
         // Boss already defeated
-        if (Player.Instance.skills.Contains("BlackHole")) {
+        PlayerData state;
+        if (GameManager.Instance.warping) {
+            state = GameManager.Instance.warpData;
+        } else {
+            state = GameManager.Instance.playerData;
+        }
+        if (state.spawnSkills.Contains("BlackHole")) {
             GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
             foreach (GameObject rock in obstacles) {
                 Destroy(rock);
@@ -124,6 +130,7 @@ public class SkeletonBoss : MonoBehaviour {
             sprite.material.color = new Color(255, 1, 0, 1);
             currentColor = sprite.material.color;
             attacks.Add(blackHole);
+            maxAttackInterval = 3;
         }
     }
 
@@ -188,7 +195,7 @@ public class SkeletonBoss : MonoBehaviour {
     IEnumerator ChooseAttack() {
         while (true) {
             yield return new WaitForSeconds(Random.Range(minAttackInterval, maxAttackInterval + 1));
-            if (attacks.Count > 0 && !frozen && active) {
+            if (attacks.Count > 0 && !frozen && active && !idle) {
                 int chosen = Random.Range(0, attacks.Count);
                 yield return UseAttack(chosen);
             }
