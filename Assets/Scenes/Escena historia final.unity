@@ -636,7 +636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -147, y: 58}
+  m_AnchoredPosition: {x: -133, y: 77}
   m_SizeDelta: {x: -1318.04, y: -364.494}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1284602860
@@ -672,9 +672,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Theos, un joven que perdi\xF3 a su amada, al verse envuelto en una caprichosa
-    disputa entre entes divinos.\r\nEste, lleno de ira, decide enfrentarse a los
-    dioses para recuperar lo que le han quitado\r.\n"
+  m_Text: 'Theos, vuelve a casa junto a su amada, su aventura ha terminado y ha logrado
+    su objetivo. Ahora los dioses lo observan con respeto...
+
+'
 --- !u!222 &1284602861
 CanvasRenderer:
   m_ObjectHideFlags: 0
