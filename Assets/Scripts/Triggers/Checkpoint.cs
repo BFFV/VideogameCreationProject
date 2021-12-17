@@ -27,6 +27,5 @@ public class Checkpoint : MonoBehaviour {
     public void SaveGame() {
         AudioManager.Instance.PlaySound("save", 2f);
         GameManager.Instance.SaveCheckpoint(level, transform.position);
-        GUIManager.Instance.ShowEvent("Progress Saved!");
     }
 }

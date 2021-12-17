@@ -88,13 +88,19 @@ public class Lightning : MonoBehaviour {
             // TODO: add other bosses
             if (t.CompareTag("Enemy") && targetTag.Contains("Enemy")) {
                 Enemy enemy = t.GetComponent<Enemy>();
-                if (!enemy.isRecovering && enemy.hp <= damage) {
+                if (!enemy.isRecovering && !enemy.invincible && enemy.hp <= damage) {
                     targets.RemoveAt(i);
                 }
                 enemy.TakeDamage(damage);
             } else if (t.CompareTag("Boss1") && targetTag.Contains("Boss1")) {
                 SkeletonBoss boss = t.GetComponent<SkeletonBoss>();
                 if (!boss.isRecovering && boss.hp <= damage) {
+                    targets.RemoveAt(i);
+                }
+                boss.TakeDamage(damage);
+            } else if (t.CompareTag("Boss2") && targetTag.Contains("Boss2")) {
+                AngelBoss boss = t.GetComponent<AngelBoss>();
+                if (!boss.isRecovering && !boss.invincible && boss.hp <= damage) {
                     targets.RemoveAt(i);
                 }
                 boss.TakeDamage(damage);

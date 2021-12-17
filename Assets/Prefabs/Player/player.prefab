@@ -153,12 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 0}
-  attack: 2
   weapons: []
   attacks:
   - {fileID: 4217426930786536418, guid: f963e9e521c5f6e4197297d34313ae23, type: 3}
   - {fileID: 757851957709202160, guid: 7ddb7f001b749fa45a2e23402c835c80, type: 3}
   - {fileID: 7265667205566160918, guid: 486e4109263e4174a97e9f70ace97ada, type: 3}
+  - {fileID: 4365866085564694974, guid: f9f91fbad26571f489b98ce06adcbd56, type: 3}
   hp: 100
   isRecovering: 0
   mp: 100
@@ -172,6 +172,8 @@ MonoBehaviour:
   explosion: {fileID: 8375888138684464778, guid: b0a769c9def391541a5506059b1c1a8e, type: 3}
   blast: 0
   vortex: 0
+  windAttacking: 0
+  fireAttacking: 0
   blackHole: {fileID: 5623354847732807814, guid: 6da803723c4f4734aa98fb09fce5c66f, type: 3}
   holyBeam: {fileID: 3949892118607451988, guid: 937ea492a6a7e074fbd02bf212329a3d, type: 3}
   holyCharge: {fileID: 9142842301012320788, guid: 798ada2ede5bcbc4885c7e97eb01259a, type: 3}

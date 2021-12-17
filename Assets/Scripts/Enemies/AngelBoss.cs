@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AngelBoss : MonoBehaviour
-{
+// Angel Boss
+public class AngelBoss : MonoBehaviour {
+
     // Movement
     public float speed;
     float moveSpeed;
     public Rigidbody2D body;
-    bool moving = true;
+    bool moving = false;
     Vector2 movement = Vector2.zero;
     Animator anim;
     bool active = true;
     public float activityRadius;
     public bool frozen = false;
-    float freezeTimeout = 1;
+    float freezeTimeout = 2;
 
     // Combat
     public int attack;
-    bool idle = false;
+    bool idle = true;
 
     // Health
     public int maxHp;
@@ -26,9 +27,11 @@ public class AngelBoss : MonoBehaviour
     float recoveryTime = 0.5f;
     float recoveryDelta = 0.05f;
     public bool isRecovering = false;
+    public bool invincible = false;
 
     // References
     GameObject player;
+    public GameObject rock;
     public SpriteRenderer sprite;
     Color currentColor;
 
@@ -36,17 +39,26 @@ public class AngelBoss : MonoBehaviour
     int phase = 0;
     public GameObject barrier;
     public GameObject lightning;
-    public bool storm = false;
     public GameObject holyBeam;
+    public GameObject holyCharge;
     List<GameObject> attacks = new List<GameObject>();
     float minAttackInterval = 1f;
     float maxAttackInterval = 4f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    // Initialize boss
+    void Start() {
         // Boss already defeated
-        if (Player.Instance.skills.Contains("HolyBeam")) {
+        PlayerData state;
+        if (GameManager.Instance.warping) {
+            state = GameManager.Instance.warpData;
+        } else {
+            state = GameManager.Instance.playerData;
+        }
+        if (state.spawnSkills.Contains("HolyBeam")) {
+            GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+            foreach (GameObject rock in obstacles) {
+                Destroy(rock);
+            }
             Destroy(gameObject);
         }
         hp = maxHp;
@@ -60,9 +72,8 @@ public class AngelBoss : MonoBehaviour
         StartCoroutine(ChooseAttack());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // Boss interactions
+    void Update() {
         // Frozen
         if (frozen) {
             freezeTimeout -= Time.deltaTime;
@@ -97,10 +108,20 @@ public class AngelBoss : MonoBehaviour
         // Phases
         if (phase == 0 && hp <= maxHp * 0.7) {
             phase = 1;
+            speed *= 1.5f;
+            moveSpeed = speed;
+            sprite.material.color = new Color(0, 0.5f, 10, 1);
+            currentColor = sprite.material.color;
             attacks.Add(lightning);
+            maxAttackInterval -= 1;
         } else if (phase == 1 && hp <= maxHp * 0.3) {
             phase = 2;
+            speed *= 1.5f;
+            moveSpeed = speed;
+            sprite.material.color = new Color(0, 1, 30, 1);
+            currentColor = sprite.material.color;
             attacks.Add(holyBeam);
+            maxAttackInterval -= 1;
         }
     }
 
@@ -118,9 +139,8 @@ public class AngelBoss : MonoBehaviour
 
     // Take damage from player
     public void TakeDamage(int damage, bool forced = false) {
-
         // Invincibility
-        if (isRecovering || idle) {
+        if (isRecovering || idle || invincible) {
             return;
         }
 
@@ -156,7 +176,7 @@ public class AngelBoss : MonoBehaviour
     IEnumerator ChooseAttack() {
         while (true) {
             yield return new WaitForSeconds(Random.Range(minAttackInterval, maxAttackInterval + 1));
-            if (attacks.Count > 0 && !frozen && active) {
+            if (attacks.Count > 0 && !frozen && active && !idle) {
                 int chosen = Random.Range(0, attacks.Count);
                 yield return UseAttack(chosen);
             }
@@ -169,22 +189,23 @@ public class AngelBoss : MonoBehaviour
             GameObject barrierSkill = Instantiate(barrier, transform);
             barrierSkill.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
             AudioManager.Instance.StartLoop("barrier");
-            isRecovering = true;
+            invincible = true;
             yield return new WaitForSeconds(1.5f);
             Destroy(barrierSkill);
             AudioManager.Instance.StopLoop("barrier");
-            isRecovering = false;
+            invincible = false;
         } else {
             moveSpeed = 0;
             anim.enabled = false;
             if (attackID == 1) {  // Storm
                 GameObject stormSkill = Instantiate(lightning, transform.position, Quaternion.identity);
                 stormSkill.GetComponent<Lightning>().AssignToEnemy();
-                storm = true;
                 yield return new WaitForSeconds(2f);
             }
-            if (attackID == 2) { // Holy Beam
-                Vector3 vectorToTarget = player.transform.position - transform.position;
+            if (attackID == 2) {  // Holy Beam
+                Vector3 vectorToTarget = (player.transform.position - transform.position).normalized;
+                Vector3 offset = (transform.position + (Vector3) vectorToTarget * 1.5f);
+                Instantiate(holyCharge, offset, Quaternion.identity);
                 Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, 90) * vectorToTarget;
                 Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
                 GameObject holyBeamSkill = Instantiate(holyBeam, transform.position, targetRotation);
@@ -208,13 +229,13 @@ public class AngelBoss : MonoBehaviour
     void BossDeath() {
         StopAllCoroutines();
         AudioManager.Instance.PlaySound("victory", 2f);
-        AudioManager.Instance.PlaySoundtrack("lava");
+        AudioManager.Instance.PlaySoundtrack("heaven1");
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach (GameObject rock in obstacles) {
             Destroy(rock);
         }
-        GUIManager.Instance.ShowEvent("You have learned the superior skill Black Hole!");
-        Inventory.Instance.SetSkill("BlackHole");
+        GUIManager.Instance.ShowEvent("You have learned the superior skill Holy Beam!");
+        Inventory.Instance.SetSkill("HolyBeam");
         Destroy(gameObject);
     }
 
@@ -222,9 +243,13 @@ public class AngelBoss : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         string tag = other.gameObject.tag;
         if (other.CompareTag("Player") && !moving) {
-            //rageTimeout = 0.5f;
-            //idle = false;
-            //AudioManager.Instance.PlaySoundtrack("skeletonBoss");
+            Vector3 entranceA = new Vector3(51, 17.4f, 0);
+            Vector3 entranceB = new Vector3(51, 19.7f, 0);
+            Instantiate(rock, entranceA, Quaternion.identity);
+            Instantiate(rock, entranceB, Quaternion.identity);
+            idle = false;
+            moving = true;
+            AudioManager.Instance.PlaySoundtrack("angelBoss");
         }
     }
 }

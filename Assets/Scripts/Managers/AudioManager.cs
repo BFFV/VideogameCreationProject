@@ -23,6 +23,11 @@ public class AudioManager : SceneSingleton<AudioManager> {
     Dictionary<string, AudioSource> loops = new Dictionary<string, AudioSource>();
 
     // Background music
+    public AudioClip mainMenu;
+    public AudioClip controlsMenu;
+    public AudioClip slotMenu;
+    public AudioClip gameOver;
+    public AudioClip opening;
     public AudioClip tutorial;
     public AudioClip shrine;
     public AudioClip lava;
@@ -34,11 +39,14 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip finalBoss1;
     public AudioClip finalBoss2;
     public AudioClip finalBoss3;
+    public AudioClip ending;
 
     // Sound Effects
 
     // Events
     public AudioClip victory;
+    public AudioClip finalVictory;
+    public AudioClip rescued;
     public AudioClip item;
     public AudioClip save;
     public AudioClip laser;
@@ -48,6 +56,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip sword;
     public AudioClip wind;
     public AudioClip fire;
+    public AudioClip burning;
 
     // Skills
     public AudioClip thunder;
@@ -95,20 +104,28 @@ public class AudioManager : SceneSingleton<AudioManager> {
 
         // Music
         currentMusic = levelSong;
+        songs.Add("mainMenu", mainMenu);
+        songs.Add("controlsMenu", controlsMenu);
+        songs.Add("slotMenu", slotMenu);
+        songs.Add("gameOver", gameOver);
+        songs.Add("opening", opening);
         songs.Add("tutorial", tutorial);
         songs.Add("shrine", shrine);
         songs.Add("lava", lava);
+        songs.Add("skeletonBoss", skeletonBoss);
         songs.Add("heaven1", heaven1);
         songs.Add("heaven2", heaven2);
-        songs.Add("finalArena", finalArena);
-        songs.Add("skeletonBoss", skeletonBoss);
         songs.Add("angelBoss", angelBoss);
+        songs.Add("finalArena", finalArena);
         songs.Add("finalBoss1", finalBoss1);
         songs.Add("finalBoss2", finalBoss2);
         songs.Add("finalBoss3", finalBoss3);
+        songs.Add("ending", ending);
 
         // Events
         songs.Add("victory", victory);
+        songs.Add("finalVictory", finalVictory);
+        songs.Add("rescued", rescued);
         songs.Add("item", item);
         songs.Add("save", save);
         songs.Add("laser", laser);
@@ -117,7 +134,9 @@ public class AudioManager : SceneSingleton<AudioManager> {
         songs.Add("sword", sword);
         songs.Add("gun", gun);
         songs.Add("wind", wind);
+        songs.Add("tornado", wind);
         songs.Add("fire", fire);
+        songs.Add("burning", burning);
 
         // Skills
         songs.Add("thunder", thunder);

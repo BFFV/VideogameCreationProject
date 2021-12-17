@@ -22,6 +22,9 @@ public class IceShot: MonoBehaviour {
 
     // Advance
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         distance--;
         if (distance <= 0) {
             Destroy(gameObject);
@@ -44,6 +47,9 @@ public class IceShot: MonoBehaviour {
             boss.Freeze();
         } else if (tag == "Player" && targetTag.Contains("Player")) {
             Player.Instance.Freeze();
+        } else if (tag == "Boss2" && targetTag.Contains("Boss2")) {
+            AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            boss.Freeze();
         }
     }
 }
