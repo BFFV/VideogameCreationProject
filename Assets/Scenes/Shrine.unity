@@ -7657,7 +7657,6 @@ MonoBehaviour:
   mpNumber: {fileID: 1046601986}
   expNumber: {fileID: 106105121}
   gunIcon: {fileID: 843094722}
-  actionMessage: {fileID: 891423745}
   eventMessage: {fileID: 873984321}
   tutorialMessage: {fileID: 1621817788}
 --- !u!222 &402032706
@@ -9198,7 +9197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1735784222, guid: f6aaa663a8db60047ad08c9bb2d409c9, type: 3}
       propertyPath: destination
-      value: Sky
+      value: Space
       objectReference: {fileID: 0}
     - target: {fileID: 784023894722258546, guid: f6aaa663a8db60047ad08c9bb2d409c9, type: 3}
       propertyPath: m_RootOrder
