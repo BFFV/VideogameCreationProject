@@ -52,6 +52,9 @@ public class Fire : MonoBehaviour {
         } else if (tag == "Boss2") {
             AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
             boss.TakeDamage(damage);
+        } else if (tag == "Boss3") {
+            FinalBoss boss = other.gameObject.GetComponent<FinalBoss>();
+            boss.TakeDamage(damage);
         }
     }
 }

@@ -30,7 +30,10 @@ public class Sword : MonoBehaviour {
             AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
             boss.TakeDamage(damage);
             boss.body.AddForce(direction * impulse, ForceMode2D.Impulse);
+        } else if (tag == "Boss3") {
+            FinalBoss boss = other.gameObject.GetComponent<FinalBoss>();
+            boss.TakeDamage(damage);
+            boss.body.AddForce(direction * impulse, ForceMode2D.Impulse);
         }
-        // TODO: add other bosses
     }
 }

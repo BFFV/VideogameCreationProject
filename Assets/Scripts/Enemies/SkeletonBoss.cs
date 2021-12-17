@@ -158,12 +158,22 @@ public class SkeletonBoss : MonoBehaviour {
 
         // Death
         if (hp <= 0) {
-            BossDeath();
+            StartCoroutine(DeathAnimation());
             return;
         }
 
         // Recovery frames
         StartCoroutine(Recover());
+    }
+
+    IEnumerator DeathAnimation() {
+        moveSpeed = 0;
+        anim.enabled = false;
+        for (int i = 0; i < 16; i++) {
+            transform.localScale -= new Vector3(0.0625f, 0.0625f, 0f);
+            yield return new WaitForSeconds(0.25f);
+        }
+        BossDeath();
     }
 
     // Recovery state
@@ -220,6 +230,7 @@ public class SkeletonBoss : MonoBehaviour {
 
     // Death sequence
     void BossDeath() {
+        player.GetComponent<Player>().Celebrate();
         StopAllCoroutines();
         AudioManager.Instance.PlaySound("victory", 2f);
         AudioManager.Instance.PlaySoundtrack("lava");

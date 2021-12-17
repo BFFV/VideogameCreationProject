@@ -49,6 +49,7 @@ public class Inventory : SceneSingleton<Inventory> {
     // Activate new weapon
     public void SetWeapon(string weapon) {
         Player.Instance.weapons.Add(weapon);
+        Player.Instance.Celebrate();
         InventoryUI.Instance.UpdateWeapon(weapons[weapon]);
     }
 

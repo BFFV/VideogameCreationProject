@@ -18,6 +18,7 @@ TagManager:
   - Boss2
   - Fire
   - Laser
+  - Boss3
   layers:
   - Default
   - TransparentFX

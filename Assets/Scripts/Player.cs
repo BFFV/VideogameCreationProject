@@ -121,11 +121,7 @@ public class Player : SceneSingleton<Player> {
         }
 
         // Movement input
-        if (!attacking) {
-            direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        } else {
-            direction = Vector2.zero;
-        }
+        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // Animate player movement
         AnimationMove();
@@ -184,12 +180,15 @@ public class Player : SceneSingleton<Player> {
         // Sprint skill input
         if (skills.Contains("Sprint") && Inventory.Instance.SkillCost("Sprint") <= mp) {
             if (Input.GetKeyDown(KeyCode.LeftShift) && !sprinting) {
+                // swap to sprint animation
+                animator.SetLayerWeight(3, 1);
                 mp -= Inventory.Instance.SkillCost("Sprint");
                 GUIManager.Instance.UpdatePlayerMagic(mp);
                 sprinting = true;
                 moveSpeed *= 2.5f;
                 AudioManager.Instance.PlaySound("sprint");
             } else if (Input.GetKeyUp(KeyCode.LeftShift) && sprinting) {
+                animator.SetLayerWeight(3, 0);
                 sprinting = false;
                 moveSpeed /= 2.5f;
             }
@@ -223,11 +222,7 @@ public class Player : SceneSingleton<Player> {
         // Teleport skill input
         if (skills.Contains("Teleport") && Inventory.Instance.SkillCost("Teleport") <= mp) {
             if (Input.GetKeyDown(KeyCode.F) && !gateActive) {
-                float initX = (float) (transform.position.x + dynamicDirection.x);
-                float initY = (float) (transform.position.y + dynamicDirection.y);
-                gate = Instantiate(portal, new Vector3(initX, initY, 0), Quaternion.identity);
-                gate.GetComponent<Teleport>().direction = dynamicDirection;
-                gateActive = true;
+                StartCoroutine(CastSpell(0));
             } else if (Input.GetKeyDown(KeyCode.F) && gate != null) {
                 mp -= Inventory.Instance.SkillCost("Teleport");
                 GUIManager.Instance.UpdatePlayerMagic(mp);
@@ -248,39 +243,21 @@ public class Player : SceneSingleton<Player> {
         // Ice Shot skill input
         if (skills.Contains("Ice") && Inventory.Instance.SkillCost("Ice") <= mp) {
             if (Input.GetKeyDown(KeyCode.E)) {
-                mp -= Inventory.Instance.SkillCost("Ice");
-                GUIManager.Instance.UpdatePlayerMagic(mp);
-                float initX = (float) (transform.position.x + dynamicDirection.x);
-                float initY = (float) (transform.position.y + dynamicDirection.y);
-                Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
-                Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
-                GameObject ice = Instantiate(iceShot, new Vector3(initX, initY, 0), rotation);
-                IceShot iceBlast = ice.GetComponent<IceShot>();
-                iceBlast.direction = dynamicDirection;
+                StartCoroutine(CastSpell(1));
             }
         }
 
         // Black Hole skill input
         if (skills.Contains("BlackHole") && Inventory.Instance.SkillCost("BlackHole") <= mp) {
             if (Input.GetKeyDown(KeyCode.L) && !vortex) {
-                mp -= Inventory.Instance.SkillCost("BlackHole");
-                GUIManager.Instance.UpdatePlayerMagic(mp);
-                Instantiate(blackHole, transform.position, Quaternion.identity);
-                vortex = true;
+                StartCoroutine(CastSpell(2));
             }
         }
 
         // Holy Beam skill input
         if (skills.Contains("HolyBeam") && Inventory.Instance.SkillCost("HolyBeam") <= mp) {
             if (Input.GetKeyDown(KeyCode.K) && !holy) {
-                mp -= Inventory.Instance.SkillCost("HolyBeam");
-                GUIManager.Instance.UpdatePlayerMagic(mp);
-                Vector3 offset = (transform.position + (Vector3) dynamicDirection * 1.5f);
-                Instantiate(holyCharge, offset, Quaternion.identity);
-                Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
-                Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
-                Instantiate(holyBeam, offset, rotation);
-                holy = true;
+                StartCoroutine(CastSpell(3));
             }
         }
 
@@ -340,12 +317,11 @@ public class Player : SceneSingleton<Player> {
     private IEnumerator Attack() {
         animator.SetLayerWeight(2,1);
         attacking = true;
-
         // Set Sword Object
         float initX = (float) (transform.position.x + fixedDirection.x);
         float initY = (float) (transform.position.y + fixedDirection.y);
         GameObject sword = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.25f);
         animator.SetLayerWeight(2,0);
         Destroy(sword);
         attacking = false;
@@ -385,6 +361,73 @@ public class Player : SceneSingleton<Player> {
         yield return new WaitForSeconds(0.5f);
     }
 
+    IEnumerator CastSpell(int spellID) {
+        moveSpeed = 0;
+        animator.SetBool("CastingSpell", true);
+        yield return new WaitForSeconds(0.3f);
+        if (spellID == 0) {
+            float initX = (float) (transform.position.x + dynamicDirection.x);
+            float initY = (float) (transform.position.y + dynamicDirection.y);
+            gate = Instantiate(portal, new Vector3(initX, initY, 0), Quaternion.identity);
+            gate.GetComponent<Teleport>().direction = dynamicDirection;
+            gateActive = true;
+
+        } else if (spellID == 1) {
+            mp -= Inventory.Instance.SkillCost("Ice");
+            GUIManager.Instance.UpdatePlayerMagic(mp);
+            float initX = (float) (transform.position.x + dynamicDirection.x);
+            float initY = (float) (transform.position.y + dynamicDirection.y);
+            Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
+            Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
+            GameObject ice = Instantiate(iceShot, new Vector3(initX, initY, 0), rotation);
+            IceShot iceBlast = ice.GetComponent<IceShot>();
+            iceBlast.direction = dynamicDirection;
+
+        } else if (spellID == 2) {
+            mp -= Inventory.Instance.SkillCost("BlackHole");
+            GUIManager.Instance.UpdatePlayerMagic(mp);
+            Instantiate(blackHole, transform.position, Quaternion.identity);
+            vortex = true;
+
+        } else if (spellID == 3) {
+            mp -= Inventory.Instance.SkillCost("HolyBeam");
+            GUIManager.Instance.UpdatePlayerMagic(mp);
+            Vector3 offset = (transform.position + (Vector3) dynamicDirection * 1.5f);
+            Instantiate(holyCharge, offset, Quaternion.identity);
+            Vector3 rotatedUp = Quaternion.Euler(0, 0, 90) * dynamicDirection;
+            Quaternion rotation = Quaternion.LookRotation(transform.forward, rotatedUp);
+            Instantiate(holyBeam, offset, rotation);
+            holy = true;
+
+        }
+        animator.SetBool("CastingSpell", false);
+        if (skills.Contains("Sprint") && Inventory.Instance.SkillCost("Sprint") <= mp && Input.GetKey(KeyCode.LeftShift)) {
+            moveSpeed = speed * 2.5f;
+        } else {
+            moveSpeed = speed;
+        }
+    }
+
+    // Celebrate
+    public void Celebrate() {
+        StartCoroutine(animateCelebration());
+    }
+
+    IEnumerator animateCelebration() {
+        moveSpeed = 0;
+        isRecovering = true;
+        animator.SetBool("Celebrating", true);
+        yield return new WaitForSeconds(0.3f);
+        animator.SetBool("Celebrating", false);
+        if (skills.Contains("Sprint") && Inventory.Instance.SkillCost("Sprint") <= mp && Input.GetKey(KeyCode.LeftShift)) {
+            moveSpeed = speed * 2.5f;
+        } else {
+            moveSpeed = speed;
+        }
+        yield return new WaitForSeconds(0.3f);
+        isRecovering = false;
+    }
+
     // Enemy damage
     void OnCollisionStay2D(Collision2D other) {
         string tag = other.gameObject.tag;
@@ -402,6 +445,11 @@ public class Player : SceneSingleton<Player> {
             }
         } else if (tag == "Boss2") {
             AngelBoss boss = other.gameObject.GetComponent<AngelBoss>();
+            if (!boss.frozen) {
+                TakeDamage(boss.attack, knockbackDir.normalized);
+            }
+        } else if (tag == "Boss3") {
+            FinalBoss boss = other.gameObject.GetComponent<FinalBoss>();
             if (!boss.frozen) {
                 TakeDamage(boss.attack, knockbackDir.normalized);
             }
@@ -434,7 +482,7 @@ public class Player : SceneSingleton<Player> {
 
         // Death
         if (hp <= 0) {
-            GameManager.Instance.StartGame();
+            StartCoroutine(DeathAnimation());
         }
 
         // Knockback
@@ -444,6 +492,17 @@ public class Player : SceneSingleton<Player> {
 
         // Recovery frames
         StartCoroutine(Recover());
+    }
+
+    IEnumerator DeathAnimation() {
+        moveSpeed = 0;
+        animator.enabled = false;
+        AudioListener.pause = true;
+        for (int i = 0; i < 16; i++) {
+            transform.localScale -= new Vector3(0.0625f, 0.0625f, 0f);
+            yield return new WaitForSeconds(0.25f);
+        }
+        GameManager.Instance.StartGame();
     }
 
     // Recovery state
