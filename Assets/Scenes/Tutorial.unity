@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6d5c504e17e15547aea2822675115f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 577d0275faaad504c9152be44513addf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7358,7 +7358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6d5c504e17e15547aea2822675115f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 715a20308c13cd848a7c999dbe8e780a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7595,8 +7595,8 @@ MonoBehaviour:
   infoUI: {fileID: 1449630689}
   info: {fileID: 0}
   weapon: Fire
-  weaponName: Flamethrower
-  location: 'Location: In the depths of Hell'
+  weaponName: Flame
+  location: 'Location: In the depths of Hell.'
   description: Burns down near enemies to smithereens.
 --- !u!1 &478887964
 GameObject:
@@ -7833,7 +7833,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2035418646}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8277,7 +8277,7 @@ MonoBehaviour:
   info: {fileID: 0}
   weapon: Wind
   weaponName: Typhoon
-  location: 'Location: Lost somewhere in Heaven'
+  location: 'Location: Lost somewhere in Heaven.'
   description: Allows you to summon a mighty tornado that blows your foes away.
 --- !u!1 &642512207
 GameObject:
@@ -34418,7 +34418,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6d5c504e17e15547aea2822675115f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d424831f1232e144a962de144662249, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -35452,7 +35452,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2035418646}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -36147,85 +36147,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001771893}
   m_CullTransparentMesh: 1
---- !u!1 &2006639596
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2006639597}
-  - component: {fileID: 2006639599}
-  - component: {fileID: 2006639598}
-  m_Layer: 5
-  m_Name: actionText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &2006639597
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006639596}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2035418646}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 100}
-  m_SizeDelta: {x: 800, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2006639598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006639596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: bc24ecd0c91d7404ea439110c14f1361, type: 3}
-    m_FontSize: 20
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 1
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
---- !u!222 &2006639599
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006639596}
-  m_CullTransparentMesh: 1
 --- !u!1 &2030256132
 GameObject:
   m_ObjectHideFlags: 0
@@ -36283,7 +36204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6d5c504e17e15547aea2822675115f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3affd0e9587f1e742b8d9d34bdde9157, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -36334,7 +36255,6 @@ RectTransform:
   - {fileID: 1133987400}
   - {fileID: 1780457345}
   - {fileID: 2116676892}
-  - {fileID: 2006639597}
   - {fileID: 533640083}
   - {fileID: 1782279126}
   m_Father: {fileID: 1652314117}
@@ -36361,7 +36281,6 @@ MonoBehaviour:
   mpNumber: {fileID: 1133987399}
   expNumber: {fileID: 1780457344}
   gunIcon: {fileID: 2116676891}
-  actionMessage: {fileID: 2006639596}
   eventMessage: {fileID: 533640082}
   tutorialMessage: {fileID: 1782279125}
 --- !u!222 &2035418648

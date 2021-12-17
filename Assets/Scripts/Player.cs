@@ -300,6 +300,8 @@ public class Player : SceneSingleton<Player> {
             }
             currentWeapon = weapons[currentWeaponIdx];
             AudioManager.Instance.PlaySound("switchWeapon");
+            // TODO: activate for GUI
+            //GUIManager.Instance.ShowWeapon(currentWeapon);
         }
     }
 
