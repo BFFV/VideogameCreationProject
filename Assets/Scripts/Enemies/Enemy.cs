@@ -181,6 +181,8 @@ public class Enemy : MonoBehaviour {
         // Lose HP
         hp -= damage;
 
+        DamagePopup dp = DamagePopup.Create(new Vector3(transform.position.x, transform.position.y, 0), damage);
+
         // Death
         if (hp <= 0) {
             // Tell spawner that this enemy is dead

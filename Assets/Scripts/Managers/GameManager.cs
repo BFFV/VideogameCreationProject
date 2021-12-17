@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager> {
     public PlayerData warpData = new PlayerData("Shrine", new Vector3(0, 0, 0), "default");
     public int warpHp = 0;
     public float warpMp = 0;
+    public Transform damagePopup;
 
     // Checkpoints & save data
     public int slot = 0;
