@@ -48,6 +48,7 @@ public class AudioManager : SceneSingleton<AudioManager> {
     public AudioClip sword;
     public AudioClip wind;
     public AudioClip fire;
+    public AudioClip burning;
 
     // Skills
     public AudioClip thunder;
@@ -117,7 +118,9 @@ public class AudioManager : SceneSingleton<AudioManager> {
         songs.Add("sword", sword);
         songs.Add("gun", gun);
         songs.Add("wind", wind);
+        songs.Add("tornado", wind);
         songs.Add("fire", fire);
+        songs.Add("burning", burning);
 
         // Skills
         songs.Add("thunder", thunder);

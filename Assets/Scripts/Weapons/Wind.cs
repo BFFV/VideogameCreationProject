@@ -1,43 +1,50 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// Wind weapon
+// Tornado weapon
 public class Wind : MonoBehaviour {
 
-    // Body
-    Rigidbody2D body;
+    // Setup
     public Vector2 direction;
-    public float speed;
-    public int distance;
-    public int damage;
-
-    float impulse = 20f;
-
+    float speed = 8;
+    int distance = 900;
+    int damage = 15;
+    float impulse = 100f;
 
     // Setup
     void Start() {
-        body = GetComponent<Rigidbody2D>();
+        StartCoroutine(Cast(8, 0.5f));
         AudioManager.Instance.StartLoop("wind");
+    }
 
+    // Cast tornado
+    IEnumerator Cast(float sValue, float sTime) {
+        float x = transform.localScale.x;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / sTime) {
+            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 1);
+            yield return null;
+        }
     }
 
     // Check distance for the wind
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         distance--;
         if (distance <= 0) {
             AudioManager.Instance.StopLoop("wind");
+            Player.Instance.windAttacking = false;
             Destroy(gameObject);
-            Player.Instance.wind_attacking = false;
         }
     }
 
     // Wind movement
-    private void FixedUpdate() {
+    void FixedUpdate() {
         System.Random random = new System.Random();
         Vector2 vr;
-        int sum_or_subs_x = random.Next(0,2);
-        int sum_or_subs_y = random.Next(0,2);
+        int sum_or_subs_x = random.Next(0, 2);
+        int sum_or_subs_y = random.Next(0, 2);
         vr = new Vector2((float) random.NextDouble(), (float) random.NextDouble());
         if (sum_or_subs_x == 1) {
             direction.x = direction.x + vr.x;
@@ -50,8 +57,6 @@ public class Wind : MonoBehaviour {
             direction.y = direction.y - vr.y;
         }
         transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
-
-        //body.velocity = direction.normalized * speed;
     }
 
     // Hit an enemy

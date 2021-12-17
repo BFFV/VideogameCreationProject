@@ -357,6 +357,7 @@ MonoBehaviour:
   sword: {fileID: 8300000, guid: 0ecb086029ab3c34baf6895a4d56d0df, type: 3}
   wind: {fileID: 8300000, guid: 3b4633750eadee44cb9460041bdc0c2b, type: 3}
   fire: {fileID: 8300000, guid: 798d430f7a8fbeb428dac583854d9674, type: 3}
+  burning: {fileID: 8300000, guid: db798c616db1f4f4a8089e1699f20872, type: 3}
   thunder: {fileID: 8300000, guid: b0fe34a08cba8ea408cb09eb9ac58832, type: 3}
   storm: {fileID: 8300000, guid: e7d3b717869182f4bbbb73708ae3ff50, type: 3}
   sprint: {fileID: 8300000, guid: 7b879305006d9d04298e370169c781c0, type: 3}

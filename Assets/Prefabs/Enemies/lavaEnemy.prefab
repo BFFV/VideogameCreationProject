@@ -133,14 +133,18 @@ MonoBehaviour:
   frozen: 0
   attack: 10
   timeBetweenAttack: 5
-  attacks:
-  - {fileID: 5569558701137803408, guid: f38b6dc07c758f546864dc69085fc9c0, type: 3}
+  attackDuration: 0
+  fireball: {fileID: 5569558701137803408, guid: f38b6dc07c758f546864dc69085fc9c0, type: 3}
+  barrier: {fileID: 0}
+  lightning: {fileID: 0}
   maxHp: 80
   hp: 80
   isRecovering: 0
+  invincible: 0
   expValue: 30
   spawner: {fileID: 0}
   enemyType: LavaEnemy
+  secondForm: {fileID: 0}
 --- !u!50 &203980776
 Rigidbody2D:
   serializedVersion: 4

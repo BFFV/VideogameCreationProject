@@ -27,10 +27,9 @@ public class Enemy : MonoBehaviour {
     public float timeBetweenAttack;
     float timeBetweenAttackCounter;
     public float attackDuration;
-    public GameObject[] attacks;
+    public GameObject fireball;
     public GameObject barrier;
     public GameObject lightning;
-    public bool storm = false;
 
     // Health
     public int maxHp;
@@ -38,6 +37,7 @@ public class Enemy : MonoBehaviour {
     float recoveryTime = 0.5f;
     float recoveryDelta = 0.05f;
     public bool isRecovering = false;
+    public bool invincible = false;
 
     // Experience
     public int expValue;
@@ -48,23 +48,20 @@ public class Enemy : MonoBehaviour {
 
     // Enemy type
     public string enemyType;
-    private List<string> chasingEnemies = new List<string>()
-                    {
-                        "Bat",
-                        "LavaEnemy",
-                        "Light",
-                        "Lightball",
-                        "Paladin"                    
-                    };
-    private List<string> attackingEnemies = new List<string>()
-                    {
-                        "LavaEnemy",
-                        "Angel",
-                        "Paladin"                    
-                    };
+    private List<string> chasingEnemies = new List<string>() {
+        "Bat",
+        "LavaEnemy",
+        "Light",
+        "Lightball",
+        "Paladin"
+    };
+    private List<string> attackingEnemies = new List<string>() {
+        "LavaEnemy",
+        "Angel",
+        "Paladin"
+    };
 
     // Light elemental second form
-
     public GameObject secondForm;
 
     // Initialize enemy
@@ -141,7 +138,7 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        // Bat
+        // Chasing enemies
         if (chasingEnemies.Contains(enemyType)) {
             Vector3 direction = player.transform.position - transform.position;
             direction.Normalize();
@@ -177,7 +174,7 @@ public class Enemy : MonoBehaviour {
     // Take damage from player
     public void TakeDamage(int damage, bool forced = false) {
         // Invincibility
-        if (isRecovering && !forced) {
+        if ((isRecovering || invincible) && !forced) {
             return;
         }
 
@@ -223,6 +220,7 @@ public class Enemy : MonoBehaviour {
         sprite.material.color = new Color(0, 2f, 2f, 1);
     }
 
+    // Choose special attack
     IEnumerator ChooseAttack() {
         while (true) {
             yield return new WaitForSeconds(timeBetweenAttack);
@@ -237,7 +235,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    // Lava enemy shoot fireball
+    // Lava enemy shoots fireball
     IEnumerator shootFireball() {
         float initX = (float) (transform.position.x);
         float initY = (float) (transform.position.y);
@@ -263,7 +261,7 @@ public class Enemy : MonoBehaviour {
                 initY -= 2f;
             }
         }
-        GameObject newProjectile = Instantiate(attacks[0], new Vector3(initX, initY, 0), transform.rotation);
+        GameObject newProjectile = Instantiate(fireball, new Vector3(initX, initY, 0), transform.rotation);
         // Set direction of the fireball
         newProjectile.GetComponent<Fireball>().direction = player.transform.position - transform.position;
         newProjectile.GetComponent<Fireball>().transform.Rotate(0.0f, 0.0f, angle, Space.Self);
@@ -271,25 +269,29 @@ public class Enemy : MonoBehaviour {
         timeBetweenAttackCounter = timeBetweenAttack;
     }
 
+    // Use special attack
     IEnumerator useAttack(int attackID) {
-        moveSpeed = 0;
-        anim.enabled = false;
         if (attackID == 0) {  // Barrier
+            anim.SetBool("Barrier", true);
+            yield return new WaitForSeconds(0.85f);
+            moveSpeed = 0;
             GameObject barrierSkill = Instantiate(barrier, transform);
             AudioManager.Instance.StartLoop("barrier");
-            isRecovering = true;
+            invincible = true;
             yield return new WaitForSeconds(attackDuration);
             Destroy(barrierSkill);
+            anim.SetBool("Barrier", false);
             AudioManager.Instance.StopLoop("barrier");
-            isRecovering = false;
+            invincible = false;
         }
         if (attackID == 1) {  // Storm
+            moveSpeed = 0;
+            anim.enabled = false;
             GameObject stormSkill = Instantiate(lightning, transform.position, Quaternion.identity);
             stormSkill.GetComponent<Lightning>().AssignToEnemy();
-            storm = true;
             yield return new WaitForSeconds(2f);
+            anim.enabled = true;
         }
         moveSpeed = speed;
-        anim.enabled = true;
     }
 }

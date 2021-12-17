@@ -23,11 +23,13 @@ public class Weapon : MonoBehaviour {
             Inventory.Instance.SetWeapon(gameObject.tag);
             AudioManager.Instance.PlaySound("item", 1.5f);
             if (gameObject.tag == "Gun") {
-                GUIManager.Instance.ToggleGunIcon(true);  // TODO: will be changed later
                 GUIManager.Instance.ShowEvent("You have acquired a " + gameObject.tag + "!");
             }
             if (gameObject.tag == "Wind") {
                 GUIManager.Instance.ShowEvent("You have acquired the Typhoon!");
+            }
+            if (gameObject.tag == "Fire") {
+                GUIManager.Instance.ShowEvent("You have acquired the Flame!");
             }
             Destroy(gameObject);
         }

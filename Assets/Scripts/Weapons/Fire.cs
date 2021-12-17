@@ -1,34 +1,47 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // Fire weapon
-public class Fire : MonoBehaviour
-{
+public class Fire : MonoBehaviour {
 
-    public Rigidbody2D body;
-    public int duration = 60;
-    public int damage = 25;
-    // Start is called before the first frame update
+    // Setup
+    int duration = 300;
+    int damage = 20;
+
+    // Setup
     void Start() {
-        body = GetComponent<Rigidbody2D>();
-        AudioManager.Instance.StartLoop("fire");
+        StartCoroutine(Cast(0.5f, 0.5f));
+        AudioManager.Instance.PlaySound("fire");
+        AudioManager.Instance.PlaySound("burning");
     }
 
-    // Update is called once per frame
+    // Cast fire
+    IEnumerator Cast(float sValue, float sTime) {
+        float x = transform.localScale.x;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / sTime) {
+            transform.localScale = new Vector3(Mathf.Lerp(x, sValue, t), Mathf.Lerp(x, sValue, t), 1);
+            yield return null;
+        }
+    }
+
+    // Weapon activity
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         duration--;
-        if (duration == 0) {
-            Player.Instance.fire_attacking = false;
-            AudioManager.Instance.StopLoop("fire");
+        if (duration <= 0) {
+            Player.Instance.fireAttacking = false;
             Destroy(gameObject);
         }
     }
 
+    // Burn enemies
     void OnTriggerStay2D(Collider2D other) {
         if (other.isTrigger) {
             return;
         }
+        // TODO: add other bosses
         string tag = other.gameObject.tag;
         if (tag == "Enemy") {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();

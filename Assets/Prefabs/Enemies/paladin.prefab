@@ -104,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.57, y: 0.67}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.57, y: 0.67}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -125,9 +125,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 80
+  m_LinearDrag: 2
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -146,23 +146,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acfe1321c8a27949b5b83e7ffbca814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   body: {fileID: 2062826980833160523}
   timeBetweenMove: 0
   timeToMove: 0
   activityRadius: 15
   frozen: 0
-  attack: 2
+  attack: 15
   timeBetweenAttack: 5
   attackDuration: 1.5
-  attacks:
-  - {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}
-  maxHp: 15
-  hp: 15
+  fireball: {fileID: 0}
+  barrier: {fileID: 1678878691216768877, guid: 09508df9adb29674ca146897f7dd9b4f, type: 3}
+  lightning: {fileID: 0}
+  maxHp: 80
+  hp: 80
   isRecovering: 0
+  invincible: 0
   expValue: 30
   spawner: {fileID: 0}
   enemyType: Paladin
+  secondForm: {fileID: 0}
 --- !u!95 &2062826980833160525
 Animator:
   serializedVersion: 3
@@ -173,7 +176,7 @@ Animator:
   m_GameObject: {fileID: 2062826980833160528}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a5260287da0cd2942930b87358dd85b0, type: 2}
+  m_Controller: {fileID: 9100000, guid: c635dd93b8c653c4d9ea6f7609bd6776, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

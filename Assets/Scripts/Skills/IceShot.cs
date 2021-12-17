@@ -22,6 +22,9 @@ public class IceShot: MonoBehaviour {
 
     // Advance
     void Update() {
+        if (Time.timeScale == 0) {  // Game is paused
+            return;
+        }
         distance--;
         if (distance <= 0) {
             Destroy(gameObject);

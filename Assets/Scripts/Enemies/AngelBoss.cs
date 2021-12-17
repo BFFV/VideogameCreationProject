@@ -200,7 +200,7 @@ public class AngelBoss : MonoBehaviour {
             if (attackID == 1) {  // Storm
                 GameObject stormSkill = Instantiate(lightning, transform.position, Quaternion.identity);
                 stormSkill.GetComponent<Lightning>().AssignToEnemy();
-                yield return new WaitForSeconds(4f);
+                yield return new WaitForSeconds(2f);
             }
             if (attackID == 2) {  // Holy Beam
                 Vector3 vectorToTarget = (player.transform.position - transform.position).normalized;

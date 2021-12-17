@@ -15,7 +15,7 @@ public class BlackHole : MonoBehaviour {
 
     // Start skill
     void Start() {
-        AudioManager.Instance.PlaySound("blackHole", 3f);
+        AudioManager.Instance.PlaySound("blackHole", 4f);
         StartCoroutine(Cast(2.5f, 2));
     }
 
