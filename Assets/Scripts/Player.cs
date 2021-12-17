@@ -331,9 +331,9 @@ public class Player : SceneSingleton<Player> {
     // Movement animation
     public void AnimationMove() {
         if (direction.x != 0 || direction.y != 0) {
-            animator.SetLayerWeight(1,1);
+            animator.SetLayerWeight(1, 1);
         } else {
-            animator.SetLayerWeight(1,0);
+            animator.SetLayerWeight(1, 0);
         }
         animator.SetFloat("x", direction.x * moveSpeed);
         animator.SetFloat("y", direction.y * moveSpeed);
@@ -432,11 +432,8 @@ public class Player : SceneSingleton<Player> {
         } else {
             hp -= damage;
         }
-        DamagePopup dp = DamagePopup.Create(new Vector3(transform.position.x, transform.position.y, 0), damage);
         AudioManager.Instance.PlaySound("damage");
         GUIManager.Instance.UpdatePlayerHealth(hp);
-
-        // Show damage taken
 
         // Death
         if (hp <= 0) {

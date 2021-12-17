@@ -11,6 +11,7 @@ public class GUIManager : SceneSingleton<GUIManager> {
     public GameObject gunIcon;
     public GameObject eventMessage;
     public GameObject tutorialMessage;
+    public Transform damagePopup;
 
     // Event Messages
     float eventTimeout = 0;
