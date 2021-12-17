@@ -66,8 +66,6 @@ public class Player : SceneSingleton<Player> {
     // Environmental damage
     int lavaDamage = 40;
 
-    // GUI
-
     // Initialize player
     void Start() {
         // Body & animator
@@ -300,8 +298,7 @@ public class Player : SceneSingleton<Player> {
             }
             currentWeapon = weapons[currentWeaponIdx];
             AudioManager.Instance.PlaySound("switchWeapon");
-            // TODO: activate for GUI
-            //GUIManager.Instance.ShowWeapon(currentWeapon);
+            GUIManager.Instance.ShowWeapon(currentWeapon);
         }
     }
 
