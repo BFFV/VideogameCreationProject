@@ -431,6 +431,7 @@ public class Player : SceneSingleton<Player> {
         } else {
             hp -= damage;
         }
+        DamagePopup dp = DamagePopup.Create(new Vector3(transform.position.x, transform.position.y, 0), damage);
         AudioManager.Instance.PlaySound("damage");
         GUIManager.Instance.UpdatePlayerHealth(hp);
 
