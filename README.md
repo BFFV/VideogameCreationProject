@@ -40,3 +40,9 @@ Project for IIC3686 - Videogame Creation.
 **Demo:** https://youtu.be/Q6ZZEJoNEXQ
 
 **Game:** https://bffv.itch.io/god-slayer
+
+# E6
+
+**Demo:** https://youtu.be/a6Bm-moR1o0
+
+**Game:** https://bffv.itch.io/god-slayer
